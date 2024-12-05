@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Opflashcontrol</string>
+    <string-array name="led_types">
+        <item>white</item>
+        <item>yellow</item>
+        <item>both</item>
+    </string-array>
+</resources>

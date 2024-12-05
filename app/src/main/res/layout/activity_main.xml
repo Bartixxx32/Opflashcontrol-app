@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/on"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="306dp"
+        android:text="On" />
+
+    <Button
+        android:id="@+id/off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="360dp"
+        android:text="Off" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="473dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Brightness: 0" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_x="0dp"
+        android:layout_y="425dp"
+        android:max="255" />
+
+    <TextView
+        android:id="@+id/flashbrightness"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_x="1dp"
+        android:layout_y="157dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center"
+        android:text="OnePlus Flash Brightness"
+        android:textSize="24sp" />
+
+</AbsoluteLayout>
