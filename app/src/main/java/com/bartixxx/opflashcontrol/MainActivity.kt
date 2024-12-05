@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 whiteBrightness = progress
                 whiteBrightnessText.text = "White Brightness: $whiteBrightness"
             }
-,
+
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (isLedOn) {
