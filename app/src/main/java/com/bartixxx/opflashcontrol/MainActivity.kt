@@ -7,48 +7,85 @@ import java.io.DataOutputStream
 
 class MainActivity : AppCompatActivity() {
 
-    private var brightness = 0
-    private var isLedOn = false  // Track if the LED is on or off
+    private var masterBrightness = 0
+    private var whiteBrightness = 0
+    private var yellowBrightness = 0
+    private var isLedOn = false // Track if the LED is on or off
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val brightnessText: TextView = findViewById(R.id.textView)
-        val brightnessSeekBar: SeekBar = findViewById(R.id.seekBar)
+        val masterBrightnessText: TextView = findViewById(R.id.masterTextView)
+        val whiteBrightnessText: TextView = findViewById(R.id.whiteTextView)
+        val yellowBrightnessText: TextView = findViewById(R.id.yellowTextView)
+
+        val masterSeekBar: SeekBar = findViewById(R.id.masterSeekBar)
+        val whiteSeekBar: SeekBar = findViewById(R.id.whiteSeekBar)
+        val yellowSeekBar: SeekBar = findViewById(R.id.yellowSeekBar)
+
         val onButton: Button = findViewById(R.id.on)
         val offButton: Button = findViewById(R.id.off)
 
-        // Set up the slider listener
-        brightnessSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        // Master SeekBar Logic
+        masterSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                brightness = progress
-                brightnessText.text = "Brightness: $brightness"
-
-                // Only apply brightness change if the LED is on
-                if (isLedOn) {
-                    controlLed("on", brightness, "both")
-                }
+                masterBrightness = progress
+                masterBrightnessText.text = "Master Brightness: $masterBrightness"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                if (isLedOn && whiteBrightness == 0 && yellowBrightness == 0) {
+                    controlLed("on", masterBrightness, masterBrightness)
+                }
+            }
+        })
+
+        // White SeekBar Logic
+        whiteSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                whiteBrightness = progress
+                whiteBrightnessText.text = "White Brightness: $whiteBrightness"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                if (isLedOn) {
+                    controlLed("on", whiteBrightness, yellowBrightness)
+                }
+            }
+        })
+
+        // Yellow SeekBar Logic
+        yellowSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                yellowBrightness = progress
+                yellowBrightnessText.text = "Yellow Brightness: $yellowBrightness"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                if (isLedOn) {
+                    controlLed("on", whiteBrightness, yellowBrightness)
+                }
+            }
         })
 
         // Set up the "on" button
         onButton.setOnClickListener {
-            isLedOn = true  // Set LED state to "on"
-            controlLed("on", brightness, "both")  // Apply brightness when turning on
+            isLedOn = true // Set LED state to "on"
+            controlLed("on", whiteBrightness, yellowBrightness)
         }
 
         // Set up the "off" button
         offButton.setOnClickListener {
-            isLedOn = false  // Set LED state to "off"
-            controlLed("off", 0, "both")  // Turn off LEDs
+            isLedOn = false // Set LED state to "off"
+            controlLed("off", 0, 0) // Turn off LEDs
         }
     }
 
-    private fun controlLed(action: String, brightness: Int, ledType: String) {
+    private fun controlLed(action: String, whiteBrightness: Int, yellowBrightness: Int) {
         val whiteLedPath = "/sys/class/leds/led:torch_0/brightness"
         val yellowLedPath = "/sys/class/leds/led:torch_1/brightness"
         val togglePaths = listOf(
@@ -65,9 +102,9 @@ class MainActivity : AppCompatActivity() {
             commands.add("echo 0 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
 
-            // Turn on the specified LEDs
-            if (ledType == "white" || ledType == "both") commands.add("echo $brightness > $whiteLedPath")
-            if (ledType == "yellow" || ledType == "both") commands.add("echo $brightness > $yellowLedPath")
+            // Set the brightness for each LED independently
+            if (whiteBrightness > 0) commands.add("echo $whiteBrightness > $whiteLedPath")
+            if (yellowBrightness > 0) commands.add("echo $yellowBrightness > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 255 > $it") }
         } else if (action == "off") {
             // Turn off all LEDs
