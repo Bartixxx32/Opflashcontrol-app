@@ -49,10 +49,11 @@ class MainActivity : AppCompatActivity() {
                 whiteBrightness = progress
                 whiteBrightnessText.text = "White Brightness: $whiteBrightness"
             }
-
+,
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (isLedOn) {
+                    // Apply white LED brightness without overriding yellow LED
                     controlLed("on", whiteBrightness, "white")
                 }
             }
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (isLedOn) {
+                    // Apply yellow LED brightness without overriding white LED
                     controlLed("on", yellowBrightness, "yellow")
                 }
             }
