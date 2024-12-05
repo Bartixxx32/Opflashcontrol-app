@@ -1,0 +1,1 @@
+OpFlashControl allows users to control the LED flashlight and adjust brightness on OnePlus devices. Root access is required.
