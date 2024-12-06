@@ -37,8 +37,7 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (isLedOn && whiteBrightness == 0 && yellowBrightness == 0) {
-                    // Only apply if individual LEDs are not overriding
-                    controlLed("on", masterBrightness, "both")
+                    controlLed("on", masterBrightness, masterBrightness)
                 }
             }
         })
@@ -53,8 +52,7 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (isLedOn) {
-                    // Apply white LED brightness without overriding yellow LED
-                    controlLed("on", whiteBrightness, "white")
+                    controlLed("on", whiteBrightness, yellowBrightness)
                 }
             }
         })
@@ -69,8 +67,7 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (isLedOn) {
-                    // Apply yellow LED brightness without overriding white LED
-                    controlLed("on", yellowBrightness, "yellow")
+                    controlLed("on", whiteBrightness, yellowBrightness)
                 }
             }
         })
@@ -78,24 +75,17 @@ class MainActivity : AppCompatActivity() {
         // Set up the "on" button
         onButton.setOnClickListener {
             isLedOn = true // Set LED state to "on"
-            if (whiteBrightness > 0 || yellowBrightness > 0) {
-                // Apply individual brightness if set
-                if (whiteBrightness > 0) controlLed("on", whiteBrightness, "white")
-                if (yellowBrightness > 0) controlLed("on", yellowBrightness, "yellow")
-            } else {
-                // Apply master brightness if individual are 0
-                controlLed("on", masterBrightness, "both")
-            }
+            controlLed("on", whiteBrightness, yellowBrightness)
         }
 
         // Set up the "off" button
         offButton.setOnClickListener {
             isLedOn = false // Set LED state to "off"
-            controlLed("off", 0, "both") // Turn off LEDs
+            controlLed("off", 0, 0) // Turn off LEDs
         }
     }
 
-    private fun controlLed(action: String, brightness: Int, ledType: String) {
+    private fun controlLed(action: String, whiteBrightness: Int, yellowBrightness: Int) {
         val whiteLedPath = "/sys/class/leds/led:torch_0/brightness"
         val yellowLedPath = "/sys/class/leds/led:torch_1/brightness"
         val togglePaths = listOf(
@@ -112,9 +102,9 @@ class MainActivity : AppCompatActivity() {
             commands.add("echo 0 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
 
-            // Turn on the specified LEDs
-            if (ledType == "white" || ledType == "both") commands.add("echo $brightness > $whiteLedPath")
-            if (ledType == "yellow" || ledType == "both") commands.add("echo $brightness > $yellowLedPath")
+            // Set the brightness for each LED independently
+            if (whiteBrightness > 0) commands.add("echo $whiteBrightness > $whiteLedPath")
+            if (yellowBrightness > 0) commands.add("echo $yellowBrightness > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 255 > $it") }
         } else if (action == "off") {
             // Turn off all LEDs
