@@ -12,6 +12,14 @@
         android:text="On" />
 
     <Button
+        android:id="@+id/destroyer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="1dp"
+        android:layout_y="680dp"
+        android:text="Eye destroyer (DONT USE TOO OFTEN)" />
+
+    <Button
         android:id="@+id/off"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

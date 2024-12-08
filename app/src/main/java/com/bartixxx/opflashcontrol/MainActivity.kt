@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         val onButton: Button = findViewById(R.id.on)
         val offButton: Button = findViewById(R.id.off)
+        val extraButton: Button = findViewById(R.id.destroyer)
 
         // Master SeekBar Logic
         masterSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -83,6 +84,12 @@ class MainActivity : AppCompatActivity() {
             isLedOn = false // Set LED state to "off"
             controlLed("off", 0, 0) // Turn off LEDs
         }
+
+        // Set up the "Extra On" button
+        extraButton.setOnClickListener {
+            isLedOn = true // Set LED state to "on"
+            controlFlashLeds("on", 1500, 1500) // Use predefined brightness
+        }
     }
 
     private fun controlLed(action: String, whiteBrightness: Int, yellowBrightness: Int) {
@@ -98,8 +105,8 @@ class MainActivity : AppCompatActivity() {
 
         if (action == "on") {
             // Turn off all LEDs before turning them on
-            commands.add("echo 0 > $whiteLedPath")
-            commands.add("echo 0 > $yellowLedPath")
+            commands.add("echo 80 > $whiteLedPath")
+            commands.add("echo 80 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
 
             // Set the brightness for each LED independently
@@ -108,8 +115,32 @@ class MainActivity : AppCompatActivity() {
             togglePaths.forEach { commands.add("echo 255 > $it") }
         } else if (action == "off") {
             // Turn off all LEDs
-            commands.add("echo 0 > $whiteLedPath")
-            commands.add("echo 0 > $yellowLedPath")
+            commands.add("echo 80 > $whiteLedPath")
+            commands.add("echo 80 > $yellowLedPath")
+            togglePaths.forEach { commands.add("echo 0 > $it") }
+        }
+
+        executeRootCommands(commands)
+    }
+
+    private fun controlFlashLeds(action: String, flashWhiteBrightness: Int, flashYellowBrightness: Int) {
+        val flashWhiteLedPath = "/sys/class/leds/led:flash_0/brightness"
+        val flashYellowLedPath = "/sys/class/leds/led:flash_1/brightness"
+        val togglePaths = listOf(
+            "/sys/class/leds/led:switch_0/brightness",
+            "/sys/class/leds/led:switch_1/brightness",
+            "/sys/class/leds/led:switch_2/brightness"
+        )
+
+        val commands = mutableListOf<String>()
+
+        if (action == "on") {
+            commands.add("echo 1500 > $flashWhiteLedPath")
+            commands.add("echo 1500 > $flashYellowLedPath")
+            togglePaths.forEach { commands.add("echo 1500 > $it") }
+        } else if (action == "off") {
+            commands.add("echo 0 > $flashWhiteLedPath")
+            commands.add("echo 0 > $flashYellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
         }
 
