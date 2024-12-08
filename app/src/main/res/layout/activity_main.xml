@@ -15,8 +15,8 @@
         android:id="@+id/destroyer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_x="1dp"
-        android:layout_y="680dp"
+        android:layout_x="0dp"
+        android:layout_y="706dp"
         android:text="Eye destroyer (DONT USE TOO OFTEN)" />
 
     <Button
@@ -97,6 +97,16 @@
         android:foregroundGravity="center"
         android:gravity="center"
         android:text="Master Brightness: 0" />
+
+    <TextView
+        android:id="@+id/masterTextView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="776dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="As safety measure press OFF button every time you use Eye Destroyer" />
 
     <TextView
         android:id="@+id/whiteTextView"
