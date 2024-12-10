@@ -42,7 +42,8 @@
         android:layout_height="40dp"
         android:layout_x="0dp"
         android:layout_y="549dp"
-        android:max="255" />
+        android:max="255"
+        android:min="0" />
 
     <TextView
         android:id="@+id/textView2"
@@ -59,7 +60,8 @@
         android:layout_height="40dp"
         android:layout_x="0dp"
         android:layout_y="491dp"
-        android:max="255" />
+        android:max="255"
+        android:min="0" />
 
     <TextView
         android:id="@+id/textView3"
@@ -76,7 +78,8 @@
         android:layout_height="40dp"
         android:layout_x="0dp"
         android:layout_y="441dp"
-        android:max="255" />
+        android:max="255"
+        android:min="0" />
 
     <TextView
         android:id="@+id/yellowTextView"
