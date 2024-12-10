@@ -1,86 +1,95 @@
-name: Generated APK AAB (Upload - Create Artifact To Github Action)
+name: Build OnePlus Flash Control
 
 env:
-  # The name of the main module repository
   main_project_module: app
-
-  # The name of the Play Store
   playstore_name: Bartixxx
 
 on:
-
   push:
     branches:
       - 'master'
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      prerelease:
+        description: 'Mark as Pre-release'
+        required: false
+        type: boolean
+      publish:
+        description: 'Publish release'
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      # Set Current Date As Env Variable
-      - name: Set current date as env variable
-        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      # Set current date and repository name as environment variables
+      - name: Set environment variables
+        run: |
+          echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+          echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 
-      # Set Repository Name As Env Variable
-      - name: Set repository name as env variable
-        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
-
-      - name: Set Up JDK
+      # Set up JDK for Gradle build
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu' # See 'Supported distributions' for available options
-          java-version: '17'
+          distribution: 'zulu'
+          java-version: '21'
           cache: 'gradle'
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      # Run Tests Build
-      - name: Run gradle tests
-        run: ./gradlew test
+      # Run Gradle tests and build the project
+      - name: Run tests and build project
+        run: |
+          ./gradlew test
+          ./gradlew build
 
-      # Run Build Project
-      - name: Build gradle project
-        run: ./gradlew build
-
-      # Create APK Debug
-      #- name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-      #  run: ./gradlew assembleDebug
-
-      # Create APK Release
-      - name: Build apk release project (APK) - ${{ env.main_project_module }} module
+      # Build APK release
+      - name: Build APK release
         run: ./gradlew assembleRelease
 
-      # Create Bundle AAB Release
-      # Noted for main module build [main_project_module]:bundleRelease
-      #- name: Build app bundle release (AAB) - ${{ env.main_project_module }} module
-      #  run: ./gradlew ${{ env.main_project_module }}:bundleRelease
+      # Rename unsigned APK to signed APK name
+      - name: Rename APK
+        run: mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/app-release.apk
 
-      # Upload Artifact Build
-      # Noted For Output [main_project_module]/build/outputs/apk/debug/
-      - name: Upload APK Debug - ${{ env.repository_name }}
-        uses: actions/upload-artifact@v4
+      # Get the current version from Gradle
+      - name: Get current version
+        id: version-env
+        run: |
+          ./gradlew getVersion
+          echo "version=$(cat app/build/version.txt)" >> $GITHUB_ENV
+
+      # Sign APK release
+      - uses: r0adkll/sign-android-release@v1
+        name: Sign APK
+        id: sign_app
         with:
-          name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) debug generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
 
-      # Noted For Output [main_project_module]/build/outputs/apk/release/
-      #- name: Upload APK Release - ${{ env.repository_name }}
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
-      #    path: ${{ env.main_project_module }}/build/outputs/apk/release/
+      # Upload signed APK as artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OnePlus Flash Control APK
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
 
-      # Noted For Output [main_project_module]/build/outputs/bundle/release/
-      #- name: Upload AAB (App Bundle) Release - ${{ env.repository_name }}
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - App bundle(s) AAB release generated
-      #    path: ${{ env.main_project_module }}/build/outputs/bundle/release/
+      # Publish APK to GitHub Releases
+      - name: Publish APK
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: ${{ inputs.prerelease || 'true' }}  # Default to 'true' if no input is provided
+          files: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          tag_name: v${{ env.version }}

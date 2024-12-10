@@ -12,20 +12,19 @@ android {
         applicationId = "com.bartixxx.opflashcontrol"
         minSdk = 29
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.0.4"
+        versionCode = 6
+        versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -40,8 +39,25 @@ android {
     }
 }
 
-dependencies {
+tasks.register("getVersion") {
+    doLast {
+        val versionCode = android.defaultConfig.versionCode
+        val versionName = android.defaultConfig.versionName
+        val versionFile = File("app/build/version.txt")
 
+        // Output the version details
+        println("App Version Code: $versionCode")
+        println("App Version Name: $versionName")
+        versionFile.parentFile.mkdirs()
+        if (!versionFile.exists()) {
+            versionFile.createNewFile()
+        }
+        // Optionally, write the version details to a file
+        versionFile.writeText("$versionName")
+    }
+}
+
+dependencies {
     implementation(libs.material)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
