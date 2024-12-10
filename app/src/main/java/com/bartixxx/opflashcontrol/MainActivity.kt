@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         const val FLASH_WHITE_LED_PATH = "/sys/class/leds/led:flash_0/brightness"
         const val FLASH_YELLOW_LED_PATH = "/sys/class/leds/led:flash_1/brightness"
         val TOGGLE_PATHS = listOf(
-            "/sys/class/leds/led:switch_0/brightness",
-            "/sys/class/leds/led:switch_1/brightness",
+            //"/sys/class/leds/led:switch_0/brightness",
+            //"/sys/class/leds/led:switch_1/brightness",
             "/sys/class/leds/led:switch_2/brightness"
         )
     }
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         setupSeekBar(masterSeekBar, masterBrightnessText, "Master Brightness") { progress ->
             masterBrightness = progress
-            if (isLedOn && whiteBrightness == 0 && yellowBrightness == 0) {
+            if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
                 controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, masterBrightness, masterBrightness)
             }
         }
@@ -72,11 +72,11 @@ class MainActivity : AppCompatActivity() {
 
         offButton.setOnClickListener {
             isLedOn = false
-            controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, 0, 0)
+            controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, 1, 1)
         }
 
         extraButton.setOnClickListener {
-            controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 0, 0)
+            controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 1000, 1000)
             controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 1500, 1500)
             isLedOn = true
         }
@@ -95,7 +95,11 @@ class MainActivity : AppCompatActivity() {
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                onStopTracking(seekBar.progress)
+                var progress = seekBar.progress
+                if (progress == 0) {
+                    progress = 1 // Prevent zero brightness
+                }
+                onStopTracking(progress)
             }
         })
     }
@@ -111,16 +115,16 @@ class MainActivity : AppCompatActivity() {
         val commands = mutableListOf<String>()
 
         if (action == "on") {
-            commands.add("echo 0 > $whiteLedPath")
-            commands.add("echo 0 > $yellowLedPath")
+            commands.add("echo 80 > $whiteLedPath")
+            commands.add("echo 80 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
 
             commands.add("echo $whiteBrightness > $whiteLedPath")
             commands.add("echo $yellowBrightness > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 255 > $it") }
         } else if (action == "off") {
-            commands.add("echo 0 > $whiteLedPath")
-            commands.add("echo 0 > $yellowLedPath")
+            commands.add("echo 80 > $whiteLedPath")
+            commands.add("echo 80 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
         }
 
