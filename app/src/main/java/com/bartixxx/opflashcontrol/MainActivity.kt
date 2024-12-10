@@ -12,6 +12,18 @@ class MainActivity : AppCompatActivity() {
     private var yellowBrightness = 0
     private var isLedOn = false // Track if the LED is on or off
 
+    companion object {
+        const val WHITE_LED_PATH = "/sys/class/leds/led:torch_0/brightness"
+        const val YELLOW_LED_PATH = "/sys/class/leds/led:torch_1/brightness"
+        const val FLASH_WHITE_LED_PATH = "/sys/class/leds/led:flash_0/brightness"
+        const val FLASH_YELLOW_LED_PATH = "/sys/class/leds/led:flash_1/brightness"
+        val TOGGLE_PATHS = listOf(
+            "/sys/class/leds/led:switch_0/brightness",
+            "/sys/class/leds/led:switch_1/brightness",
+            "/sys/class/leds/led:switch_2/brightness"
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,142 +40,87 @@ class MainActivity : AppCompatActivity() {
         val offButton: Button = findViewById(R.id.off)
         val extraButton: Button = findViewById(R.id.destroyer)
 
-        // Master SeekBar Logic
-        masterSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                masterBrightness = progress
-                masterBrightnessText.text = "Master Brightness: $masterBrightness"
+        setupSeekBar(masterSeekBar, masterBrightnessText, "Master Brightness") { progress ->
+            masterBrightness = progress
+            if (isLedOn && whiteBrightness == 0 && yellowBrightness == 0) {
+                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, masterBrightness, masterBrightness)
             }
+        }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (isLedOn && whiteBrightness == 0 && yellowBrightness == 0) {
-                    controlLed("on", masterBrightness, masterBrightness)
-                }
+        setupSeekBar(whiteSeekBar, whiteBrightnessText, "White Brightness") { progress ->
+            whiteBrightness = progress
+            if (isLedOn) {
+                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness)
             }
-        })
+        }
 
-        // White SeekBar Logic
-        whiteSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                whiteBrightness = progress
-                whiteBrightnessText.text = "White Brightness: $whiteBrightness"
+        setupSeekBar(yellowSeekBar, yellowBrightnessText, "Yellow Brightness") { progress ->
+            yellowBrightness = progress
+            if (isLedOn) {
+                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness)
             }
+        }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (isLedOn) {
-                    controlLed("on", whiteBrightness, yellowBrightness)
-                }
-            }
-        })
-
-        // Yellow SeekBar Logic
-        yellowSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                yellowBrightness = progress
-                yellowBrightnessText.text = "Yellow Brightness: $yellowBrightness"
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (isLedOn) {
-                    controlLed("on", whiteBrightness, yellowBrightness)
-                }
-            }
-        })
-
-        // Set up the "on" button
         onButton.setOnClickListener {
-            isLedOn = true // Set LED state to "on"
-
-            // Read the current slider values, including master brightness
-            val currentMasterBrightness = masterSeekBar.progress
-            val currentWhiteBrightness = whiteSeekBar.progress
-            val currentYellowBrightness = yellowSeekBar.progress
-
-            // Update stored values
-            masterBrightness = currentMasterBrightness
-            whiteBrightness = currentWhiteBrightness
-            yellowBrightness = currentYellowBrightness
-
-            // Use master brightness if both sliders are at 0
+            isLedOn = true
             if (whiteBrightness == 0 && yellowBrightness == 0) {
-                controlLed("on", masterBrightness, masterBrightness)
+                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, masterBrightness, masterBrightness)
             } else {
-                controlLed("on", whiteBrightness, yellowBrightness)
+                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness)
             }
         }
 
-        // Set up the "off" button
         offButton.setOnClickListener {
-            isLedOn = false // Set LED state to "off"
-            controlLed("off", 0, 0) // Turn off LEDs
+            isLedOn = false
+            controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, 0, 0)
         }
 
-        // Set up the "Extra On" button
         extraButton.setOnClickListener {
-            // Turn off all LEDs first to reset the state
-            controlLed("off", 0, 0)
-
-            // Then turn on the flash LEDs with predefined brightness
-            controlFlashLeds("on", 1500, 1500)
-
-            // Update the LED state to indicate they are on
+            controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 0, 0)
+            controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 1500, 1500)
             isLedOn = true
         }
     }
 
-    private fun controlLed(action: String, whiteBrightness: Int, yellowBrightness: Int) {
-        val whiteLedPath = "/sys/class/leds/led:torch_0/brightness"
-        val yellowLedPath = "/sys/class/leds/led:torch_1/brightness"
-        val togglePaths = listOf(
-            "/sys/class/leds/led:switch_0/brightness",
-            "/sys/class/leds/led:switch_1/brightness",
-            "/sys/class/leds/led:switch_2/brightness"
-        )
+    private fun setupSeekBar(
+        seekBar: SeekBar,
+        textView: TextView,
+        label: String,
+        onStopTracking: (progress: Int) -> Unit
+    ) {
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                textView.text = "$label: $progress"
+            }
 
-        val commands = mutableListOf<String>()
-
-        if (action == "on") {
-            commands.add("echo 80 > $whiteLedPath")
-            commands.add("echo 80 > $yellowLedPath")
-            togglePaths.forEach { commands.add("echo 0 > $it") }
-
-            // Set the brightness for each LED independently
-            if (whiteBrightness > 0) commands.add("echo $whiteBrightness > $whiteLedPath")
-            if (yellowBrightness > 0) commands.add("echo $yellowBrightness > $yellowLedPath")
-            togglePaths.forEach { commands.add("echo 255 > $it") }
-        } else if (action == "off") {
-            commands.add("echo 80 > $whiteLedPath")
-            commands.add("echo 80 > $yellowLedPath")
-            togglePaths.forEach { commands.add("echo 0 > $it") }
-        }
-
-        executeRootCommands(commands)
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                onStopTracking(seekBar.progress)
+            }
+        })
     }
 
-    private fun controlFlashLeds(action: String, flashWhiteBrightness: Int, flashYellowBrightness: Int) {
-        val flashWhiteLedPath = "/sys/class/leds/led:flash_0/brightness"
-        val flashYellowLedPath = "/sys/class/leds/led:flash_1/brightness"
-        val togglePaths = listOf(
-            "/sys/class/leds/led:switch_0/brightness",
-            "/sys/class/leds/led:switch_1/brightness",
-            "/sys/class/leds/led:switch_2/brightness"
-        )
-
+    private fun controlLeds(
+        action: String,
+        whiteLedPath: String,
+        yellowLedPath: String,
+        togglePaths: List<String>,
+        whiteBrightness: Int,
+        yellowBrightness: Int
+    ) {
         val commands = mutableListOf<String>()
 
         if (action == "on") {
-            commands.add("echo 0 > $flashWhiteLedPath")
-            commands.add("echo 0 > $flashYellowLedPath")
+            commands.add("echo 0 > $whiteLedPath")
+            commands.add("echo 0 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
-            commands.add("echo 1500 > $flashWhiteLedPath")
-            commands.add("echo 1500 > $flashYellowLedPath")
-            togglePaths.forEach { commands.add("echo 1500 > $it") }
+
+            commands.add("echo $whiteBrightness > $whiteLedPath")
+            commands.add("echo $yellowBrightness > $yellowLedPath")
+            togglePaths.forEach { commands.add("echo 255 > $it") }
         } else if (action == "off") {
-            commands.add("echo 0 > $flashWhiteLedPath")
-            commands.add("echo 0 > $flashYellowLedPath")
+            commands.add("echo 0 > $whiteLedPath")
+            commands.add("echo 0 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
         }
 
@@ -174,17 +131,17 @@ class MainActivity : AppCompatActivity() {
         try {
             val process = Runtime.getRuntime().exec("su")
             val outputStream = DataOutputStream(process.outputStream)
-            for (command in commands) {
-                outputStream.writeBytes("$command\n")
-            }
-            outputStream.writeBytes("exit\n")
+
+            val batchCommands = commands.joinToString("\n") + "\nexit\n"
+            outputStream.writeBytes(batchCommands)
             outputStream.flush()
             outputStream.close()
+
             process.waitFor()
-            Toast.makeText(this, "Command executed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Failed to execute command", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.command_failed), Toast.LENGTH_LONG).show()
         }
     }
 }

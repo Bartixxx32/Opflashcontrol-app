@@ -1,8 +1,17 @@
 <resources>
-    <string name="app_name">Opflashcontrol</string>
+    <string name="app_name" translatable="false">OnePlus Flash Control</string>
     <string-array name="led_types">
         <item>white</item>
         <item>yellow</item>
         <item>both</item>
     </string-array>
+    <string name="command_executed">Command executed</string>
+    <string name="command_failed">Failed to execute command</string>
+    <string name="master">Master control</string>
+    <string name="white">White control</string>
+    <string name="yellow">Yellow control</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="info">Yes, really dont use it too often, it may overheat led</string>
+    <string name="destroyer">Eye destroer</string>
 </resources>

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_x="0dp"
         android:layout_y="306dp"
-        android:text="On" />
+        android:text="@string/on" />
 
     <Button
         android:id="@+id/destroyer"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_x="0dp"
         android:layout_y="706dp"
-        android:text="Eye destroyer (DONT USE TOO OFTEN)" />
+        android:text="@string/destroyer" />
 
     <Button
         android:id="@+id/off"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_x="0dp"
         android:layout_y="360dp"
-        android:text="Off" />
+        android:text="@string/off" />
 
     <TextView
         android:id="@+id/textView4"
@@ -34,7 +34,7 @@
         android:layout_x="0dp"
         android:layout_y="422dp"
         android:gravity="center"
-        android:text="Master control" />
+        android:text="@string/master" />
 
     <SeekBar
         android:id="@+id/yellowSeekBar"
@@ -51,7 +51,7 @@
         android:layout_x="0dp"
         android:layout_y="531dp"
         android:gravity="center"
-        android:text="Yellow control" />
+        android:text="@string/yellow" />
 
     <SeekBar
         android:id="@+id/whiteSeekBar"
@@ -68,7 +68,7 @@
         android:layout_x="0dp"
         android:layout_y="472dp"
         android:gravity="center"
-        android:text="White control" />
+        android:text="@string/white" />
 
     <SeekBar
         android:id="@+id/masterSeekBar"
@@ -106,7 +106,7 @@
         android:layout_y="776dp"
         android:foregroundGravity="center"
         android:gravity="center"
-        android:text="As safety measure press OFF button every time you use Eye Destroyer" />
+        android:text="@string/info" />
 
     <TextView
         android:id="@+id/whiteTextView"

@@ -1,0 +1,16 @@
+<resources>
+    <string-array name="led_types">
+        <item>biały</item>
+        <item>żółty</item>
+        <item>master</item>
+    </string-array>
+    <string name="command_executed">Akcja wykonana pomyślnie</string>
+    <string name="command_failed">Akcja sie nie powiodła</string>
+    <string name="master">Kontrola główna</string>
+    <string name="white">Kontrola koloru białego</string>
+    <string name="yellow">Kontrola koloru żółtego</string>
+    <string name="on">Włącz</string>
+    <string name="off">Wyłącz</string>
+    <string name="info">Tak, serio nie używaj tego zbyt często może doprowadzić do przegrzania flasha</string>
+    <string name="destroyer">Rozpierdalacz oczu</string>
+</resources>
