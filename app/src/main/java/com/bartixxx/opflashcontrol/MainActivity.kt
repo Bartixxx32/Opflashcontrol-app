@@ -76,7 +76,23 @@ class MainActivity : AppCompatActivity() {
         // Set up the "on" button
         onButton.setOnClickListener {
             isLedOn = true // Set LED state to "on"
-            controlLed("on", whiteBrightness, yellowBrightness)
+
+            // Read the current slider values, including master brightness
+            val currentMasterBrightness = masterSeekBar.progress
+            val currentWhiteBrightness = whiteSeekBar.progress
+            val currentYellowBrightness = yellowSeekBar.progress
+
+            // Update stored values
+            masterBrightness = currentMasterBrightness
+            whiteBrightness = currentWhiteBrightness
+            yellowBrightness = currentYellowBrightness
+
+            // Use master brightness if both sliders are at 0
+            if (whiteBrightness == 0 && yellowBrightness == 0) {
+                controlLed("on", masterBrightness, masterBrightness)
+            } else {
+                controlLed("on", whiteBrightness, yellowBrightness)
+            }
         }
 
         // Set up the "off" button
@@ -87,8 +103,14 @@ class MainActivity : AppCompatActivity() {
 
         // Set up the "Extra On" button
         extraButton.setOnClickListener {
-            isLedOn = true // Set LED state to "on"
-            controlFlashLeds("on", 1500, 1500) // Use predefined brightness
+            // Turn off all LEDs first to reset the state
+            controlLed("off", 0, 0)
+
+            // Then turn on the flash LEDs with predefined brightness
+            controlFlashLeds("on", 1500, 1500)
+
+            // Update the LED state to indicate they are on
+            isLedOn = true
         }
     }
 
@@ -104,7 +126,6 @@ class MainActivity : AppCompatActivity() {
         val commands = mutableListOf<String>()
 
         if (action == "on") {
-            // Turn off all LEDs before turning them on
             commands.add("echo 80 > $whiteLedPath")
             commands.add("echo 80 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
@@ -114,7 +135,6 @@ class MainActivity : AppCompatActivity() {
             if (yellowBrightness > 0) commands.add("echo $yellowBrightness > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 255 > $it") }
         } else if (action == "off") {
-            // Turn off all LEDs
             commands.add("echo 80 > $whiteLedPath")
             commands.add("echo 80 > $yellowLedPath")
             togglePaths.forEach { commands.add("echo 0 > $it") }
@@ -135,6 +155,9 @@ class MainActivity : AppCompatActivity() {
         val commands = mutableListOf<String>()
 
         if (action == "on") {
+            commands.add("echo 0 > $flashWhiteLedPath")
+            commands.add("echo 0 > $flashYellowLedPath")
+            togglePaths.forEach { commands.add("echo 0 > $it") }
             commands.add("echo 1500 > $flashWhiteLedPath")
             commands.add("echo 1500 > $flashYellowLedPath")
             togglePaths.forEach { commands.add("echo 1500 > $it") }
