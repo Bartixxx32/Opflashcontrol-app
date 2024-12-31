@@ -133,12 +133,11 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/navigateToMainActivity2"
+        android:id="@+id/navigateBackToMainActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_x="0dp"
         android:layout_y="855dp"
-        android:text="@string/quadled" />
+        android:text="@string/dualled" />
 
 </AbsoluteLayout>

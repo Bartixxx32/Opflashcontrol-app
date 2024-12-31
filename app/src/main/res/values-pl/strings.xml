@@ -13,4 +13,6 @@
     <string name="off">Wyłącz</string>
     <string name="info">Tak, serio nie używaj tego zbyt często może doprowadzić do przegrzania flasha</string>
     <string name="destroyer">Rozwalacz oczu</string>
+    <string name="quadled">Włącz tryb Quad-LED</string>
+    <string name="dualled">Włącz tryb Dual-LED</string>
 </resources>

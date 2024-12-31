@@ -6,7 +6,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.DataOutputStream
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
 
     private var masterBrightness = 0
     private var whiteBrightness = 0
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
 
         val masterBrightnessText: TextView = findViewById(R.id.masterTextView)
         val whiteBrightnessText: TextView = findViewById(R.id.whiteTextView)
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         val extraButton: Button = findViewById(R.id.destroyer)
 
         // Navigate to MainActivity2 button
-        val navigateToMainActivity2Button: Button = findViewById(R.id.navigateToMainActivity2)
+        val navigateBackToMainActivityButton: Button = findViewById(R.id.navigateBackToMainActivity)
 
         setupSeekBar(masterSeekBar, masterBrightnessText, "Master Brightness") { progress ->
             masterBrightness = progress
@@ -85,9 +85,9 @@ class MainActivity : AppCompatActivity() {
             isLedOn = true
         }
 
-        // Set onClickListener for the navigateToMainActivity2 button
-        navigateToMainActivity2Button.setOnClickListener {
-            val intent = Intent(this, MainActivity2::class.java)
+        // Set onClickListener for the button
+        navigateBackToMainActivityButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
