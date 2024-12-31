@@ -8,3 +8,9 @@ OnePlus Flash Control is an Android application that allows users to precisely c
 - **Individual LED Control:** Independently control the brightness of white and yellow LEDs.
 - **"Eye Destroyer" Mode:** A feature to momentarily turn on the LEDs at maximum brightness for both white and yellow LEDs. Use with caution as it emits very intense light!
 - **Compatibility:** Designed for rooted OnePlus devices with dual-tone LED flash.
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.bartixxx.opflashcontrol/)
+
+Or download the latest APK from the [Releases Section](https://github.com/Bartixxx32/Opflashcontrol-app/releases/latest).
