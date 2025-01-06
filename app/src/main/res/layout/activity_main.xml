@@ -4,102 +4,12 @@
              android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/on"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="306dp"
-        android:text="@string/on" />
-
-    <Button
         android:id="@+id/destroyer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_x="0dp"
         android:layout_y="706dp"
         android:text="@string/destroyer" />
-
-    <Button
-        android:id="@+id/off"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="360dp"
-        android:text="@string/off" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="422dp"
-        android:gravity="center"
-        android:text="@string/master" />
-
-    <SeekBar
-        android:id="@+id/yellowSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_x="0dp"
-        android:layout_y="549dp"
-        android:max="255"
-        android:min="0" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="531dp"
-        android:gravity="center"
-        android:text="@string/yellow" />
-
-    <SeekBar
-        android:id="@+id/whiteSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_x="0dp"
-        android:layout_y="491dp"
-        android:max="255"
-        android:min="0" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="472dp"
-        android:gravity="center"
-        android:text="@string/white" />
-
-    <SeekBar
-        android:id="@+id/masterSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_x="0dp"
-        android:layout_y="441dp"
-        android:max="255"
-        android:min="0" />
-
-    <TextView
-        android:id="@+id/yellowTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="646dp"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        android:text="Yellow Brightness: 0" />
-
-    <TextView
-        android:id="@+id/masterTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="606dp"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        android:text="Master Brightness: 0" />
 
     <TextView
         android:id="@+id/masterTextView2"
@@ -112,24 +22,123 @@
         android:text="@string/info" />
 
     <TextView
+        android:id="@+id/flashbrightness"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_x="0dp"
+        android:layout_y="60dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center"
+        android:text="OnePlus Flash Brightness"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/masterTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="433dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Master Brightness: 0" />
+
+    <TextView
         android:id="@+id/whiteTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_x="0dp"
-        android:layout_y="626dp"
+        android:layout_y="453dp"
         android:foregroundGravity="center"
         android:gravity="center"
         android:text="White Brightness: 0" />
 
     <TextView
-        android:id="@+id/flashbrightness"
+        android:id="@+id/yellowTextView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_x="1dp"
-        android:layout_y="157dp"
-        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="473dp"
+        android:foregroundGravity="center"
         android:gravity="center"
-        android:text="OnePlus Flash Brightness"
-        android:textSize="24sp" />
+        android:text="Yellow Brightness: 0" />
+
+    <SeekBar
+        android:id="@+id/yellowSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_x="0dp"
+        android:layout_y="382dp"
+        android:max="255"
+        android:min="0" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="364dp"
+        android:gravity="center"
+        android:text="@string/yellow" />
+
+    <SeekBar
+        android:id="@+id/whiteSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_x="0dp"
+        android:layout_y="324dp"
+        android:max="255"
+        android:min="0" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="305dp"
+        android:gravity="center"
+        android:text="@string/white" />
+
+    <SeekBar
+        android:id="@+id/masterSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_x="0dp"
+        android:layout_y="274dp"
+        android:max="255"
+        android:min="0" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="255dp"
+        android:gravity="center"
+        android:text="@string/master" />
+
+    <Button
+        android:id="@+id/off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="193dp"
+        android:text="@string/off" />
+
+    <Button
+        android:id="@+id/on"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="147dp"
+        android:text="@string/on" />
+
+    <Button
+        android:id="@+id/navigateToMainActivity2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_x="0dp"
+        android:layout_y="855dp"
+        android:text="@string/quadled" />
 
 </AbsoluteLayout>

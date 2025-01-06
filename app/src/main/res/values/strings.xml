@@ -10,8 +10,12 @@
     <string name="master">Master control</string>
     <string name="white">White control</string>
     <string name="yellow">Yellow control</string>
+    <string name="white2">White control</string>
+    <string name="yellow2">Yellow control</string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="info">Yes, really dont use it too often, it may overheat led</string>
     <string name="destroyer">Eye destroer</string>
+    <string name="quadled">Go to Quad-LED</string>
+    <string name="dualled">Go to Dual-LED</string>
 </resources>
