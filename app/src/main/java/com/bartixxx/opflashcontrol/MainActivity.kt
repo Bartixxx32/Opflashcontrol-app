@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.DataOutputStream
+import android.util.Log
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -143,6 +145,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun executeRootCommands(commands: List<String>) {
         try {
+            // Log only the commands being executed
+            commands.forEach { command ->
+                Log.d("LEDControlApp", "Executing command: $command")
+            }
+
             val process = Runtime.getRuntime().exec("su")
             val outputStream = DataOutputStream(process.outputStream)
 
@@ -158,4 +165,5 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.command_failed), Toast.LENGTH_LONG).show()
         }
     }
+
 }

@@ -9,6 +9,8 @@
     <string name="master">Kontrola główna</string>
     <string name="white">Kontrola koloru białego</string>
     <string name="yellow">Kontrola koloru żółtego</string>
+    <string name="white2">Kontrola koloru białego2</string>
+    <string name="yellow2">Kontrola koloru żółtego2</string>
     <string name="on">Włącz</string>
     <string name="off">Wyłącz</string>
     <string name="info">Tak, serio nie używaj tego zbyt często może doprowadzić do przegrzania flasha</string>
