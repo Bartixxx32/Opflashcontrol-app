@@ -1,1 +1,1 @@
-Control LED brightness on rooted OnePlus devices with options for individual LEDs
+Control LED brightness on rooted OnePlus devices
