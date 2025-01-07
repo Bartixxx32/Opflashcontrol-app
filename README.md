@@ -2,8 +2,6 @@
 
 OnePlus Flash Control is an Android application designed specifically for rooted OnePlus devices, providing users with precise control over the brightness of the dual-tone and quad-tone LED flashes. The app offers a user-friendly interface to easily adjust the master brightness and independently control the brightness of the white, yellow, and additional LEDs (for quad-tone setups).
 
-By leveraging root access, the app allows direct modification of system-level files to control the LED behavior, enabling a customized and enhanced flashlight experience on your OnePlus device.
-
 ## Features
 
 - **Master Brightness Control:** Adjust overall LED brightness with a single slider.
