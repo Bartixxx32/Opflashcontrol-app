@@ -1,1 +1,1 @@
-OnePlus Flash Brightness control app
+Control LED brightness on rooted OnePlus devices with options for individual LEDs

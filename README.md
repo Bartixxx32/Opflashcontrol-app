@@ -1,6 +1,8 @@
 # OnePlus Flash Control
 
-OnePlus Flash Control is an Android application that allows users to precisely control the brightness of the dual-tone LED flash on OnePlus devices. This app provides a user-friendly interface for adjusting master brightness, as well as individual control of the white and yellow LEDs. It leverages root access to modify system-level files for controlling the LED behavior.
+OnePlus Flash Control is an Android application designed specifically for rooted OnePlus devices, providing users with precise control over the brightness of the dual-tone and quad-tone LED flashes. The app offers a user-friendly interface to easily adjust the master brightness and independently control the brightness of the white, yellow, and additional LEDs (for quad-tone setups).
+
+By leveraging root access, the app allows direct modification of system-level files to control the LED behavior, enabling a customized and enhanced flashlight experience on your OnePlus device.
 
 ## Features
 
@@ -8,10 +10,12 @@ OnePlus Flash Control is an Android application that allows users to precisely c
 - **Individual LED Control:** Independently control the brightness of white and yellow LEDs.
 - **"Eye Destroyer" Mode:** A feature to momentarily turn on the LEDs at maximum brightness for both white and yellow LEDs. Use with caution as it emits very intense light!
 - **Compatibility:** Designed for rooted OnePlus devices with dual-tone LED flash.
+- **Quad LED Control::** Control up to four LEDs, with support for dual-tone flash on OnePlus devices. (Work in progress, reports needed for testing.)
 
 ## Preview Screenshot
 
-[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/github/tr:w-0.2/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png?raw=true)](https://ik.imagekit.io/bartixxx32/github/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png?raw=true) 
+[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/github/tr:w-0.2/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png?raw=true)](https://ik.imagekit.io/bartixxx32/github/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png?raw=true)
+[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/github/tr:w-0.2/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png?raw=true)](https://ik.imagekit.io/bartixxx32/github/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png?raw=true)
 
 ## Download
 

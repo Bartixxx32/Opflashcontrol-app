@@ -38,7 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     // Helper method to sanitize brightness values (ensuring no 0 values are written)
     private fun sanitizeBrightness(brightness: Int): Int {
-        return if (brightness == 0) 0 else brightness
+        return if (brightness == 0) 1 else brightness
     }
 
     protected fun setupSlider(
