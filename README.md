@@ -10,7 +10,7 @@ By leveraging root access, the app allows direct modification of system-level fi
 - **Individual LED Control:** Independently control the brightness of white and yellow LEDs.
 - **"Eye Destroyer" Mode:** A feature to momentarily turn on the LEDs at maximum brightness for both white and yellow LEDs. Use with caution as it emits very intense light!
 - **Compatibility:** Designed for rooted OnePlus devices with dual-tone LED flash.
-- **Quad LED Control::** Control up to four LEDs, with support for dual-tone flash on OnePlus devices. (Work in progress, reports needed for testing.)
+- **Quad LED Control:** Control up to four LEDs, with support for dual-tone flash on OnePlus devices. (Work in progress, reports needed for testing.)
 
 ## Preview Screenshot
 
