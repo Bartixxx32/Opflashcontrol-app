@@ -2,210 +2,61 @@ package com.bartixxx.opflashcontrol
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import java.io.DataOutputStream
-import android.util.Log
+import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
 
+class MainActivity : BaseActivity() {
 
-class MainActivity : AppCompatActivity() {
-
-    private var masterBrightness = 0
-    private var whiteBrightness = 0
-    private var yellowBrightness = 0
-    private var isLedOn = false // Track if the LED is on or off
-
-    companion object {
-        const val WHITE_LED_PATH = "/sys/class/leds/led:torch_0/brightness"
-        const val YELLOW_LED_PATH = "/sys/class/leds/led:torch_1/brightness"
-        const val FLASH_WHITE_LED_PATH = "/sys/class/leds/led:flash_0/brightness"
-        const val FLASH_YELLOW_LED_PATH = "/sys/class/leds/led:flash_1/brightness"
-        val TOGGLE_PATHS = listOf(
-            //"/sys/class/leds/led:switch_0/brightness",
-            //"/sys/class/leds/led:switch_1/brightness",
-            "/sys/class/leds/led:switch_2/brightness"
-        )
-    }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val masterBrightnessText: TextView = findViewById(R.id.masterTextView)
-        val whiteBrightnessText: TextView = findViewById(R.id.whiteTextView)
-        val yellowBrightnessText: TextView = findViewById(R.id.yellowTextView)
-
-        val masterSeekBar: SeekBar = findViewById(R.id.masterSeekBar)
-        val whiteSeekBar: SeekBar = findViewById(R.id.whiteSeekBar)
-        val yellowSeekBar: SeekBar = findViewById(R.id.yellowSeekBar)
-
-        val onButton: Button = findViewById(R.id.on)
-        val offButton: Button = findViewById(R.id.off)
-        val extraButton: Button = findViewById(R.id.destroyer)
-
-        // Navigate to MainActivity2 button
-        val navigateToMainActivity2Button: Button = findViewById(R.id.navigateToMainActivity2)
-
-        setupSeekBar(masterSeekBar, masterBrightnessText, "Master Brightness") { progress ->
-            masterBrightness = progress
-            if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
-                controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    masterBrightness,
-                    masterBrightness
-                )
-            }
-        }
-
-        setupSeekBar(whiteSeekBar, whiteBrightnessText, "White Brightness") { progress ->
-            whiteBrightness = progress
-            if (isLedOn) {
-                controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    whiteBrightness,
-                    yellowBrightness
-                )
-            }
-        }
-
-        setupSeekBar(yellowSeekBar, yellowBrightnessText, "Yellow Brightness") { progress ->
-            yellowBrightness = progress
-            if (isLedOn) {
-                controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    whiteBrightness,
-                    yellowBrightness
-                )
-            }
-        }
-
-        onButton.setOnClickListener {
-            isLedOn = true
-            if (whiteBrightness == 0 && yellowBrightness == 0) {
-                controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    masterBrightness,
-                    masterBrightness
-                )
-            } else {
-                controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    whiteBrightness,
-                    yellowBrightness
-                )
-            }
-        }
-
-        offButton.setOnClickListener {
-            isLedOn = false
-            controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, 1, 1)
-        }
-
-        extraButton.setOnClickListener {
-            controlLeds(
-                "off",
-                FLASH_WHITE_LED_PATH,
-                FLASH_YELLOW_LED_PATH,
-                TOGGLE_PATHS,
-                1000,
-                1000
-            )
-            controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 1500, 1500)
-            isLedOn = true
-        }
-
-        // Set onClickListener for the navigateToMainActivity2 button
-        navigateToMainActivity2Button.setOnClickListener {
-            val intent = Intent(this, MainActivity2::class.java)
-            startActivity(intent)
-        }
-    }
-
-    private fun setupSeekBar(
-        seekBar: SeekBar,
-        textView: TextView,
-        label: String,
-        onStopTracking: (progress: Int) -> Unit
-    ) {
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                textView.text = "$label: $progress"
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                var progress = seekBar.progress
-                if (progress == 0) {
-                    progress = 1 // Prevent zero brightness
+        with(binding) {
+            setupSeekBar(masterSeekBar, masterTextView, "Master Brightness") { progress ->
+                masterBrightness = progress
+                if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
+                    controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = progress)
                 }
-                onStopTracking(progress)
-            }
-        })
-    }
-
-    private fun controlLeds(
-        action: String,
-        whiteLedPath: String,
-        yellowLedPath: String,
-        togglePaths: List<String>,
-        whiteBrightness: Int,
-        yellowBrightness: Int
-    ) {
-        val commands = mutableListOf<String>()
-
-        if (action == "on") {
-            commands.add("echo 80 > $whiteLedPath")
-            commands.add("echo 80 > $yellowLedPath")
-            togglePaths.forEach { commands.add("echo 0 > $it") }
-
-            commands.add("echo $whiteBrightness > $whiteLedPath")
-            commands.add("echo $yellowBrightness > $yellowLedPath")
-            togglePaths.forEach { commands.add("echo 255 > $it") }
-        } else if (action == "off") {
-            commands.add("echo 80 > $whiteLedPath")
-            commands.add("echo 80 > $yellowLedPath")
-            togglePaths.forEach { commands.add("echo 0 > $it") }
-        }
-
-        executeRootCommands(commands)
-    }
-
-    private fun executeRootCommands(commands: List<String>) {
-        try {
-            // Log only the commands being executed
-            commands.forEach { command ->
-                Log.d("LEDControlApp", "Executing command: $command")
             }
 
-            val process = Runtime.getRuntime().exec("su")
-            val outputStream = DataOutputStream(process.outputStream)
+            setupSeekBar(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
+                whiteBrightness = progress
+                if (isLedOn) controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = yellowBrightness)
+            }
 
-            val batchCommands = commands.joinToString("\n") + "\nexit\n"
-            outputStream.writeBytes(batchCommands)
-            outputStream.flush()
-            outputStream.close()
+            setupSeekBar(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
+                yellowBrightness = progress
+                if (isLedOn) controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = whiteBrightness, yellowBrightness = progress)
+            }
 
-            process.waitFor()
-            Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, getString(R.string.command_failed), Toast.LENGTH_LONG).show()
+            on.setOnClickListener { toggleLEDs(true) }
+            off.setOnClickListener { toggleLEDs(false) }
+            destroyer.setOnClickListener { executeExtraFunction() }
+            navigateToMainActivity2.setOnClickListener { navigateToMainActivity2() }
         }
     }
 
+    private fun toggleLEDs(on: Boolean) {
+        isLedOn = on
+        if (on) {
+            controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH,
+                whiteBrightness = if (whiteBrightness == 0) masterBrightness else whiteBrightness,
+                yellowBrightness = if (yellowBrightness == 0) masterBrightness else yellowBrightness
+            )
+        } else {
+            controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 1, yellowBrightness = 1)
+        }
+    }
+
+    private fun executeExtraFunction() {
+        controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1000, yellowBrightness = 1000)
+        controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1500, yellowBrightness = 1500)
+        isLedOn = true
+    }
+
+    private fun navigateToMainActivity2() {
+        startActivity(Intent(this, MainActivity2::class.java))
+    }
 }
