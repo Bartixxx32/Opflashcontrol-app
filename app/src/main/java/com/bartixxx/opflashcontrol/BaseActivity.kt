@@ -8,6 +8,7 @@ import java.io.DataOutputStream
 import android.util.Log
 import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
 import com.bartixxx.opflashcontrol.databinding.ActivityMain2Binding
+import java.io.IOException
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -135,9 +136,15 @@ abstract class BaseActivity : AppCompatActivity() {
             }
             process.waitFor()
             Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             e.printStackTrace()
-            Toast.makeText(this, getString(R.string.command_failed), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_io), Toast.LENGTH_LONG).show()
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+            Toast.makeText(this, getString(R.string.error_permission), Toast.LENGTH_LONG).show()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+            Toast.makeText(this, getString(R.string.error_interrupted), Toast.LENGTH_LONG).show()
         }
     }
 }
