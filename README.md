@@ -9,17 +9,16 @@ By leveraging root access, the app allows direct modification of system-level fi
 - **Master Brightness Control:** Adjust overall LED brightness with a single slider.
 - **Individual LED Control:** Independently control the brightness of white and yellow LEDs.
 - **"Eye Destroyer" Mode:** A feature to momentarily turn on the LEDs at maximum brightness for both white and yellow LEDs. Use with caution as it emits very intense light!
-- **Compatibility:** Designed for rooted OnePlus devices with dual-tone LED flash.
+- **Compatibility:** Designed for rooted OnePlus devices only.
 - **Quad LED Control:** Control up to four LEDs on supported OnePlus devices (OnePlus 9 series and newer). Currently in development:
   - Support for controlling additional LED modules (warm and cool tones)
   - Brightness synchronization across all LEDs
-  - Custom presets for different LED combinations
 
 
   Testing needed: If you have a OnePlus 9/10/11 series device, please help by:
   - Confirming the number and types of LED modules on your device
   - Testing brightness control functionality and reporting any issues
-  - Sharing your device model and OxygenOS version in GitHub Issues
+  - Sharing your device model and OxygenOS/Custom ROM version in GitHub Issues
 
 ## Preview Screenshot
 
