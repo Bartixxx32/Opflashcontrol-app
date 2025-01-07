@@ -3,6 +3,9 @@ package com.bartixxx.opflashcontrol
 import android.content.Intent
 import android.os.Bundle
 import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
+import com.google.android.material.slider.Slider
+import android.widget.TextView
+
 
 class MainActivity : BaseActivity() {
 
@@ -13,22 +16,36 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set the range of the sliders
         with(binding) {
-            setupSeekBar(masterSeekBar, masterTextView, "Master Brightness") { progress ->
+            masterSeekBar.valueFrom = 0f
+            masterSeekBar.valueTo = 255f
+
+            whiteSeekBar.valueFrom = 0f
+            whiteSeekBar.valueTo = 255f
+
+            yellowSeekBar.valueFrom = 0f
+            yellowSeekBar.valueTo = 255f
+
+            setupSlider(masterSeekBar, masterTextView, "Master Brightness") { progress ->
                 masterBrightness = progress
                 if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
                     controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = progress)
                 }
             }
 
-            setupSeekBar(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
+            setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
                 whiteBrightness = progress
-                if (isLedOn) controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = yellowBrightness)
+                if (isLedOn) {
+                    controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = yellowBrightness)
+                }
             }
 
-            setupSeekBar(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
+            setupSlider(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
                 yellowBrightness = progress
-                if (isLedOn) controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = whiteBrightness, yellowBrightness = progress)
+                if (isLedOn) {
+                    controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = whiteBrightness, yellowBrightness = progress)
+                }
             }
 
             on.setOnClickListener { toggleLEDs(true) }

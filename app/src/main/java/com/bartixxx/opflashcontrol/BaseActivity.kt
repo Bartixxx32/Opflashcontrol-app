@@ -3,6 +3,7 @@ package com.bartixxx.opflashcontrol
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.slider.Slider
 import java.io.DataOutputStream
 import android.util.Log
 import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
@@ -35,22 +36,34 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    protected fun setupSeekBar(
-        seekBar: SeekBar,
+    // Helper method to sanitize brightness values (ensuring no 0 values are written)
+    private fun sanitizeBrightness(brightness: Int): Int {
+        return if (brightness == 0) 0 else brightness
+    }
+
+    protected fun setupSlider(
+        slider: Slider, // Use Slider from Material3
         textView: TextView,
         label: String,
         onStopTracking: (Int) -> Unit
     ) {
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                textView.text = "$label: $progress"
+        slider.addOnChangeListener { _, value, _ ->
+            val progress = value.toInt() // Convert from Float to Int
+            Log.d("SliderProgress", "$label Progress: $progress") // Debugging log
+
+            textView.text = "$label: $progress"
+        }
+
+        slider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: Slider) {
+                // Do nothing on touch start
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                var progress = seekBar.progress
-                if (progress == 0) progress = 1 // Prevent zero brightness
-                onStopTracking(progress)
+            override fun onStopTrackingTouch(slider: Slider) {
+                val progress = slider.value.toInt() // Get the final value when user releases the slider
+                Log.d("SliderProgress", "$label Finger released, Progress: $progress")
+                textView.text = "$label: $progress" // Update the text view with the final value
+                onStopTracking(progress) // Trigger the callback with the final value
             }
         })
     }
@@ -66,15 +79,21 @@ abstract class BaseActivity : AppCompatActivity() {
         white2Brightness: Int = 0,
         yellow2Brightness: Int = 0
     ) {
+        // Sanitize the brightness values to ensure no 0 values are written
+        val sanitizedWhiteBrightness = sanitizeBrightness(whiteBrightness)
+        val sanitizedYellowBrightness = sanitizeBrightness(yellowBrightness)
+        val sanitizedWhite2Brightness = sanitizeBrightness(white2Brightness)
+        val sanitizedYellow2Brightness = sanitizeBrightness(yellow2Brightness)
+
         val commands = mutableListOf<String>()
 
         if (action == "on") {
             commands.addAll(commonOnCommands(whiteLedPath, yellowLedPath, white2LedPath, yellow2LedPath))
             commands.addAll(listOf(
-                "echo $whiteBrightness > $whiteLedPath",
-                "echo $yellowBrightness > $yellowLedPath",
-                white2LedPath?.let { "echo $white2Brightness > $it" },
-                yellow2LedPath?.let { "echo $yellow2Brightness > $it" }
+                "echo $sanitizedWhiteBrightness > $whiteLedPath",
+                "echo $sanitizedYellowBrightness > $yellowLedPath",
+                white2LedPath?.let { "echo $sanitizedWhite2Brightness > $it" },
+                yellow2LedPath?.let { "echo $sanitizedYellow2Brightness > $it" }
             ).filterNotNull())
             TOGGLE_PATHS.forEach { commands.add("echo 255 > $it") }
         } else if (action == "off") {
@@ -106,7 +125,6 @@ abstract class BaseActivity : AppCompatActivity() {
         try {
             commands.forEach { Log.d("LEDControlApp", "Executing command: $it") }
 
-            // Use 'use' function for proper resource management
             val process = Runtime.getRuntime().exec("su")
             process.outputStream.use { outputStream ->
                 DataOutputStream(outputStream).use { dataOutputStream ->
