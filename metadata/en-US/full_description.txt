@@ -1,10 +1,10 @@
-OpFlashControl is an advanced LED control application designed specifically for OnePlus devices. With this app, users can control the flashlight and other LED features on their OnePlus phones, including adjusting the brightness and toggling the state of multiple LEDs. The app offers a simple and intuitive interface, allowing users to quickly turn the LED flash on or off, and fine-tune the brightness via a slider.
+OnePlus Flash Control is an simple LED control application designed specifically for rooted OnePlus devices. With this app, users can control the flashlight and other LED features on their OnePlus phones, including adjusting the brightness and toggling the state of multiple LEDs. The app offers a simple and intuitive interface, allowing users to quickly turn the LED flash on or off, and fine-tune the brightness via a slider.
 
-To ensure the app works seamlessly, root access is required. This is necessary for the app to interact with system-level files to control the LED settings. This app is ideal for users who want to customize their OnePlus device's LED functionality beyond the stock settings.
+To ensure the app works seamlessly, root access is required. This is necessary for the app to interact with system-level files to control the LED settings. OnePlus Flash Control is ideal for users who want to customize their OnePlus device's LED functionality beyond the stock settings.
 
 Key Features:
-
-Control LED flash brightness on OnePlus devices.
-Toggle between different LED types (white, yellow, or both).
-Simple UI with buttons and a brightness slider for easy interaction.
-Root access required for full functionality.
+Master Brightness Control: Adjust overall LED brightness with a single slider.
+Individual LED Control: Independently control the brightness of white and yellow LEDs.
+"Eye Destroyer" Mode: A feature to momentarily turn on the LEDs at maximum brightness for both white and yellow LEDs. Use with caution as it emits very intense light!
+Compatibility: Designed for rooted OnePlus devices with dual-tone LED flash.
+Quad LED Control (WIP): Control the brightness of four LEDs (Quad-LED models). This feature is implemented but untested; reports are needed for further refinement.

@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.Opflashcontrol" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Opflashcontrol" parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
         <!-- Dark theme colors -->
         <item name="colorPrimary">#BB86FC</item>
         <item name="colorPrimaryDark">#3700B3</item>

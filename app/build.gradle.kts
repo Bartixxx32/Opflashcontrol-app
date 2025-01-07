@@ -12,8 +12,8 @@ android {
         applicationId = "com.bartixxx.opflashcontrol"
         minSdk = 29
         targetSdk = 35
-        versionCode = 12
-        versionName = "1.0.11"
+        versionCode = 13
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     buildToolsVersion = "35.0.0"
 }
