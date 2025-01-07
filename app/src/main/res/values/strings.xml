@@ -21,4 +21,5 @@
     <string name="error_io">Command failed: IO error occurred</string>
     <string name="error_permission">Command failed: Permission denied</string>
     <string name="error_interrupted">Command failed: Process interrupted</string>
+    <string name="error_retry_failed">Getting ROOT failed</string>
 </resources>

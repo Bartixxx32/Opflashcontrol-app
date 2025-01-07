@@ -123,28 +123,48 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun executeRootCommands(commands: List<String>) {
-        try {
-            commands.forEach { Log.d("LEDControlApp", "Executing command: $it") }
+        val maxRetries = 3 // Maximum number of retries
+        val initialDelay = 1000L // Initial delay in milliseconds
+        val maxDelay = 8000L // Maximum delay (8 seconds) for exponential backoff
+        var attempt = 0
+        var delay = initialDelay
 
-            val process = Runtime.getRuntime().exec("su")
-            process.outputStream.use { outputStream ->
-                DataOutputStream(outputStream).use { dataOutputStream ->
-                    val batchCommands = commands.joinToString("\n") + "\nexit\n"
-                    dataOutputStream.writeBytes(batchCommands)
-                    dataOutputStream.flush()
+        while (attempt < maxRetries) {
+            try {
+                commands.forEach { Log.d("LEDControlApp", "Executing command: $it") }
+
+                val process = Runtime.getRuntime().exec("su")
+                process.outputStream.use { outputStream ->
+                    DataOutputStream(outputStream).use { dataOutputStream ->
+                        val batchCommands = commands.joinToString("\n") + "\nexit\n"
+                        dataOutputStream.writeBytes(batchCommands)
+                        dataOutputStream.flush()
+                    }
                 }
+                process.waitFor()
+                Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
+                return // Exit the method if the command was successfully executed
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(this, getString(R.string.error_io), Toast.LENGTH_LONG).show()
+            } catch (e: SecurityException) {
+                e.printStackTrace()
+                Toast.makeText(this, getString(R.string.error_permission), Toast.LENGTH_LONG).show()
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+                Toast.makeText(this, getString(R.string.error_interrupted), Toast.LENGTH_LONG).show()
             }
-            process.waitFor()
-            Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Toast.makeText(this, getString(R.string.error_io), Toast.LENGTH_LONG).show()
-        } catch (e: SecurityException) {
-            e.printStackTrace()
-            Toast.makeText(this, getString(R.string.error_permission), Toast.LENGTH_LONG).show()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-            Toast.makeText(this, getString(R.string.error_interrupted), Toast.LENGTH_LONG).show()
+
+            // Retry mechanism with exponential backoff
+            attempt++
+            if (attempt < maxRetries) {
+                Log.d("LEDControlApp", "Retrying... attempt #$attempt")
+                Thread.sleep(delay)
+                delay = (delay * 2).coerceAtMost(maxDelay) // Exponential backoff
+            }
         }
+
+        // If we've exhausted all retries
+        Toast.makeText(this, getString(R.string.error_retry_failed), Toast.LENGTH_LONG).show()
     }
 }
