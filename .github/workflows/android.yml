@@ -8,7 +8,10 @@ on:
   push:
     branches:
       - 'master'
-
+      - '**'  # Trigger for all branches
+  pull_request:
+    branches:
+      - '**'  # Trigger for all branches
   workflow_dispatch:
     inputs:
       prerelease:
@@ -85,8 +88,9 @@ jobs:
           name: OnePlus Flash Control APK
           path: ${{ steps.sign_app.outputs.signedReleaseFile }}
 
-      # Publish APK to GitHub Releases
+      # Publish APK to GitHub Releases only for master branch
       - name: Publish APK
+        if: github.ref == 'refs/heads/master'  # Only publish for master branch
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
