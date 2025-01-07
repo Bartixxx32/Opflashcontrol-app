@@ -15,6 +15,7 @@ By leveraging root access, the app allows direct modification of system-level fi
   - Brightness synchronization across all LEDs
   - Custom presets for different LED combinations
 
+
   Testing needed: If you have a OnePlus 9/10/11 series device, please help by:
   - Confirming the number and types of LED modules on your device
   - Testing brightness control functionality and reporting any issues
