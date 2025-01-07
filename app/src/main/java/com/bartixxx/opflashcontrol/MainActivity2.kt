@@ -58,54 +58,164 @@ class MainActivity2 : AppCompatActivity() {
         setupSeekBar(masterSeekBar, masterBrightnessText, "Master Brightness") { progress ->
             masterBrightness = progress
             if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, masterBrightness, masterBrightness, masterBrightness, masterBrightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    TOGGLE_PATHS,
+                    masterBrightness,
+                    masterBrightness,
+                    masterBrightness,
+                    masterBrightness
+                )
             }
         }
 
         setupSeekBar(whiteSeekBar, whiteBrightnessText, "White Brightness") { progress ->
             whiteBrightness = progress
             if (isLedOn) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness,
+                    white2Brightness,
+                    yellow2Brightness
+                )
             }
         }
 
         setupSeekBar(yellowSeekBar, yellowBrightnessText, "Yellow Brightness") { progress ->
             yellowBrightness = progress
             if (isLedOn) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness,
+                    white2Brightness,
+                    yellow2Brightness
+                )
             }
         }
         setupSeekBar(white2SeekBar, white2BrightnessText, "White2 Brightness") { progress ->
             white2Brightness = progress
             if (isLedOn) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness,
+                    white2Brightness,
+                    yellow2Brightness
+                )
             }
         }
 
         setupSeekBar(yellow2SeekBar, yellow2BrightnessText, "Yellow2 Brightness") { progress ->
             yellow2Brightness = progress
             if (isLedOn) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness,
+                    white2Brightness,
+                    yellow2Brightness
+                )
             }
         }
 
         onButton.setOnClickListener {
             isLedOn = true
             if (whiteBrightness == 0 && yellowBrightness == 0) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, masterBrightness, masterBrightness, masterBrightness, masterBrightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    TOGGLE_PATHS,
+                    masterBrightness,
+                    masterBrightness,
+                    masterBrightness,
+                    masterBrightness
+                )
             } else {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness,
+                    white2Brightness,
+                    yellow2Brightness
+                )
             }
         }
 
         offButton.setOnClickListener {
             isLedOn = false
-            controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, TOGGLE_PATHS, 1, 1,1,1)
+            controlLeds(
+                "off",
+                WHITE_LED_PATH,
+                YELLOW_LED_PATH,
+                WHITE2_LED_PATH,
+                YELLOW2_LED_PATH,
+                TOGGLE_PATHS,
+                1,
+                1,
+                1,
+                1
+            )
         }
 
         extraButton.setOnClickListener {
-            controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, FLASH_WHITE2_LED_PATH, FLASH_YELLOW2_LED_PATH, TOGGLE_PATHS, 1000, 1000,1000,1000)
-            controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, FLASH_WHITE2_LED_PATH, FLASH_YELLOW2_LED_PATH, TOGGLE_PATHS, 1500, 1500,1500,1500)
+            controlLeds(
+                "off",
+                FLASH_WHITE_LED_PATH,
+                FLASH_YELLOW_LED_PATH,
+                FLASH_WHITE2_LED_PATH,
+                FLASH_YELLOW2_LED_PATH,
+                TOGGLE_PATHS,
+                1000,
+                1000,
+                1000,
+                1000
+            )
+            controlLeds(
+                "on",
+                FLASH_WHITE_LED_PATH,
+                FLASH_YELLOW_LED_PATH,
+                FLASH_WHITE2_LED_PATH,
+                FLASH_YELLOW2_LED_PATH,
+                TOGGLE_PATHS,
+                1500,
+                1500,
+                1500,
+                1500
+            )
             isLedOn = true
         }
 

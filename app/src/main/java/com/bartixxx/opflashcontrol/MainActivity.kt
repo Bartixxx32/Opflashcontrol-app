@@ -49,30 +49,65 @@ class MainActivity : AppCompatActivity() {
         setupSeekBar(masterSeekBar, masterBrightnessText, "Master Brightness") { progress ->
             masterBrightness = progress
             if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, masterBrightness, masterBrightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    masterBrightness,
+                    masterBrightness
+                )
             }
         }
 
         setupSeekBar(whiteSeekBar, whiteBrightnessText, "White Brightness") { progress ->
             whiteBrightness = progress
             if (isLedOn) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness
+                )
             }
         }
 
         setupSeekBar(yellowSeekBar, yellowBrightnessText, "Yellow Brightness") { progress ->
             yellowBrightness = progress
             if (isLedOn) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness
+                )
             }
         }
 
         onButton.setOnClickListener {
             isLedOn = true
             if (whiteBrightness == 0 && yellowBrightness == 0) {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, masterBrightness, masterBrightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    masterBrightness,
+                    masterBrightness
+                )
             } else {
-                controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, TOGGLE_PATHS, whiteBrightness, yellowBrightness)
+                controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness,
+                    yellowBrightness
+                )
             }
         }
 
@@ -82,7 +117,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         extraButton.setOnClickListener {
-            controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 1000, 1000)
+            controlLeds(
+                "off",
+                FLASH_WHITE_LED_PATH,
+                FLASH_YELLOW_LED_PATH,
+                TOGGLE_PATHS,
+                1000,
+                1000
+            )
             controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, TOGGLE_PATHS, 1500, 1500)
             isLedOn = true
         }
