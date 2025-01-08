@@ -43,15 +43,23 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun setupSlider(
-        slider: Slider, // Use Slider from Material3
+        slider: Slider,
         textView: TextView,
         label: String,
         onStopTracking: (Int) -> Unit
     ) {
+        var lastIntegerValue = slider.value.toInt() // Track the last integer value
+
         slider.addOnChangeListener { _, value, _ ->
             val progress = value.toInt() // Convert from Float to Int
-            Log.d("SliderProgress", "$label Progress: $progress") // Debugging log
 
+            // Vibrate only if the integer part of the slider value has changed
+            if (progress != lastIntegerValue) {
+                VibrationUtil.vibrate50(this)
+                lastIntegerValue = progress
+            }
+
+            Log.d("SliderProgress", "$label Progress: $progress") // Debugging log
             textView.text = "$label: $progress"
         }
 
