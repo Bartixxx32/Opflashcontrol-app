@@ -59,10 +59,22 @@ class MainActivity2 : BaseActivity() {
                 if (isLedOn) controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, whiteBrightness, yellowBrightness, white2Brightness, progress)
             }
 
-            on.setOnClickListener { toggleLEDs(true) }
-            off.setOnClickListener { toggleLEDs(false) }
-            destroyer.setOnClickListener { executeExtraFunction() }
-            navigateBackToMainActivity.setOnClickListener { navigateBackToMainActivity() }
+            on.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity2)
+                toggleLEDs(true)
+            }
+            off.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity2)
+                toggleLEDs(false)
+            }
+            destroyer.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity2)
+                executeExtraFunction()
+            }
+            navigateBackToMainActivity.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity2)
+                navigateBackToMainActivity()
+            }
         }
     }
 
