@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.autonomousapps.dependency-analysis")
 }
 
 android {
@@ -10,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId = "com.bartixxx.opflashcontrol"
-        minSdk = 29
+        minSdk = 31
         targetSdk = 35
-        versionCode = 13
-        versionName = "1.1.0"
+        versionCode = 14
+        versionName = "1.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,6 +30,7 @@ android {
         }
         getByName("debug") {
             multiDexEnabled = true
+            isJniDebuggable = true
         }
     }
     compileOptions {
@@ -66,21 +68,22 @@ tasks.register("getVersion") {
 dependencies {
     implementation(libs.material)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    debugRuntimeOnly(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.ui.text)
+    implementation(libs.androidx.ui.unit)
+    androidTestImplementation(libs.androidx.monitor)
+    androidTestImplementation(libs.junit)
+    implementation(libs.androidx.lifecycle.viewmodel)
 }
