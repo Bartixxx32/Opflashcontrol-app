@@ -48,10 +48,22 @@ class MainActivity : BaseActivity() {
                 }
             }
 
-            on.setOnClickListener { toggleLEDs(true) }
-            off.setOnClickListener { toggleLEDs(false) }
-            destroyer.setOnClickListener { executeExtraFunction() }
-            navigateToMainActivity2.setOnClickListener { navigateToMainActivity2() }
+            on.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity)
+                toggleLEDs(true)
+            }
+            off.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity)
+                toggleLEDs(false)
+            }
+            destroyer.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity)
+                executeExtraFunction()
+            }
+            navigateToMainActivity2.setOnClickListener {
+                VibrationUtil.vibrate100(this@MainActivity)
+                navigateToMainActivity2()
+            }
         }
     }
 
