@@ -49,19 +49,19 @@ class MainActivity : BaseActivity() {
             }
 
             on.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity)
+                VibrationUtil.vibrate(this@MainActivity, 100L)
                 toggleLEDs(true)
             }
             off.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity)
+                VibrationUtil.vibrate(this@MainActivity, 100L)
                 toggleLEDs(false)
             }
             destroyer.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity)
+                VibrationUtil.vibrate(this@MainActivity, 100L)
                 executeExtraFunction()
             }
             navigateToMainActivity2.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity)
+                VibrationUtil.vibrate(this@MainActivity, 100L)
                 navigateToMainActivity2()
             }
         }

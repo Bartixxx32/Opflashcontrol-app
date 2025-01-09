@@ -55,7 +55,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
             // Vibrate only if the integer part of the slider value has changed
             if (progress != lastIntegerValue) {
-                VibrationUtil.vibrate50(this)
+                VibrationUtil.vibrate(this, 50L)
                 lastIntegerValue = progress
             }
 
