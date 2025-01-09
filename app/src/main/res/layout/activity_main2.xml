@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
         android:textSize="24sp"
         android:textColor="?attr/colorOnSurface"
         android:text="OnePlus Flash Brightness"
