@@ -3,6 +3,7 @@ package com.bartixxx.opflashcontrol
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView  // Add this import
+import com.bartixxx.opflashcontrol.MainActivity
 import com.bartixxx.opflashcontrol.databinding.ActivityMain2Binding
 import com.google.android.material.slider.Slider
 
@@ -60,19 +61,19 @@ class MainActivity2 : BaseActivity() {
             }
 
             on.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity2)
+                VibrationUtil.vibrate(this@MainActivity2, 100L)
                 toggleLEDs(true)
             }
             off.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity2)
+                VibrationUtil.vibrate(this@MainActivity2, 100L)
                 toggleLEDs(false)
             }
             destroyer.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity2)
+                VibrationUtil.vibrate(this@MainActivity2, 100L)
                 executeExtraFunction()
             }
             navigateBackToMainActivity.setOnClickListener {
-                VibrationUtil.vibrate100(this@MainActivity2)
+                VibrationUtil.vibrate(this@MainActivity2, 100L)
                 navigateBackToMainActivity()
             }
         }
