@@ -78,7 +78,7 @@ class MainActivity2 : BaseActivity() {
                 VibrationUtil.vibrate(this@MainActivity2, 100L)
                 navigateBackToMainActivity()
             }
-            // Set up click listener for the title which requires 3 clicks within 5 seconds
+            // Set up click listener for the title which requires 5 clicks within 5 seconds
             flashbrightness.setOnClickListener {
                 val currentTime = System.currentTimeMillis()
                 VibrationUtil.vibrate(this@MainActivity2, 100L)
