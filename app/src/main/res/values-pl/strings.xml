@@ -21,4 +21,6 @@
     <string name="error_permission">Błąd polecenia: Odrzucono uprawnienia</string>
     <string name="error_interrupted">Błąd polecenia: Proces został przerwany</string>
     <string name="error_retry_failed">Błąd żądania ROOT</string>
+    <string name="experimental">Odkryłeś menu eksperymentów!</string>
+    <string name="back">Powrót</string>
 </resources>

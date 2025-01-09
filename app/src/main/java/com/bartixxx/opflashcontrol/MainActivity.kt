@@ -2,14 +2,16 @@ package com.bartixxx.opflashcontrol
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
-import com.google.android.material.slider.Slider
-import android.widget.TextView
-
 
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var clickCount = 0
+    private var lastClickTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,33 @@ class MainActivity : BaseActivity() {
                 VibrationUtil.vibrate(this@MainActivity, 100L)
                 navigateToMainActivity2()
             }
+
+            // Set up click listener for the title which requires 3 clicks within 5 seconds
+            flashbrightness.setOnClickListener {
+                val currentTime = System.currentTimeMillis()
+                VibrationUtil.vibrate(this@MainActivity, 100L)
+                if (currentTime - lastClickTime > 5000) {
+                    clickCount = 1
+                } else {
+                    clickCount++
+                }
+
+                lastClickTime = currentTime
+
+                if (clickCount == 5) {
+                    // Perform the action after 3 clicks within 5 seconds
+                    performSecretAction()
+                    // Reset counter
+                    clickCount = 0
+                } else {
+                    // Optionally, you can show feedback for each click if desired
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        if (clickCount < 3) {
+                            clickCount = 0
+                        }
+                    }, 5000)
+                }
+            }
         }
     }
 
@@ -87,5 +116,11 @@ class MainActivity : BaseActivity() {
 
     private fun navigateToMainActivity2() {
         startActivity(Intent(this, MainActivity2::class.java))
+    }
+
+    private fun performSecretAction() {
+        VibrationUtil.vibrate(this, 200L)
+        Toast.makeText(this, getString(R.string.experimental), Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, ExperimentalActivity::class.java))
     }
 }

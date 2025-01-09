@@ -22,4 +22,10 @@
     <string name="error_permission">Command failed: Permission denied</string>
     <string name="error_interrupted">Command failed: Process interrupted</string>
     <string name="error_retry_failed">Getting ROOT failed</string>
+    <string name="alternateon" translatable="false">Alternate ON</string>
+    <string name="alternateoff" translatable="false">Alternate OFF</string>
+    <string name="alternatebright" translatable="false">Alternate Brightness ON</string>
+    <string name="alternatebrightoff" translatable="false">Alternate Brightness OFF</string>
+    <string name="experimental">You discovered experimential and fun stuff</string>
+    <string name="back">Back</string>
 </resources>
