@@ -13,8 +13,8 @@ android {
         applicationId = "com.bartixxx.opflashcontrol"
         minSdk = 31
         targetSdk = 35
-        versionCode = 15
-        versionName = "1.1.2"
+        versionCode = 16
+        versionName = "1.1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -85,5 +85,5 @@ dependencies {
     implementation(libs.androidx.ui.unit)
     androidTestImplementation(libs.androidx.monitor)
     androidTestImplementation(libs.junit)
-    implementation(libs.androidx.lifecycle.viewmodel)
+  implementation(libs.androidx.lifecycle.viewmodel)
 }

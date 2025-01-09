@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.Slider
 import java.io.DataOutputStream
 import android.util.Log
-import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
-import com.bartixxx.opflashcontrol.databinding.ActivityMain2Binding
 import java.io.IOException
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -55,7 +53,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
             // Vibrate only if the integer part of the slider value has changed
             if (progress != lastIntegerValue) {
-                VibrationUtil.vibrate50(this)
+                VibrationUtil.vibrate(this, 50L)
                 lastIntegerValue = progress
             }
 
@@ -150,17 +148,30 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
                 }
                 process.waitFor()
-                Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
+
+                // Show toast on the main thread
+                runOnUiThread {
+                    Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
+                }
                 return // Exit the method if the command was successfully executed
             } catch (e: IOException) {
                 e.printStackTrace()
-                Toast.makeText(this, getString(R.string.error_io), Toast.LENGTH_LONG).show()
+                // Show toast on the main thread
+                runOnUiThread {
+                    Toast.makeText(this, getString(R.string.error_io), Toast.LENGTH_LONG).show()
+                }
             } catch (e: SecurityException) {
                 e.printStackTrace()
-                Toast.makeText(this, getString(R.string.error_permission), Toast.LENGTH_LONG).show()
+                // Show toast on the main thread
+                runOnUiThread {
+                    Toast.makeText(this, getString(R.string.error_permission), Toast.LENGTH_LONG).show()
+                }
             } catch (e: InterruptedException) {
                 e.printStackTrace()
-                Toast.makeText(this, getString(R.string.error_interrupted), Toast.LENGTH_LONG).show()
+                // Show toast on the main thread
+                runOnUiThread {
+                    Toast.makeText(this, getString(R.string.error_interrupted), Toast.LENGTH_LONG).show()
+                }
             }
 
             // Retry mechanism with exponential backoff
@@ -172,7 +183,9 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
 
-        // If we've exhausted all retries
-        Toast.makeText(this, getString(R.string.error_retry_failed), Toast.LENGTH_LONG).show()
+        // If we've exhausted all retries, show toast on the main thread
+        runOnUiThread {
+            Toast.makeText(this, getString(R.string.error_retry_failed), Toast.LENGTH_LONG).show()
+        }
     }
 }
