@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.bartixxx.opflashcontrol
 
 import android.content.Context
