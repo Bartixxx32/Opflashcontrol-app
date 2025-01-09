@@ -87,7 +87,7 @@ class MainActivity : BaseActivity() {
                 } else {
                     // Optionally, you can show feedback for each click if desired
                     Handler(Looper.getMainLooper()).postDelayed({
-                        if (clickCount < 3) {
+                        if (clickCount < 5) {
                             clickCount = 0
                         }
                     }, 5000)
