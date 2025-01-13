@@ -13,8 +13,8 @@ android {
         applicationId = "com.bartixxx.opflashcontrol"
         minSdk = 31
         targetSdk = 35
-        versionCode = 16
-        versionName = "1.1.3"
+        versionCode = 17
+        versionName = "1.1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,6 +22,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
