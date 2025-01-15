@@ -76,6 +76,7 @@
         android:layout_height="wrap_content"
         android:max="255"
         android:min="0"
+        android:value="80"
         app:layout_constraintTop_toBottomOf="@id/textView4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,10 +91,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Master Brightness: 0"
-        app:layout_constraintTop_toBottomOf="@id/masterSeekBar"
+        android:text="Master Brightness: 80"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/masterSeekBar" />
 
     <!-- Space after Master Brightness -->
     <View

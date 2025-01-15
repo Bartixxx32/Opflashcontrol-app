@@ -10,7 +10,7 @@ import java.io.IOException
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    protected var masterBrightness = 0
+    protected var masterBrightness = 80
     protected var whiteBrightness = 0
     protected var yellowBrightness = 0
     protected var white2Brightness = 0
