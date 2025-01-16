@@ -21,6 +21,7 @@ class MainActivity : BaseActivity() {
         // Set the range of the sliders
         with(binding) {
             masterSeekBar.valueFrom = 0f
+            masterSeekBar.value = 80f
             masterSeekBar.valueTo = 255f
 
             whiteSeekBar.valueFrom = 0f
