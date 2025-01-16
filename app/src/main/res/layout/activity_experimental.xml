@@ -7,6 +7,86 @@
     android:background="?attr/colorSurface">
 
     <!-- Title -->
+
+    <TextView
+        android:id="@+id/delayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/delayvalue"
+        android:textColor="@color/material_dynamic_neutral90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button4"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/delayTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="204dp"
+        android:text="@string/brightnessalternate"
+        android:textColor="@color/material_dynamic_neutral90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button4" />
+
+    <TextView
+        android:id="@+id/delayTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Delay: 500ms"
+        android:textColor="@color/material_dynamic_neutral90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delaySeekBar1" />
+
+    <TextView
+        android:id="@+id/brightnessTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Delay: 500ms"
+        android:textColor="@color/material_dynamic_neutral90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/brightnessSeekBar" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/delaySeekBar1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:max="1000"
+        android:min="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button4"
+        app:thumbColor="@color/material_dynamic_neutral50"
+        app:tickColorActive="@color/material_dynamic_neutral90"
+        app:tickColorInactive="@color/material_dynamic_neutral70"
+        app:trackColorActive="@color/material_dynamic_neutral60"
+        app:trackColorInactive="@color/material_dynamic_neutral40" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/brightnessSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="224dp"
+        android:max="1000"
+        android:min="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button4"
+        app:thumbColor="@color/material_dynamic_neutral50"
+        app:tickColorActive="@color/material_dynamic_neutral90"
+        app:tickColorInactive="@color/material_dynamic_neutral70"
+        app:trackColorActive="@color/material_dynamic_neutral60"
+        app:trackColorInactive="@color/material_dynamic_neutral40" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/flashbrightness"
         android:layout_width="0dp"
