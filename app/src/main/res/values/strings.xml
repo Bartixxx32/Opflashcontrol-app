@@ -28,4 +28,6 @@
     <string name="alternatebrightoff" translatable="false">Alternate Brightness OFF</string>
     <string name="experimental">You discovered experimential and fun stuff</string>
     <string name="back">Back</string>
+    <string name="delayvalue" translatable="false">Delay for alternate</string>
+    <string name="brightnessalternate" translatable="false">Brightness for alternate</string>
 </resources>

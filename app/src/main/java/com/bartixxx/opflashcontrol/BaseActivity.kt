@@ -84,7 +84,8 @@ abstract class BaseActivity : AppCompatActivity() {
         whiteBrightness: Int,
         yellowBrightness: Int,
         white2Brightness: Int = 0,
-        yellow2Brightness: Int = 0
+        yellow2Brightness: Int = 0,
+        showToast: Boolean = true
     ) {
         // Sanitize the brightness values to ensure no 0 values are written
         val sanitizedWhiteBrightness = sanitizeBrightness(whiteBrightness)
@@ -107,7 +108,7 @@ abstract class BaseActivity : AppCompatActivity() {
             commands.addAll(commonOffCommands(whiteLedPath, yellowLedPath, white2LedPath, yellow2LedPath))
         }
 
-        executeRootCommands(commands)
+        executeRootCommands(commands, showToast)
     }
 
     private fun commonOnCommands(white: String, yellow: String, white2: String?, yellow2: String?): List<String> {
@@ -128,7 +129,7 @@ abstract class BaseActivity : AppCompatActivity() {
         ).filterNotNull() + TOGGLE_PATHS.map { "echo 0 > $it" }
     }
 
-    protected fun executeRootCommands(commands: List<String>) {
+    protected fun executeRootCommands(commands: List<String>, showToast: Boolean = true) {
         val maxRetries = 3 // Maximum number of retries
         val initialDelay = 1000L // Initial delay in milliseconds
         val maxDelay = 8000L // Maximum delay (8 seconds) for exponential backoff
@@ -149,28 +150,33 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
                 process.waitFor()
 
-                // Show toast on the main thread
-                runOnUiThread {
-                    Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
+                // Show toast on the main thread if allowed
+                if (showToast) {
+                    runOnUiThread {
+                        Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
+                    }
                 }
                 return // Exit the method if the command was successfully executed
             } catch (e: IOException) {
                 e.printStackTrace()
-                // Show toast on the main thread
-                runOnUiThread {
-                    Toast.makeText(this, getString(R.string.error_io), Toast.LENGTH_LONG).show()
+                if (showToast) {
+                    runOnUiThread {
+                        Toast.makeText(this, getString(R.string.error_io), Toast.LENGTH_LONG).show()
+                    }
                 }
             } catch (e: SecurityException) {
                 e.printStackTrace()
-                // Show toast on the main thread
-                runOnUiThread {
-                    Toast.makeText(this, getString(R.string.error_permission), Toast.LENGTH_LONG).show()
+                if (showToast) {
+                    runOnUiThread {
+                        Toast.makeText(this, getString(R.string.error_permission), Toast.LENGTH_LONG).show()
+                    }
                 }
             } catch (e: InterruptedException) {
                 e.printStackTrace()
-                // Show toast on the main thread
-                runOnUiThread {
-                    Toast.makeText(this, getString(R.string.error_interrupted), Toast.LENGTH_LONG).show()
+                if (showToast) {
+                    runOnUiThread {
+                        Toast.makeText(this, getString(R.string.error_interrupted), Toast.LENGTH_LONG).show()
+                    }
                 }
             }
 
@@ -183,9 +189,11 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
 
-        // If we've exhausted all retries, show toast on the main thread
-        runOnUiThread {
-            Toast.makeText(this, getString(R.string.error_retry_failed), Toast.LENGTH_LONG).show()
+        // If we've exhausted all retries, show toast on the main thread if allowed
+        if (showToast) {
+            runOnUiThread {
+                Toast.makeText(this, getString(R.string.error_retry_failed), Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
