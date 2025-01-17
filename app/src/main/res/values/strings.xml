@@ -33,4 +33,5 @@
     <string name="buycoffe" translatable="false">Buy me a coffee ☕</string>
     <string name="donate" translatable="true">If you would like to support the project you can donate to us</string>
     <string name="donate2" translatable="true">Tap to visit the donation page, or press and hold to view the supporters list</string>
+    <string name="supporters" translatable="true">Supporters</string>
 </resources>

@@ -16,7 +16,7 @@
         android:gravity="center"
         android:textSize="26sp"
         android:textColor="?attr/colorOnSurface"
-        android:text="Supporters"
+        android:text="@string/supporters"
         android:fontFamily="sans-serif-medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
