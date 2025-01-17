@@ -1,7 +1,6 @@
 package com.bartixxx.opflashcontrol
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bartixxx.opflashcontrol.databinding.ItemSupporterBinding

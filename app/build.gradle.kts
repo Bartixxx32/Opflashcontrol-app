@@ -75,9 +75,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -90,7 +87,8 @@ dependencies {
     implementation(libs.androidx.ui.unit)
     androidTestImplementation(libs.androidx.monitor)
     androidTestImplementation(libs.junit)
-    implementation(libs.androidx.lifecycle.viewmodel)
-    implementation("com.github.bumptech.glide:glide:4.15.0") // Use the latest stable version
-    annotationProcessor("com.github.bumptech.glide:compiler:4.15.0") // For Glide annotations
+    implementation("com.github.bumptech.glide:glide:4.15.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.1.0")
 }

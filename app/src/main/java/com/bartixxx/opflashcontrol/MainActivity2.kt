@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import com.bartixxx.opflashcontrol.MainActivity
 import com.bartixxx.opflashcontrol.databinding.ActivityMain2Binding
 
 class MainActivity2 : BaseActivity() {
