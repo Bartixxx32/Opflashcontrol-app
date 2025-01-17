@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-12-16T11:56:06.442953800Z">
+        <DropdownSelection timestamp="2025-01-17T09:03:53.678680Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=0e06e7a0" />
+              <DeviceId pluginId="Default" identifier="serial=192.168.1.123:40789;connection=1e3de1e2" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -17,6 +17,9 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="Experimental">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="Supporters">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

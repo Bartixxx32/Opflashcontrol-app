@@ -30,4 +30,5 @@
     <string name="back">Back</string>
     <string name="delayvalue" translatable="false">Delay for alternate</string>
     <string name="brightnessalternate" translatable="false">Brightness for alternate</string>
+    <string name="buycoffe" translatable="false">Buy me a coffee ☕</string>
 </resources>

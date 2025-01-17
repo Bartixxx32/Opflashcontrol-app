@@ -1,6 +1,7 @@
 package com.bartixxx.opflashcontrol
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -93,6 +94,39 @@ class MainActivity : BaseActivity() {
                         }
                     }, 5000)
                 }
+            }
+            // Add clickable and holdable behavior for the MaterialTextView
+            buymecoffe.setOnClickListener {
+                val delayBetweenVibrations = 100L // Delay between each vibration in milliseconds
+                val vibrationstrenght = 100L
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/bartixxx32"))
+                startActivity(browserIntent)
+
+                // First vibration
+                Handler(Looper.getMainLooper()).postDelayed({
+                    VibrationUtil.vibrate(this@MainActivity, vibrationstrenght)
+                }, 0)
+
+                // Second vibration
+                Handler(Looper.getMainLooper()).postDelayed({
+                    VibrationUtil.vibrate(this@MainActivity, vibrationstrenght)
+                }, delayBetweenVibrations)
+
+                // Third vibration
+                Handler(Looper.getMainLooper()).postDelayed({
+                    VibrationUtil.vibrate(this@MainActivity, vibrationstrenght)
+                }, delayBetweenVibrations * 2)
+
+                // Redirect to the webpage after all vibrations
+                Handler(Looper.getMainLooper()).postDelayed({
+                }, delayBetweenVibrations * 3)
+            }
+
+            buymecoffe.setOnLongClickListener {
+                // Navigate to another activity
+                val intent = Intent(this@MainActivity, SupportersActivity::class.java)
+                startActivity(intent)
+                true // Consume the long-click event
             }
         }
     }
