@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:max="255"
         android:min="0"
-        android:value="80"
+        android:value="0"
         app:layout_constraintTop_toBottomOf="@id/textView4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -316,5 +316,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp"
         app:backgroundTint="@color/material_dynamic_neutral70" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/buymecoffe"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-80dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/cookie"
+        android:gravity="center"
+        android:text="@string/buycoffe"
+        android:textColor="@color/material_dynamic_tertiary90"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/donateinfo2" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/donateinfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp"
+        android:gravity="center"
+        android:text="@string/donate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/donateinfo2" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/donateinfo2"
+        android:layout_width="408dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="-80dp"
+        android:gravity="center"
+        android:text="@string/donate2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/navigateBackToMainActivity" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

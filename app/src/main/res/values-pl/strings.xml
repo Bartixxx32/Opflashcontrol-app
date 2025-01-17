@@ -23,4 +23,6 @@
     <string name="error_retry_failed">Błąd żądania ROOT</string>
     <string name="experimental">Odkryłeś menu eksperymentów!</string>
     <string name="back">Powrót</string>
+    <string name="donate">Jeśli chcesz wesprzeć projekt, możesz nam przekazać darowiznę</string>
+    <string name="donate2">Stuknij, aby przejść do strony darowizn, lub przytrzymaj, aby zobaczyć listę wspierających</string>
 </resources>

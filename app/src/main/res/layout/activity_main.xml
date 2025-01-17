@@ -220,7 +220,7 @@
         android:id="@+id/buymecoffe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="360dp"
+        android:layout_marginTop="-80dp"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/cookie"
@@ -231,7 +231,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/destroyer" />
+        app:layout_constraintTop_toTopOf="@id/donateinfo2" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/donateinfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp"
+        android:gravity="center"
+        android:text="@string/donate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/donateinfo2" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/donateinfo2"
+        android:layout_width="408dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="-80dp"
+        android:gravity="center"
+        android:text="@string/donate2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/navigateToMainActivity2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/navigateToMainActivity2"

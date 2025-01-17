@@ -13,8 +13,8 @@ android {
         applicationId = "com.bartixxx.opflashcontrol"
         minSdk = 31
         targetSdk = 35
-        versionCode = 20
-        versionName = "1.1.7"
+        versionCode = 21
+        versionName = "1.1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
