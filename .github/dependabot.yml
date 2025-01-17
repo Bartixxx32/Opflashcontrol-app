@@ -1,0 +1,13 @@
+# Dependabot configuration file
+# Documentation: https://docs.github.com/code-security/dependabot
+
+version: 2
+updates:
+  - package-ecosystem: "gradle" # Specify Gradle as the package manager
+    directory: "/" # Root directory of the project
+    schedule:
+      interval: "daily" # Check for updates every day
+  - package-ecosystem: "github-actions" # To update GitHub Actions in your workflows
+    directory: "/" # Path to the workflows directory (default: root)
+    schedule:
+      interval: "daily"
