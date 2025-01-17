@@ -14,13 +14,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textColor="?attr/colorOnSurface"
-        android:text="Test"
+        android:text="Supporters"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="?attr/actionBarSize" />
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="16dp"/>
 
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -31,8 +33,9 @@
         app:layout_constraintBottom_toTopOf="@id/backbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp"
-        tools:listitem="@layout/item_supporter" />
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:listitem="@layout/item_supporter"/>
 
     <!-- Back Button -->
     <com.google.android.material.button.MaterialButton
@@ -40,9 +43,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/back"
+        android:icon="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="24dp"
+        app:backgroundTint="@color/material_dynamic_neutral70" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

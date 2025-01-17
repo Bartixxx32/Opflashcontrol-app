@@ -9,16 +9,14 @@ import com.bartixxx.opflashcontrol.databinding.ActivitySupportersBinding
 class SupportersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySupportersBinding
-    private val supporters = listOf(
-        Supporter("Alice", "Contributed on 2025-01-15"),
-        Supporter("Bob", "Contributed on 2025-01-16"),
-        Supporter("Charlie", "Contributed on 2025-01-17")
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySupportersBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Use the data from SupportersData
+        val supporters = SupportersData.supporters
 
         // Setup RecyclerView
         binding.supportersRecyclerView.layoutManager = LinearLayoutManager(this)
