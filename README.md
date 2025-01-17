@@ -25,6 +25,11 @@ By leveraging root access, the app allows direct modification of system-level fi
 [![Preview Screenshot](https://ik.imagekit.io/bartixxx32/github/tr:w-0.2/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)](https://ik.imagekit.io/bartixxx32/github/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)
 [![Preview Screenshot](https://ik.imagekit.io/bartixxx32/github/tr:w-0.2/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)](https://ik.imagekit.io/bartixxx32/github/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)
 
+## Support project
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/bartixxx32)
+
+
 ## Download
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"

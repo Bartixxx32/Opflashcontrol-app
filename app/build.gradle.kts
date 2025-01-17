@@ -13,8 +13,9 @@ android {
         applicationId = "com.bartixxx.opflashcontrol"
         minSdk = 31
         targetSdk = 35
-        versionCode = 20
-        versionName = "1.1.7"
+
+        versionCode = 21
+        versionName = "1.1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -86,5 +87,8 @@ dependencies {
     implementation(libs.androidx.ui.unit)
     androidTestImplementation(libs.androidx.monitor)
     androidTestImplementation(libs.junit)
-  implementation(libs.androidx.lifecycle.viewmodel)
+    implementation("com.github.bumptech.glide:glide:4.15.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.1.0")
 }
