@@ -2,14 +2,18 @@
 agp = "8.8.0"
 annotation = "1.9.1"
 appcompat = "1.7.0"
+cardview = "1.0.0"
 foundation = "1.7.6"
+glide = "4.16.0"
 kotlin = "2.1.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 composeBom = "2025.01.00"
+lifecycleViewmodel = "2.8.7"
 material = "1.12.0"
 constraintlayout = "2.2.0"
 monitor = "1.7.2"
+recyclerview = "1.4.0"
 runtime = "1.7.6"
 uiText = "1.7.6"
 uiUnit = "1.7.6"
@@ -17,11 +21,16 @@ uiUnit = "1.7.6"
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 androidx-monitor = { module = "androidx.test:monitor", version.ref = "monitor" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 androidx-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "runtime" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 androidx-ui-unit = { module = "androidx.compose.ui:ui-unit", version.ref = "uiUnit" }
 androidx-ui-text = { module = "androidx.compose.ui:ui-text", version.ref = "uiText" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
