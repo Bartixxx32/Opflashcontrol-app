@@ -198,7 +198,7 @@ class MainActivity2 : BaseActivity() {
         if (masterBrightness > MAX_BRIGHTNESS || whiteBrightness > MAX_BRIGHTNESS || yellowBrightness > MAX_BRIGHTNESS || white2Brightness > MAX_BRIGHTNESS || yellow2Brightness > MAX_BRIGHTNESS)  {
             if (brightnessExceededTime == 0L) {
                 brightnessExceededTime = currentTime
-            } else if (currentTime - brightnessExceededTime > 20000) { // More than 2 seconds
+            } else if (currentTime - brightnessExceededTime > 20000) { // More than 20 seconds
                 revertExceedingBrightnessToSafeLevel()
             }
         } else {
