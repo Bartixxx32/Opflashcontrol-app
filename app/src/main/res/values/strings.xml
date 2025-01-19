@@ -14,7 +14,7 @@
     <string name="yellow2">Yellow control/2</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="info">Yes, really dont use it too often, it may overheat led</string>
+    <string name="info">Yes, really dont use it too often, it may overheat/destroy led</string>
     <string name="destroyer">Eye destroer</string>
     <string name="quadled">Go to Quad-LED</string>
     <string name="dualled">Go to Dual-LED</string>
@@ -34,4 +34,5 @@
     <string name="donate" translatable="true">If you would like to support the project you can donate to us</string>
     <string name="donate2" translatable="true">Tap to visit the donation page, or press and hold to view the supporters list</string>
     <string name="supporters" translatable="true">Supporters</string>
+    <string name="safety" translatable="true">Returned to safe limits</string>
 </resources>

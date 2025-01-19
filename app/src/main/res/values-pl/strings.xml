@@ -13,7 +13,7 @@
     <string name="yellow2">Kontrola koloru żółtego/2</string>
     <string name="on">Włącz</string>
     <string name="off">Wyłącz</string>
-    <string name="info">Tak, serio nie używaj tego zbyt często może doprowadzić do przegrzania flasha</string>
+    <string name="info">Tak, serio nie używaj tego zbyt często może doprowadzić do przegrzania/uszkodzenia flasha</string>
     <string name="destroyer">Rozwalacz oczu</string>
     <string name="quadled">Włącz tryb Quad-LED</string>
     <string name="dualled">Włącz tryb Dual-LED</string>
@@ -26,4 +26,5 @@
     <string name="donate">Jeśli chcesz wesprzeć projekt, możesz nam przekazać darowiznę</string>
     <string name="donate2">Stuknij, aby przejść do strony darowizn, lub przytrzymaj, aby zobaczyć listę wspierających</string>
     <string name="supporters">Wspierający</string>
+    <string name="safety">Przywrócono bezpieczne wartości</string>
 </resources>
