@@ -1,11 +1,11 @@
 package com.bartixxx.opflashcontrol
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.Slider
 import java.io.DataOutputStream
-import android.util.Log
 import java.io.IOException
 
 abstract class BaseActivity : AppCompatActivity() {
