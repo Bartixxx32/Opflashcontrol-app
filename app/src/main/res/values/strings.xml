@@ -14,7 +14,7 @@
     <string name="yellow2">Yellow control/2</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="info">Yes, really dont use it too often, it may overheat led</string>
+    <string name="info">Yes, really dont use it too often, it may overheat/destroy led</string>
     <string name="destroyer">Eye destroer</string>
     <string name="quadled">Go to Quad-LED</string>
     <string name="dualled">Go to Dual-LED</string>
