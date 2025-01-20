@@ -15,7 +15,7 @@ By leveraging root access, the app allows direct modification of system-level fi
 - ⚠️ Use with caution as it emits very intense light and generates significant heat! ⚠️
 - Safety features to prevent prolonged high brightness usage:
   - If brightness exceeds 120 (on a scale of 0-255) for more than 20 seconds, it automatically reduces back to the default Android brightness value to prevent overheating or damage.
-  - "Eye Destroyer" mode enforces a 5-second cooldown between uses to ensure safety and prevent excessive heat buildup.
+  - "Eye Destroyer" Mode enforces a 5-second cooldown between uses to ensure safety and prevent excessive heat buildup.
 
 - **Compatibility:** Designed for rooted OnePlus devices only.
 - **Quad LED Control:** Control up to four LEDs on supported OnePlus devices (OnePlus 9 series and newer). Currently in development:
