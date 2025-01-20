@@ -23,10 +23,12 @@ class MainActivity : BaseActivity() {
     private val SAFE_BRIGHTNESS = 80
     private val CHECK_INTERVAL = 200L // 200 ms
     private var eyeDestroyerCooldown = false // Flag to track cooldown
+    private lateinit var ledController: LedController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ledController = LedController(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -54,7 +56,7 @@ class MainActivity : BaseActivity() {
                 if (!safetyTriggered) {
                     masterBrightness = progress
                     if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
-                        controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = progress)
+                        ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = progress)
                     }
                 }
             }
@@ -63,7 +65,7 @@ class MainActivity : BaseActivity() {
                 if (!safetyTriggered) {
                     whiteBrightness = progress
                     if (isLedOn) {
-                        controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = yellowBrightness)
+                        ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = yellowBrightness)
                     }
                 }
             }
@@ -72,7 +74,7 @@ class MainActivity : BaseActivity() {
                 if (!safetyTriggered) {
                     yellowBrightness = progress
                     if (isLedOn) {
-                        controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = whiteBrightness, yellowBrightness = progress)
+                        ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = whiteBrightness, yellowBrightness = progress)
                     }
                 }
             }
@@ -159,12 +161,12 @@ class MainActivity : BaseActivity() {
     private fun toggleLEDs(on: Boolean) {
         isLedOn = on
         if (on) {
-            controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH,
+            ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH,
                 whiteBrightness = if (whiteBrightness == 0) masterBrightness else whiteBrightness,
                 yellowBrightness = if (yellowBrightness == 0) masterBrightness else yellowBrightness
             )
         } else {
-            controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 1, yellowBrightness = 1)
+            ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 1, yellowBrightness = 1)
         }
     }
 
@@ -175,8 +177,8 @@ class MainActivity : BaseActivity() {
         }
 
         // Perform the eye destroyer functionality
-        controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1000, yellowBrightness = 1000)
-        controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1500, yellowBrightness = 1500)
+        ledController.controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1000, yellowBrightness = 1000)
+        ledController.controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1500, yellowBrightness = 1500)
         isLedOn = true
 
         // Start cooldown
@@ -232,7 +234,7 @@ class MainActivity : BaseActivity() {
 
         // Apply the changes to the LEDs
         if (isLedOn) {
-            controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH,
+            ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH,
                 whiteBrightness = if (whiteBrightness > MAX_BRIGHTNESS) SAFE_BRIGHTNESS else whiteBrightness,
                 yellowBrightness = if (yellowBrightness > MAX_BRIGHTNESS) SAFE_BRIGHTNESS else yellowBrightness
             )

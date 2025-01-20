@@ -35,4 +35,8 @@
     <string name="donate2" translatable="true">Tap to visit the donation page, or press and hold to view the supporters list</string>
     <string name="supporters" translatable="true">Supporters</string>
     <string name="safety" translatable="true">Returned to safe limits</string>
+    <string name="double_tap_to_turn_off">Double-tap to turn off LEDs</string>
+    <string name="brightness">Brightness</string>
+    <string name="flashlight_off">Flashlight OFF</string>
+    <string name="flashlight_on">Flashlight ON</string>
 </resources>

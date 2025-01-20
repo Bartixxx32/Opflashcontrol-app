@@ -15,9 +15,11 @@ class ExperimentalActivity : BaseActivity() {
 
     private var lightCycleDelay: Long = 500  // Default delay
     private var lightCycleBrightness: Int = 255  // Default brightness
+    private lateinit var ledController: LedController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ledController = LedController(this)
         binding = ActivityExperimentalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -119,10 +121,10 @@ class ExperimentalActivity : BaseActivity() {
                 try {
                     Log.d("ExperimentalActivity", "Light cycle: white LED on")
                     // Using the brightness from the slider
-                    controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = lightCycleBrightness, yellowBrightness = 0, showToast = false)
+                    ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = lightCycleBrightness, yellowBrightness = 0, showToast = false)
                     sleep(lightCycleDelay)  // Use slider value for delay
                     Log.d("ExperimentalActivity", "Light cycle: yellow LED on")
-                    controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 0, yellowBrightness = lightCycleBrightness, showToast = false)
+                    ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 0, yellowBrightness = lightCycleBrightness, showToast = false)
                     sleep(lightCycleDelay)
                 } catch (e: InterruptedException) {
                     Thread.currentThread().interrupt()
@@ -142,7 +144,7 @@ class ExperimentalActivity : BaseActivity() {
             Log.d("ExperimentalActivity", "Light thread interrupted")
         }
         lightThread = null
-        controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 0, yellowBrightness = 0, showToast = false)  // Turn LEDs off
+        ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 0, yellowBrightness = 0, showToast = false)  // Turn LEDs off
     }
 
     private fun startBrightnessCycle() {
@@ -157,7 +159,7 @@ class ExperimentalActivity : BaseActivity() {
                 try {
                     Log.d("ExperimentalActivity", "Brightness cycle: setting brightness to $brightness")
                     // Use the brightness from the slider
-                    controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = brightness, yellowBrightness = brightness, showToast = false)
+                    ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = brightness, yellowBrightness = brightness, showToast = false)
                     sleep(50) // Small delay for smooth transition
                     brightness += increment
                     if (brightness > 255 || brightness < 1) {
@@ -182,7 +184,7 @@ class ExperimentalActivity : BaseActivity() {
             Log.d("ExperimentalActivity", "Brightness thread interrupted")
         }
         brightnessThread = null
-        controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 0, yellowBrightness = 0, showToast = false)  // Turn LEDs off
+        ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 0, yellowBrightness = 0, showToast = false)  // Turn LEDs off
     }
 
     private fun navigateBackToMain() {
