@@ -1,10 +1,15 @@
-OnePlus Flash Control is an simple LED control application designed specifically for rooted OnePlus devices. With this app, users can control the flashlight and other LED features on their OnePlus phones, including adjusting the brightness and toggling the state of multiple LEDs. The app offers a simple and intuitive interface, allowing users to quickly turn the LED flash on or off, and fine-tune the brightness via a slider.
-
-To ensure the app works seamlessly, root access is required. This is necessary for the app to interact with system-level files to control the LED settings. OnePlus Flash Control is ideal for users who want to customize their OnePlus device's LED functionality beyond the stock settings.
+OnePlus Flash Control is a powerful and intuitive LED control application designed specifically for rooted OnePlus devices. This app allows users to customize their OnePlus device's LED functionality, offering control over the flashlight and other LED features. With features such as adjusting brightness levels and toggling LED states, OnePlus Flash Control provides an easy way to enhance the LED experience beyond the stock settings.
 
 Key Features:
-Master Brightness Control: Adjust overall LED brightness with a single slider.
-Individual LED Control: Independently control the brightness of white and yellow LEDs.
-"Eye Destroyer" Mode: A feature to momentarily turn on the LEDs at maximum brightness for both white and yellow LEDs. Use with caution as it emits very intense light!
-Compatibility: Designed for rooted OnePlus devices with dual-tone LED flash.
-Quad LED Control (WIP): Control the brightness of four LEDs (Quad-LED models). This feature is implemented but untested; reports are needed for further refinement.
+- Master Brightness Control: Adjust the overall LED brightness using a single slider.
+- Individual LED Control: Independently control the brightness of white, yellow, white2, and yellow2 LEDs for precise customization.
+- Safety Mechanism: The app includes a safety feature that ensures brightness levels never exceed safe thresholds, automatically adjusting brightness to safe levels if necessary.
+- "Eye Destroyer" Mode: A unique feature that flashes the LEDs at maximum brightness, emitting very intense light. This function is protected by a cooldown to prevent excessive use.
+- Quick Settings Tile: A quick settings tile to toggle the LED brightness with ease, including cycling through brightness levels and detecting double-tap gestures.
+- Root Access Required: Root access is required to interact with system-level files to control the LED settings, providing advanced control over the device's LEDs.
+- Support for Rooted OnePlus Devices: Specifically designed for OnePlus devices with dual-tone LED flash, with support for Quad-LED models (work in progress, user feedback welcome).
+- Secret Action: Unlock hidden features by tapping the app's title 5 times within 5 seconds, enabling a fun experimental mode.
+Compatibility:
+- Root Access: Required for controlling LED settings at the system level.
+- OnePlus Devices: Optimized for OnePlus devices, including those with dual-tone or quad-LED flash.
+- Whether you're looking to fine-tune your device's LED functionality or experiment with custom features, OnePlus Flash Control gives you full control over your phone's LEDs.
