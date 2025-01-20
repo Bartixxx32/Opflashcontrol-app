@@ -27,4 +27,8 @@
     <string name="donate2">Stuknij, aby przejść do strony darowizn, lub przytrzymaj, aby zobaczyć listę wspierających</string>
     <string name="supporters">Wspierający</string>
     <string name="safety">Przywrócono bezpieczne wartości</string>
+    <string name="double_tap_to_turn_off">Tapnij dwa razy aby wyłączyć LEDy</string>
+    <string name="brightness">Jasność</string>
+    <string name="flashlight_off">Latarka OFF</string>
+    <string name="flashlight_on">Latarka ON</string>
 </resources>
