@@ -1,10 +1,14 @@
 package com.bartixxx.opflashcontrol
 
-import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import java.io.DataOutputStream
 import java.io.IOException
+import android.content.Context
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class LedController {
 
@@ -30,8 +34,8 @@ class LedController {
         action: String,
         whiteLedPath: String = WHITE_LED_PATH,
         yellowLedPath: String = YELLOW_LED_PATH,
-        white2LedPath: String? = WHITE2_LED_PATH,
-        yellow2LedPath: String? = YELLOW2_LED_PATH,
+        white2LedPath: String? = null,
+        yellow2LedPath: String? = null,
         whiteBrightness: Int,
         yellowBrightness: Int,
         white2Brightness: Int = 0,
@@ -46,14 +50,7 @@ class LedController {
         val commands = mutableListOf<String>()
 
         if (action == "on") {
-            commands.addAll(commonOnCommands(whiteLedPath, yellowLedPath, white2LedPath, yellow2LedPath))
-            commands.addAll(listOf(
-                "echo $sanitizedWhiteBrightness > $whiteLedPath",
-                "echo $sanitizedYellowBrightness > $yellowLedPath",
-                white2LedPath?.let { "echo $sanitizedWhite2Brightness > $it" },
-                yellow2LedPath?.let { "echo $sanitizedYellow2Brightness > $it" }
-            ).filterNotNull())
-            TOGGLE_PATHS.forEach { commands.add("echo 255 > $it") }
+            commands.addAll(commonOnCommands(whiteLedPath, yellowLedPath, white2LedPath, yellow2LedPath, sanitizedWhiteBrightness, sanitizedYellowBrightness, sanitizedWhite2Brightness, sanitizedYellow2Brightness))
         } else if (action == "off") {
             commands.addAll(commonOffCommands(whiteLedPath, yellowLedPath, white2LedPath, yellow2LedPath))
         }
@@ -62,75 +59,121 @@ class LedController {
     }
 
     private fun commonOnCommands(
-        white: String, yellow: String, white2: String?, yellow2: String?
+        white: String, yellow: String, white2: String?, yellow2: String?,
+        whiteBrightness: Int, yellowBrightness: Int, white2Brightness: Int, yellow2Brightness: Int
     ): List<String> {
-        return listOf(
-            "echo 80 > $white",
-            "echo 80 > $yellow",
-            white2?.let { "echo 80 > $it" },
-            yellow2?.let { "echo 80 > $it" }
-        ).filterNotNull() + TOGGLE_PATHS.map { "echo 0 > $it" }
+        val commands = mutableListOf<String>()
+
+        // Reset toggle paths to 0, then back to 255 to ensure proper refresh
+        TOGGLE_PATHS.forEach {
+            commands.add("echo 0 > $it")
+        }
+
+        commands.add("echo $whiteBrightness > $white")
+        commands.add("echo $yellowBrightness > $yellow")
+
+        white2?.let {
+            commands.add("echo $white2Brightness > $it")
+        }
+
+        yellow2?.let {
+            commands.add("echo $yellow2Brightness > $it")
+        }
+
+        TOGGLE_PATHS.forEach {
+            commands.add("echo 255 > $it")
+        }
+
+        return commands
     }
 
     private fun commonOffCommands(
         white: String, yellow: String, white2: String?, yellow2: String?
     ): List<String> {
-        return listOf(
-            "echo 80 > $white",
-            "echo 80 > $yellow",
-            white2?.let { "echo 80 > $it" },
-            yellow2?.let { "echo 80 > $it" }
-        ).filterNotNull() + TOGGLE_PATHS.map { "echo 0 > $it" }
+        val commands = mutableListOf<String>()
+
+        // Set brightness to 80 instead of 0 for "off" action
+        commands.add("echo 80 > $white")
+        commands.add("echo 80 > $yellow")
+
+        white2?.let {
+            commands.add("echo 80 > $it")
+        }
+
+        yellow2?.let {
+            commands.add("echo 80 > $it")
+        }
+
+        // Reset toggle paths to 0
+        TOGGLE_PATHS.forEach {
+            commands.add("echo 0 > $it")
+        }
+
+        return commands
     }
 
-    private fun executeRootCommands(commands: List<String>, showToast: Boolean = true) {
+
+    protected fun executeRootCommands(commands: List<String>, showToast: Boolean = true) {
         val maxRetries = 3 // Maximum number of retries
         val initialDelay = 1000L // Initial delay in milliseconds
         val maxDelay = 8000L // Maximum delay (8 seconds) for exponential backoff
         var attempt = 0
         var delay = initialDelay
 
+
+        // Create a Handler for the main thread
+        val mainHandler = Handler(Looper.getMainLooper())
+
+        // Check SELinux status
+        val selinuxProcess = Runtime.getRuntime().exec("getenforce")
+        val selinuxStatus = selinuxProcess.inputStream.bufferedReader().readText().trim()
+        if (selinuxStatus == "Enforcing") {
+            Log.d("LEDControlApp", "SELinux is in Enforcing mode.")
+        } else {
+            Log.d("LEDControlApp", "SELinux is in Permissive mode.")
+        }
+
         while (attempt < maxRetries) {
             try {
                 commands.forEach { Log.d("LEDControlApp", "Executing command: $it") }
 
-                val process = Runtime.getRuntime().exec("su")
-                process.outputStream.use { outputStream ->
-                    DataOutputStream(outputStream).use { dataOutputStream ->
-                        val batchCommands = commands.joinToString("\n") + "\nexit\n"
-                        dataOutputStream.writeBytes(batchCommands)
-                        dataOutputStream.flush()
-                    }
-                }
+                // Use ProcessBuilder to execute the root commands
+                val process = ProcessBuilder("su").redirectErrorStream(true).start()
+                val outputStream = DataOutputStream(process.outputStream)
+                commands.forEach { outputStream.writeBytes("$it\n") }
+                outputStream.writeBytes("exit\n")
+                outputStream.flush()
+                outputStream.close()
                 process.waitFor()
 
                 // Show toast on the main thread if allowed
                 if (showToast) {
-                    Toast.makeText(context, "Command executed", Toast.LENGTH_SHORT).show()
+                    mainHandler.post {
+                        Toast.makeText(context, "Command executed successfully", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 return // Exit the method if the command was successfully executed
             } catch (e: IOException) {
                 e.printStackTrace()
                 if (showToast) {
-                    Toast.makeText(context, "Network or IO error occurred. Please try again.", Toast.LENGTH_LONG).show()
+                    mainHandler.post {
+                        Toast.makeText(context, "IO error occurred", Toast.LENGTH_LONG).show()
+                    }
                 }
             } catch (e: SecurityException) {
                 e.printStackTrace()
                 if (showToast) {
-                    Toast.makeText(context, "Permission denied. Please check app permissions.", Toast.LENGTH_LONG).show()
+                    mainHandler.post {
+                        Toast.makeText(context, "Permission denied", Toast.LENGTH_LONG).show()
+                    }
                 }
-                break // Exit loop for non-retryable error
             } catch (e: InterruptedException) {
                 e.printStackTrace()
                 if (showToast) {
-                    Toast.makeText(context, "Operation interrupted. Please try again.", Toast.LENGTH_LONG).show()
+                    mainHandler.post {
+                        Toast.makeText(context, "Operation interrupted", Toast.LENGTH_LONG).show()
+                    }
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                if (showToast) {
-                    Toast.makeText(context, "An unexpected error occurred.", Toast.LENGTH_LONG).show()
-                }
-                break // Exit loop for unexpected errors
             }
 
             // Retry mechanism with exponential backoff
@@ -142,9 +185,13 @@ class LedController {
             }
         }
 
-        // If we've exhausted all retries, show toast on the main thread if allowed
+        // If we've exhausted all retries, show toast on the main thread
         if (showToast) {
-            Toast.makeText(context, "Retry Failed", Toast.LENGTH_LONG).show()
+            mainHandler.post {
+                Toast.makeText(context, "Retry failed", Toast.LENGTH_LONG).show()
+            }
         }
     }
+
+
 }
