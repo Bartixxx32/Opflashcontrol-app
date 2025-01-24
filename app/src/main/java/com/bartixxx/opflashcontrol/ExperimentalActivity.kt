@@ -184,7 +184,7 @@ class ExperimentalActivity : BaseActivity() {
             Log.d("ExperimentalActivity", "Brightness thread interrupted")
         }
         brightnessThread = null
-        ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 0, yellowBrightness = 0, white2Brightness = 0, yellow2Brightness = 0, showToast = false)  // Turn LEDs off
+        ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, whiteBrightness = 0, yellowBrightness = 0, white2Brightness = 0, yellow2Brightness = 0, showToast = false)  // Turn LEDs off
     }
 
     private fun navigateBackToMain() {
