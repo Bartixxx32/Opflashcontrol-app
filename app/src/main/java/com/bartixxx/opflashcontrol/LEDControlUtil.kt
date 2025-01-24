@@ -7,16 +7,12 @@ import android.widget.Toast
 import java.io.DataOutputStream
 import java.io.IOException
 import android.content.Context
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 class LedController {
 
     companion object {
         const val WHITE_LED_PATH = "/sys/class/leds/led:torch_0/brightness"
         const val YELLOW_LED_PATH = "/sys/class/leds/led:torch_1/brightness"
-        const val WHITE2_LED_PATH = "/sys/class/leds/led:torch_2/brightness"
-        const val YELLOW2_LED_PATH = "/sys/class/leds/led:torch_3/brightness"
         val TOGGLE_PATHS = listOf("/sys/class/leds/led:switch_2/brightness")
     }
 
