@@ -232,7 +232,6 @@
         app:layout_constraintTop_toTopOf="@id/donateinfo2" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/donateinfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="-30dp"

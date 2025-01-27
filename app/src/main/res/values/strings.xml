@@ -1,12 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">OnePlus Flash Control</string>
-    <string-array name="led_types">
-        <item>white</item>
-        <item>yellow</item>
-        <item>both</item>
-    </string-array>
     <string name="command_executed">Command executed</string>
-    <string name="command_failed">Failed to execute command</string>
     <string name="master">Master control</string>
     <string name="white">White control</string>
     <string name="yellow">Yellow control</string>
@@ -18,10 +12,6 @@
     <string name="destroyer">Eye destroer</string>
     <string name="quadled">Go to Quad-LED</string>
     <string name="dualled">Go to Dual-LED</string>
-    <string name="error_io">Command failed: IO error occurred</string>
-    <string name="error_permission">Command failed: Permission denied</string>
-    <string name="error_interrupted">Command failed: Process interrupted</string>
-    <string name="error_retry_failed">Getting ROOT failed</string>
     <string name="alternateon" translatable="false">Alternate ON</string>
     <string name="alternateoff" translatable="false">Alternate OFF</string>
     <string name="alternatebright" translatable="false">Alternate Brightness ON</string>
@@ -34,9 +24,14 @@
     <string name="donate" translatable="true">If you would like to support the project you can donate to us</string>
     <string name="donate2" translatable="true">Tap to visit the donation page, or press and hold to view the supporters list</string>
     <string name="supporters" translatable="true">Supporters</string>
-    <string name="safety" translatable="true">Returned to safe limits</string>
     <string name="double_tap_to_turn_off">Double-tap to turn off LEDs</string>
     <string name="brightness">Brightness</string>
     <string name="flashlight_off">Flashlight OFF</string>
     <string name="flashlight_on">Flashlight ON</string>
+    <string name="command_failed">Failed to execute command</string>
+    <string name="error_io">Command failed: IO error occurred</string>
+    <string name="error_permission">Command failed: Permission denied</string>
+    <string name="error_interrupted">Command failed: Process interrupted</string>
+    <string name="error_retry_failed">Getting ROOT failed</string>
+    <string name="safety">Returned to safe limits</string>
 </resources>

@@ -1,9 +1,4 @@
 <resources>
-    <string-array name="led_types">
-        <item>biały</item>
-        <item>żółty</item>
-        <item>master</item>
-    </string-array>
     <string name="command_executed">Akcja wykonana pomyślnie</string>
     <string name="command_failed">Akcja sie nie powiodła</string>
     <string name="master">Kontrola główna</string>
