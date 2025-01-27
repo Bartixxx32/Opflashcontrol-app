@@ -254,8 +254,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/navigateToMainActivity2" />
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/navigateToMainActivity2"
+        android:visibility="invisible"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/quadled"

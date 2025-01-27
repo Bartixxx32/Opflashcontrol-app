@@ -1,6 +1,6 @@
 # OnePlus Flash Control
 
-OnePlus Flash Control is an Android application designed specifically for rooted OnePlus devices, providing users with precise control over the brightness of the dual-tone and quad-tone LED flashes. The app offers a user-friendly interface to easily adjust the master brightness and independently control the brightness of the white, yellow, and additional LEDs (for quad-tone setups).
+OnePlus Flash Control is an Android application designed specifically for rooted OnePlus devices, providing users with precise control over the brightness of the dual-tone LED flashes. The app offers a user-friendly interface to easily adjust the master brightness and independently control the brightness of the white, yellow.
 
 By leveraging root access, the app allows direct modification of system-level files to control the LED behavior, enabling a customized and enhanced flashlight experience on your OnePlus device.
 
@@ -18,25 +18,16 @@ By leveraging root access, the app allows direct modification of system-level fi
   - "Eye Destroyer" Mode enforces a 5-second cooldown between uses to ensure safety and prevent excessive heat buildup.
 
 - **Compatibility:** Designed for rooted OnePlus devices only.
-- **Quad LED Control:** Control up to four LEDs on supported OnePlus devices (OnePlus 9 series and newer). Currently in development:
-  - Support for controlling additional LED modules (warm and cool tones)
-  - Brightness synchronization across all LEDs
 - **Quick Settings Tile:** Conveniently control LED brightness and state using a Quick Settings tile:
   - Single tap cycles through brightness levels.
   - Double tap when LEDs are off to turn them on at 80% brightness.
   - Double tap when LEDs are on to turn them off.
 - **Secret Action:** Unlock hidden features by tapping the app's title 5 times within 5 seconds, enabling a fun experimental mode.
 
-**Testing needed:** If you have a OnePlus 9/10/11/12 series device, please help by:
-- Confirming the number and types of LED modules on your device
-- Testing brightness control functionality and reporting any issues
-- Sharing your device model and OxygenOS/Custom ROM version in GitHub Issues
-
 ## Preview Screenshot
 
 [![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-25/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)
 [![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-25/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)
-[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-25/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot3.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot3.png)
 
 
 

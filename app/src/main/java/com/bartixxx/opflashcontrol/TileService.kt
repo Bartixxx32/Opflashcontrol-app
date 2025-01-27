@@ -163,23 +163,9 @@ class LEDControlTileService : TileService() {
     private fun controlAllLeds(brightness: Int) {
         try {
             if (brightness == 0) {
-                ledController.controlLeds(
-                    "off",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    WHITE2_LED_PATH,
-                    YELLOW2_LED_PATH,
-                    1, 1, 1, 1, showToast = false
-                )
+                ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 1, yellowBrightness = 1, showToast = false)
             } else {
-                ledController.controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    WHITE2_LED_PATH,
-                    YELLOW2_LED_PATH,
-                    brightness, brightness, brightness, brightness, showToast = false
-                )
+                ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = brightness, yellowBrightness = brightness, showToast = false)
             }
         } catch (e: Exception) {
             Log.e("LEDControlTileService", "Error controlling LEDs", e)
