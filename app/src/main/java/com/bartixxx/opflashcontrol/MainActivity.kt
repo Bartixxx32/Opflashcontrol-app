@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import com.bartixxx.opflashcontrol.MainActivity2
 import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity() {
@@ -56,7 +55,13 @@ class MainActivity : BaseActivity() {
                 if (!safetyTriggered) {
                     masterBrightness = progress
                     if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
-                        ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = progress)
+                        ledController.controlLeds(
+                            "on",
+                            WHITE_LED_PATH,
+                            YELLOW_LED_PATH,
+                            whiteBrightness = progress,
+                            yellowBrightness = progress
+                        )
                     }
                 }
             }
@@ -65,7 +70,13 @@ class MainActivity : BaseActivity() {
                 if (!safetyTriggered) {
                     whiteBrightness = progress
                     if (isLedOn) {
-                        ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = progress, yellowBrightness = yellowBrightness)
+                        ledController.controlLeds(
+                            "on",
+                            WHITE_LED_PATH,
+                            YELLOW_LED_PATH,
+                            whiteBrightness = progress,
+                            yellowBrightness = yellowBrightness
+                        )
                     }
                 }
             }
@@ -74,7 +85,13 @@ class MainActivity : BaseActivity() {
                 if (!safetyTriggered) {
                     yellowBrightness = progress
                     if (isLedOn) {
-                        ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = whiteBrightness, yellowBrightness = progress)
+                        ledController.controlLeds(
+                            "on",
+                            WHITE_LED_PATH,
+                            YELLOW_LED_PATH,
+                            whiteBrightness = whiteBrightness,
+                            yellowBrightness = progress
+                        )
                     }
                 }
             }
@@ -126,7 +143,8 @@ class MainActivity : BaseActivity() {
             buymecoffe.setOnClickListener {
                 val delayBetweenVibrations = 100L // Delay between each vibration in milliseconds
                 val vibrationstrenght = 100L
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/bartixxx32"))
+                val browserIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/bartixxx32"))
                 startActivity(browserIntent)
 
                 // First vibration
@@ -161,29 +179,50 @@ class MainActivity : BaseActivity() {
     private fun toggleLEDs(on: Boolean) {
         isLedOn = on
         if (on) {
-            ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH,
+            ledController.controlLeds(
+                "on", WHITE_LED_PATH, YELLOW_LED_PATH,
                 whiteBrightness = if (whiteBrightness == 0) masterBrightness else whiteBrightness,
                 yellowBrightness = if (yellowBrightness == 0) masterBrightness else yellowBrightness
             )
         } else {
-            ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, whiteBrightness = 1, yellowBrightness = 1)
+            ledController.controlLeds(
+                "off",
+                WHITE_LED_PATH,
+                YELLOW_LED_PATH,
+                whiteBrightness = 1,
+                yellowBrightness = 1
+            )
         }
     }
 
     private fun executeExtraFunction() {
         if (eyeDestroyerCooldown) {
-            Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
         // Perform the eye destroyer functionality
-        ledController.controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1000, yellowBrightness = 1000)
-        ledController.controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, whiteBrightness = 1500, yellowBrightness = 1500)
+        ledController.controlLeds(
+            "off",
+            FLASH_WHITE_LED_PATH,
+            FLASH_YELLOW_LED_PATH,
+            whiteBrightness = 1000,
+            yellowBrightness = 1000
+        )
+        ledController.controlLeds(
+            "on",
+            FLASH_WHITE_LED_PATH,
+            FLASH_YELLOW_LED_PATH,
+            whiteBrightness = 1500,
+            yellowBrightness = 1500
+        )
         isLedOn = true
 
         // Start cooldown
         startEyeDestroyerCooldown()
     }
+
     private fun startEyeDestroyerCooldown() {
         eyeDestroyerCooldown = true
         binding.destroyer.isEnabled = false // Disable the button
@@ -234,15 +273,21 @@ class MainActivity : BaseActivity() {
 
         // Apply the changes to the LEDs
         if (isLedOn) {
-            ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH,
+            ledController.controlLeds(
+                "on", WHITE_LED_PATH, YELLOW_LED_PATH,
                 whiteBrightness = if (whiteBrightness > MAX_BRIGHTNESS) SAFE_BRIGHTNESS else whiteBrightness,
                 yellowBrightness = if (yellowBrightness > MAX_BRIGHTNESS) SAFE_BRIGHTNESS else yellowBrightness
             )
         }
 
         safetyTriggered = true
-        Toast.makeText(this, "Brightness exceeded limit! Adjusted to safe levels.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            "Brightness exceeded limit! Adjusted to safe levels.",
+            Toast.LENGTH_SHORT
+        ).show()
     }
+
     private fun performSecretAction() {
         VibrationUtil.vibrate(this, 200L)
         Toast.makeText(this, getString(R.string.experimental), Toast.LENGTH_SHORT).show()

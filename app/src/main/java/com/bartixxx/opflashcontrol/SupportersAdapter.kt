@@ -9,10 +9,12 @@ import com.bumptech.glide.Glide
 class SupportersAdapter(private val supporters: List<Supporter>) :
     RecyclerView.Adapter<SupportersAdapter.SupporterViewHolder>() {
 
-    class SupporterViewHolder(val binding: ItemSupporterBinding) : RecyclerView.ViewHolder(binding.root)
+    class SupporterViewHolder(val binding: ItemSupporterBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SupporterViewHolder {
-        val binding = ItemSupporterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemSupporterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SupporterViewHolder(binding)
     }
 

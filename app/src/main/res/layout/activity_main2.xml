@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,18 +10,18 @@
         android:id="@+id/flashbrightness"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
+        android:layout_marginTop="?attr/actionBarSize"
         android:clickable="true"
         android:focusable="true"
-        android:textSize="24sp"
-        android:textColor="?attr/colorOnSurface"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
         android:text="@string/app_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/on"
-        android:layout_marginTop="?attr/actionBarSize" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- On/Off Buttons -->
     <com.google.android.material.button.MaterialButton
@@ -32,32 +31,32 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/on"
+        app:backgroundTint="@color/material_dynamic_neutral70"
         app:layout_constraintEnd_toStartOf="@id/off"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flashbrightness"
-        app:backgroundTint="@color/material_dynamic_neutral70" />
+        app:layout_constraintTop_toBottomOf="@id/flashbrightness" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/off"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/off"
-        app:layout_constraintTop_toBottomOf="@id/flashbrightness"
-        app:layout_constraintStart_toEndOf="@id/on"
+        app:backgroundTint="@color/material_dynamic_neutral70"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
-        app:backgroundTint="@color/material_dynamic_neutral70" />
+        app:layout_constraintStart_toEndOf="@id/on"
+        app:layout_constraintTop_toBottomOf="@id/flashbrightness" />
 
     <!-- Space after On/Off buttons -->
     <View
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:layout_constraintTop_toBottomOf="@id/off"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/off" />
 
     <!-- Master Brightness Control -->
     <com.google.android.material.textview.MaterialTextView
@@ -66,9 +65,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/master"
-        app:layout_constraintTop_toBottomOf="@id/off"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/off" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/masterSeekBar"
@@ -77,9 +76,9 @@
         android:max="255"
         android:min="0"
         android:value="0"
-        app:layout_constraintTop_toBottomOf="@id/textView4"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4"
         app:thumbColor="@color/material_dynamic_neutral50"
         app:tickColorActive="@color/material_dynamic_neutral90"
         app:tickColorInactive="@color/material_dynamic_neutral70"
@@ -100,9 +99,9 @@
     <View
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:layout_constraintTop_toBottomOf="@id/masterTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/masterTextView" />
 
     <!-- Brightness Controls for White, Yellow, White2, Yellow2 -->
     <com.google.android.material.textview.MaterialTextView
@@ -111,9 +110,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/white"
-        app:layout_constraintTop_toBottomOf="@id/masterTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/masterTextView" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/whiteSeekBar"
@@ -121,9 +120,9 @@
         android:layout_height="wrap_content"
         android:max="255"
         android:min="0"
-        app:layout_constraintTop_toBottomOf="@id/textView3"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView3"
         app:thumbColor="@color/material_dynamic_neutral50"
         app:tickColorActive="@color/material_dynamic_neutral90"
         app:tickColorInactive="@color/material_dynamic_neutral70"
@@ -136,17 +135,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="White Brightness: 0"
-        app:layout_constraintTop_toBottomOf="@id/whiteSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/whiteSeekBar" />
 
     <!-- Space after White -->
     <View
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:layout_constraintTop_toBottomOf="@id/whiteTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/whiteTextView" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView"
@@ -154,9 +153,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/yellow"
-        app:layout_constraintTop_toBottomOf="@id/whiteTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/whiteTextView" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/yellowSeekBar"
@@ -164,9 +163,9 @@
         android:layout_height="wrap_content"
         android:max="255"
         android:min="0"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         app:thumbColor="@color/material_dynamic_neutral50"
         app:tickColorActive="@color/material_dynamic_neutral90"
         app:tickColorInactive="@color/material_dynamic_neutral70"
@@ -179,17 +178,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Yellow Brightness: 0"
-        app:layout_constraintTop_toBottomOf="@id/yellowSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/yellowSeekBar" />
 
     <!-- Space after Yellow -->
     <View
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:layout_constraintTop_toBottomOf="@id/yellowTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/yellowTextView" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView5"
@@ -197,9 +196,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/white2"
-        app:layout_constraintTop_toBottomOf="@id/yellowTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/yellowTextView" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/white2SeekBar2"
@@ -207,9 +206,9 @@
         android:layout_height="wrap_content"
         android:max="255"
         android:min="0"
-        app:layout_constraintTop_toBottomOf="@id/textView5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView5"
         app:thumbColor="@color/material_dynamic_neutral50"
         app:tickColorActive="@color/material_dynamic_neutral90"
         app:tickColorInactive="@color/material_dynamic_neutral70"
@@ -222,17 +221,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="White2 Brightness: 0"
-        app:layout_constraintTop_toBottomOf="@id/white2SeekBar2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/white2SeekBar2" />
 
     <!-- Space after White2 -->
     <View
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:layout_constraintTop_toBottomOf="@id/white2TextView3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/white2TextView3" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView2"
@@ -240,9 +239,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/yellow2"
-        app:layout_constraintTop_toBottomOf="@id/white2TextView3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/white2TextView3" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/yellow2SeekBar3"
@@ -250,9 +249,9 @@
         android:layout_height="wrap_content"
         android:max="255"
         android:min="0"
-        app:layout_constraintTop_toBottomOf="@id/textView2"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
         app:thumbColor="@color/material_dynamic_neutral50"
         app:tickColorActive="@color/material_dynamic_neutral90"
         app:tickColorInactive="@color/material_dynamic_neutral70"
@@ -265,17 +264,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Yellow2 Brightness: 0"
-        app:layout_constraintTop_toBottomOf="@id/yellow2SeekBar3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/yellow2SeekBar3" />
 
     <!-- Space after Yellow2 -->
     <View
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:layout_constraintTop_toBottomOf="@id/yellow2TextView2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/yellow2TextView2" />
 
     <!-- Additional Controls -->
     <com.google.android.material.button.MaterialButton
@@ -283,10 +282,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/destroyer"
-        app:layout_constraintTop_toBottomOf="@id/yellow2TextView2"
-        app:layout_constraintStart_toStartOf="parent"
+        app:backgroundTint="@color/material_dynamic_neutral70"
         app:layout_constraintEnd_toEndOf="parent"
-        app:backgroundTint="@color/material_dynamic_neutral70" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yellow2TextView2" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/masterTextView2"
@@ -294,28 +293,28 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/info"
-        app:layout_constraintTop_toBottomOf="@id/destroyer"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/destroyer" />
 
     <!-- Space after Additional Controls -->
     <View
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:layout_constraintTop_toBottomOf="@id/masterTextView2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/masterTextView2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/navigateBackToMainActivity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/dualled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp"
-        app:backgroundTint="@color/material_dynamic_neutral70" />
+        android:text="@string/dualled"
+        app:backgroundTint="@color/material_dynamic_neutral70"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/buymecoffe"
