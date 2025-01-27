@@ -1,12 +1,12 @@
 package com.bartixxx.opflashcontrol
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import java.io.DataOutputStream
 import java.io.IOException
-import android.content.Context
 
 class LedController {
 
@@ -46,9 +46,27 @@ class LedController {
         val commands = mutableListOf<String>()
 
         if (action == "on") {
-            commands.addAll(commonOnCommands(whiteLedPath, yellowLedPath, white2LedPath, yellow2LedPath, sanitizedWhiteBrightness, sanitizedYellowBrightness, sanitizedWhite2Brightness, sanitizedYellow2Brightness))
+            commands.addAll(
+                commonOnCommands(
+                    whiteLedPath,
+                    yellowLedPath,
+                    white2LedPath,
+                    yellow2LedPath,
+                    sanitizedWhiteBrightness,
+                    sanitizedYellowBrightness,
+                    sanitizedWhite2Brightness,
+                    sanitizedYellow2Brightness
+                )
+            )
         } else if (action == "off") {
-            commands.addAll(commonOffCommands(whiteLedPath, yellowLedPath, white2LedPath, yellow2LedPath))
+            commands.addAll(
+                commonOffCommands(
+                    whiteLedPath,
+                    yellowLedPath,
+                    white2LedPath,
+                    yellow2LedPath
+                )
+            )
         }
 
         executeRootCommands(commands, showToast)
@@ -145,7 +163,8 @@ class LedController {
                 // Show toast on the main thread if allowed
                 if (showToast) {
                     mainHandler.post {
-                        Toast.makeText(context, "Command executed successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Command executed successfully", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
                 return // Exit the method if the command was successfully executed

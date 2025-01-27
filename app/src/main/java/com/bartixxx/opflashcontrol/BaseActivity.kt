@@ -58,7 +58,8 @@ abstract class BaseActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(slider: Slider) {
-                val progress = slider.value.toInt() // Get the final value when user releases the slider
+                val progress =
+                    slider.value.toInt() // Get the final value when user releases the slider
                 Log.d("SliderProgress", "$label Finger released, Progress: $progress")
                 textView.text = "$label: $progress" // Update the text view with the final value
                 onStopTracking(progress) // Trigger the callback with the final value

@@ -14,8 +14,8 @@ android {
         minSdk = 31
         targetSdk = 35
 
-        versionCode = 29
-        versionName = "1.3.2"
+        versionCode = 30
+        versionName = "1.3.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,8 +75,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.ui.tooling)
     debugRuntimeOnly(libs.androidx.ui.test.manifest)
@@ -85,8 +83,6 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.ui.text)
     implementation(libs.androidx.ui.unit)
-    androidTestImplementation(libs.androidx.monitor)
-    androidTestImplementation(libs.junit)
     implementation(libs.glide)
     annotationProcessor(libs.compiler)
     implementation(libs.androidx.cardview)

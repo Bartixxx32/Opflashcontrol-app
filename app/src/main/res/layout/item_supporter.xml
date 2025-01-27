@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="12dp"
-    android:elevation="4dp"
     android:background="?attr/colorSurface"
-    app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="?attr/colorSurface">
+    android:elevation="4dp"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="16dp">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:padding="16dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-<!-- Avatar Image -->
-<ImageView
-    android:id="@+id/avatarImage"
-    android:layout_width="72dp"
-    android:layout_height="72dp"
-    android:layout_marginEnd="16dp"
-    android:src="@drawable/ic_launcher_background"
-    android:contentDescription="Supporter Avatar"
-    android:scaleType="centerCrop"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+        <!-- Avatar Image -->
+        <ImageView
+            android:id="@+id/avatarImage"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Supporter Avatar"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-<!-- Supporter Name -->
-<com.google.android.material.textview.MaterialTextView
-    android:id="@+id/supporterName"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:text="Supporter Name"
-    android:textSize="20sp"
-    android:textColor="?attr/colorOnSurface"
-    android:textStyle="bold"
-    app:layout_constraintStart_toEndOf="@id/avatarImage"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="8dp"/>
+        <!-- Supporter Name -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/supporterName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Supporter Name"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/avatarImage"
+            app:layout_constraintTop_toTopOf="parent" />
 
-<!-- Additional Info -->
-<com.google.android.material.textview.MaterialTextView
-    android:id="@+id/supporterInfo"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:text="Supporter Info"
-    android:textSize="14sp"
-    android:textColor="?attr/colorOnSurfaceVariant"
-    app:layout_constraintStart_toEndOf="@id/avatarImage"
-    app:layout_constraintTop_toBottomOf="@id/supporterName"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"/>
+        <!-- Additional Info -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/supporterInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Supporter Info"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/avatarImage"
+            app:layout_constraintTop_toBottomOf="@id/supporterName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

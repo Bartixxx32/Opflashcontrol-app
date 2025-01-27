@@ -57,28 +57,78 @@ class MainActivity2 : BaseActivity() {
             setupSlider(masterSeekBar, masterTextView, "Master Brightness") { progress ->
                 masterBrightness = progress
                 if (isLedOn && allBrightnessAtOne()) {
-                    ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, progress, progress, progress, progress)
+                    ledController.controlLeds(
+                        "on",
+                        WHITE_LED_PATH,
+                        YELLOW_LED_PATH,
+                        WHITE2_LED_PATH,
+                        YELLOW2_LED_PATH,
+                        progress,
+                        progress,
+                        progress,
+                        progress
+                    )
                 }
             }
 
             setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
                 whiteBrightness = progress
-                if (isLedOn) ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, progress, yellowBrightness, white2Brightness, yellow2Brightness)
+                if (isLedOn) ledController.controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    progress,
+                    yellowBrightness,
+                    white2Brightness,
+                    yellow2Brightness
+                )
             }
 
             setupSlider(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
                 yellowBrightness = progress
-                if (isLedOn) ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, whiteBrightness, progress, white2Brightness, yellow2Brightness)
+                if (isLedOn) ledController.controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    whiteBrightness,
+                    progress,
+                    white2Brightness,
+                    yellow2Brightness
+                )
             }
 
             setupSlider(white2SeekBar2, white2TextView3, "White2 Brightness") { progress ->
                 white2Brightness = progress
-                if (isLedOn) ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, whiteBrightness, yellowBrightness, progress, yellow2Brightness)
+                if (isLedOn) ledController.controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    whiteBrightness,
+                    yellowBrightness,
+                    progress,
+                    yellow2Brightness
+                )
             }
 
             setupSlider(yellow2SeekBar3, yellow2TextView2, "Yellow2 Brightness") { progress ->
                 yellow2Brightness = progress
-                if (isLedOn) ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, whiteBrightness, yellowBrightness, white2Brightness, progress)
+                if (isLedOn) ledController.controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    WHITE2_LED_PATH,
+                    YELLOW2_LED_PATH,
+                    whiteBrightness,
+                    yellowBrightness,
+                    white2Brightness,
+                    progress
+                )
             }
 
             on.setOnClickListener {
@@ -126,7 +176,8 @@ class MainActivity2 : BaseActivity() {
             buymecoffe.setOnClickListener {
                 val delayBetweenVibrations = 100L
                 val vibrationStrength = 100L
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/bartixxx32"))
+                val browserIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/bartixxx32"))
                 startActivity(browserIntent)
 
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -150,30 +201,63 @@ class MainActivity2 : BaseActivity() {
         }
     }
 
-    private fun allBrightnessAtOne() = whiteBrightness <= 1 && yellowBrightness <= 1 && white2Brightness <= 1 && yellow2Brightness <= 1
+    private fun allBrightnessAtOne() =
+        whiteBrightness <= 1 && yellowBrightness <= 1 && white2Brightness <= 1 && yellow2Brightness <= 1
 
     private fun toggleLEDs(on: Boolean) {
         isLedOn = on
         if (on) {
-            ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH,
+            ledController.controlLeds(
+                "on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH,
                 if (whiteBrightness == 0) masterBrightness else whiteBrightness,
                 if (yellowBrightness == 0) masterBrightness else yellowBrightness,
                 if (white2Brightness == 0) masterBrightness else white2Brightness,
                 if (yellow2Brightness == 0) masterBrightness else yellow2Brightness
             )
         } else {
-            ledController.controlLeds("off", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH, 1, 1, 1, 1)
+            ledController.controlLeds(
+                "off",
+                WHITE_LED_PATH,
+                YELLOW_LED_PATH,
+                WHITE2_LED_PATH,
+                YELLOW2_LED_PATH,
+                1,
+                1,
+                1,
+                1
+            )
         }
     }
 
     private fun executeExtraFunction() {
         if (eyeDestroyerCooldown) {
-            Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
-        ledController.controlLeds("off", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, FLASH_WHITE2_LED_PATH, FLASH_YELLOW2_LED_PATH, 1000, 1000, 1000, 1000)
-        ledController.controlLeds("on", FLASH_WHITE_LED_PATH, FLASH_YELLOW_LED_PATH, FLASH_WHITE2_LED_PATH, FLASH_YELLOW2_LED_PATH, 1500, 1500, 1500, 1500)
+        ledController.controlLeds(
+            "off",
+            FLASH_WHITE_LED_PATH,
+            FLASH_YELLOW_LED_PATH,
+            FLASH_WHITE2_LED_PATH,
+            FLASH_YELLOW2_LED_PATH,
+            1000,
+            1000,
+            1000,
+            1000
+        )
+        ledController.controlLeds(
+            "on",
+            FLASH_WHITE_LED_PATH,
+            FLASH_YELLOW_LED_PATH,
+            FLASH_WHITE2_LED_PATH,
+            FLASH_YELLOW2_LED_PATH,
+            1500,
+            1500,
+            1500,
+            1500
+        )
         isLedOn = true
 
         startEyeDestroyerCooldown()
@@ -197,7 +281,7 @@ class MainActivity2 : BaseActivity() {
         val currentTime = System.currentTimeMillis()
 
         // Check if any brightness exceeds the limit
-        if (masterBrightness > MAX_BRIGHTNESS || whiteBrightness > MAX_BRIGHTNESS || yellowBrightness > MAX_BRIGHTNESS || white2Brightness > MAX_BRIGHTNESS || yellow2Brightness > MAX_BRIGHTNESS)  {
+        if (masterBrightness > MAX_BRIGHTNESS || whiteBrightness > MAX_BRIGHTNESS || yellowBrightness > MAX_BRIGHTNESS || white2Brightness > MAX_BRIGHTNESS || yellow2Brightness > MAX_BRIGHTNESS) {
             if (brightnessExceededTime == 0L) {
                 brightnessExceededTime = currentTime
             } else if (currentTime - brightnessExceededTime > 20000) { // More than 20 seconds
@@ -208,6 +292,7 @@ class MainActivity2 : BaseActivity() {
             safetyTriggered = false // Allow user to adjust brightness again
         }
     }
+
     private fun revertExceedingBrightnessToSafeLevel() {
         var adjusted = false
 
@@ -244,9 +329,15 @@ class MainActivity2 : BaseActivity() {
 
         // Apply changes to LEDs only if any value was adjusted
         if (adjusted && isLedOn) {
-            ledController.controlLeds("on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH,
-                whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness)
-            Toast.makeText(this, "Brightness exceeded limit! Adjusted to safe levels.", Toast.LENGTH_SHORT).show()
+            ledController.controlLeds(
+                "on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH,
+                whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness
+            )
+            Toast.makeText(
+                this,
+                "Brightness exceeded limit! Adjusted to safe levels.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
