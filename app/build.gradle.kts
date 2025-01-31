@@ -14,8 +14,8 @@ android {
         minSdk = 31
         targetSdk = 35
 
-        versionCode = 31
-        versionName = "1.3.4"
+        versionCode = 32
+        versionName = "1.3.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,6 +47,11 @@ android {
         viewBinding = true
     }
     buildToolsVersion = "35.0.0"
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
 }
 
 tasks.register("getVersion") {
