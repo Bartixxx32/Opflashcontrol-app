@@ -97,3 +97,15 @@ jobs:
           prerelease: ${{ inputs.prerelease || 'true' }}  # Default to 'true' if no input is provided
           files: ${{ steps.sign_app.outputs.signedReleaseFile }}
           tag_name: v${{ env.version }}
+
+      # Upload APK to Appetize
+      - name: Upload to Appetize
+        run: |
+          curl -X POST https://api.appetize.io/v1/apps \
+          -H "Content-Type: application/json" \
+          -d '{
+            "token": "${{ secrets.APPETIZE_API_TOKEN }}",
+            "file": "${{ steps.sign_app.outputs.signedReleaseFile }}",
+            "platform": "android",
+            "note": "Updated to version ${{ env.version }}"
+          }'
