@@ -105,7 +105,7 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{
             "token": "${{ secrets.APPETIZE_API_TOKEN }}",
-            "file": "${{ steps.sign_app.outputs.signedReleaseFile }}",
+            "url": "https://github.com/${{ github.repository }}/releases/download/v${{ env.version }}/app-release-signed.apk",
             "platform": "android",
             "note": "Updated to version ${{ env.version }}"
           }'
