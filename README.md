@@ -26,8 +26,8 @@ By leveraging root access, the app allows direct modification of system-level fi
 
 ## Preview Screenshot
 
-[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-25/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)
-[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-25/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)
+[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-24/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)
+[![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-24/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot2.png)
 
 
 
