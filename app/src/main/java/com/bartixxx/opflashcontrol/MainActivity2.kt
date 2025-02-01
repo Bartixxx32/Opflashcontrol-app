@@ -17,7 +17,7 @@ class MainActivity2 : BaseActivity() {
     private var brightnessCheckRunnable: Runnable? = null
     private var brightnessExceededTime: Long = 0
     private var safetyTriggered = false
-    private val MAX_BRIGHTNESS = 150
+    private val MAX_BRIGHTNESS = 120
     private val SAFE_BRIGHTNESS = 80
     private val CHECK_INTERVAL = 200L // 200 ms
     private var eyeDestroyerCooldown = false // Flag to track cooldown
