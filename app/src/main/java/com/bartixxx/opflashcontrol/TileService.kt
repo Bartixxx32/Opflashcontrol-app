@@ -22,7 +22,7 @@ class LEDControlTileService : TileService() {
 
     // Define brightness steps as absolute values.
     // We now include a low step of 20, along with 50, 80, 150, 250, and 500.
-    private val brightnessSteps = listOf(20, 50, 80, 150, 250, 500)
+    private val brightnessSteps = listOf(10, 20, 50, 80, 150, 250, 500)
     private val maxBrightness = 500
 
     private var lastTapTime: Long = 0L // For double-tap detection.
