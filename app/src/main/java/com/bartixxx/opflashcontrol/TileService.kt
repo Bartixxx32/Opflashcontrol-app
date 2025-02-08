@@ -130,7 +130,7 @@ class LEDControlTileService : TileService() {
                 if (brightnessExceededTime == 0L) {
                     brightnessExceededTime = currentTime
                     Log.d("LEDControlTileService", "Brightness exceeded safe limit, timer started.")
-                } else if (currentTime - brightnessExceededTime > 2000) { // More than 2 seconds.
+                } else if (currentTime - brightnessExceededTime > 20000) { // More than 20 seconds.
                     if (!safetyTriggered) {
                         Log.d("LEDControlTileService", "Safety triggered! Reducing brightness to 80.")
                         safetyTriggered = true
