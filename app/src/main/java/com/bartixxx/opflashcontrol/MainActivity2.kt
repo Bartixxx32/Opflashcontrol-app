@@ -40,19 +40,19 @@ class MainActivity2 : BaseActivity() {
         with(binding) {
             masterSeekBar.valueFrom = 0f
             masterSeekBar.value = 80f
-            masterSeekBar.valueTo = 255f
+            masterSeekBar.valueTo = 500f
 
             whiteSeekBar.valueFrom = 0f
-            whiteSeekBar.valueTo = 255f
+            whiteSeekBar.valueTo = 500f
 
             yellowSeekBar.valueFrom = 0f
-            yellowSeekBar.valueTo = 255f
+            yellowSeekBar.valueTo = 500f
 
             white2SeekBar2.valueFrom = 0f
-            white2SeekBar2.valueTo = 255f
+            white2SeekBar2.valueTo = 500f
 
             yellow2SeekBar3.valueFrom = 0f
-            yellow2SeekBar3.valueTo = 255f
+            yellow2SeekBar3.valueTo = 500f
 
             setupSlider(masterSeekBar, masterTextView, "Master Brightness") { progress ->
                 masterBrightness = progress

@@ -14,7 +14,7 @@ class ExperimentalActivity : BaseActivity() {
     private var brightnessThread: Thread? = null
 
     private var lightCycleDelay: Long = 500  // Default delay
-    private var lightCycleBrightness: Int = 255  // Default brightness
+    private var lightCycleBrightness: Int = 500  // Default brightness
     private lateinit var ledController: LedController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +44,8 @@ class ExperimentalActivity : BaseActivity() {
 
         // Set up second slider for brightness control with vibration feedback
         binding.brightnessSeekBar.valueFrom = 0f
-        binding.brightnessSeekBar.value = 255f
-        binding.brightnessSeekBar.valueTo = 255f // Brightness range from 0 to 255
+        binding.brightnessSeekBar.value = 80f
+        binding.brightnessSeekBar.valueTo = 500f // Brightness range from 0 to 500
 
         // Add the listener to update brightness and TextView
         binding.brightnessSeekBar.addOnChangeListener { _, value, _ ->
@@ -193,7 +193,7 @@ class ExperimentalActivity : BaseActivity() {
                     )
                     sleep(50) // Small delay for smooth transition
                     brightness += increment
-                    if (brightness > 255 || brightness < 1) {
+                    if (brightness > 500 || brightness < 1) {
                         increment *= -1
                         brightness += increment * 2
                     }
