@@ -139,13 +139,13 @@ class LedController {
         val mainHandler = Handler(Looper.getMainLooper())
 
         // Check SELinux status
-        val selinuxProcess = Runtime.getRuntime().exec("getenforce")
-        val selinuxStatus = selinuxProcess.inputStream.bufferedReader().readText().trim()
-        if (selinuxStatus == "Enforcing") {
-            Log.d("LEDControlApp", "SELinux is in Enforcing mode.")
-        } else {
-            Log.d("LEDControlApp", "SELinux is in Permissive mode.")
-        }
+        // val selinuxProcess = Runtime.getRuntime().exec("getenforce")
+        // val selinuxStatus = selinuxProcess.inputStream.bufferedReader().readText().trim()
+        // if (selinuxStatus == "Enforcing") {
+        //     Log.d("LEDControlApp", "SELinux is in Enforcing mode.")
+        // } else {
+        //     Log.d("LEDControlApp", "SELinux is in Permissive mode.")
+        // }
 
         while (attempt < maxRetries) {
             try {

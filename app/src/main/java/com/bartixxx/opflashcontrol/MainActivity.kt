@@ -195,33 +195,56 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private fun cycleFlashLED(onCycleCompleted: () -> Unit) {
+        // Turn flash LED on with the current master brightness (or any desired value)
+        ledController.controlLeds(
+            "on",
+            WHITE_LED_PATH,
+            YELLOW_LED_PATH,
+            whiteBrightness = 80,
+            yellowBrightness = 80
+        )
+        // After a short delay, turn it off and then invoke the callback.
+        Handler(Looper.getMainLooper()).postDelayed({
+            ledController.controlLeds(
+                "off",
+                WHITE_LED_PATH,
+                YELLOW_LED_PATH,
+                whiteBrightness = 80,
+                yellowBrightness = 80
+            )
+            onCycleCompleted()
+        }, 100) // 100ms delay; adjust if needed
+    }
+
     private fun executeExtraFunction() {
         if (eyeDestroyerCooldown) {
-            Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Perform the eye destroyer functionality
-        ledController.controlLeds(
-            "off",
-            FLASH_WHITE_LED_PATH,
-            FLASH_YELLOW_LED_PATH,
-            whiteBrightness = 1000,
-            yellowBrightness = 1000
-        )
-        ledController.controlLeds(
-            "on",
-            FLASH_WHITE_LED_PATH,
-            FLASH_YELLOW_LED_PATH,
-            whiteBrightness = 1500,
-            yellowBrightness = 1500
-        )
-        isLedOn = true
-
-        // Start cooldown
-        startEyeDestroyerCooldown()
+        // Cycle the flash LED to initialize it
+        cycleFlashLED {
+            // After cycling, execute the eye destroyer functionality
+            ledController.controlLeds(
+                "off",
+                FLASH_WHITE_LED_PATH,
+                FLASH_YELLOW_LED_PATH,
+                whiteBrightness = 1000,
+                yellowBrightness = 1000
+            )
+            ledController.controlLeds(
+                "on",
+                FLASH_WHITE_LED_PATH,
+                FLASH_YELLOW_LED_PATH,
+                whiteBrightness = 1500,
+                yellowBrightness = 1500
+            )
+            isLedOn = true
+            startEyeDestroyerCooldown()
+        }
     }
+
 
     private fun startEyeDestroyerCooldown() {
         eyeDestroyerCooldown = true
