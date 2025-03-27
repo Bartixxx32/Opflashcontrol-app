@@ -61,7 +61,7 @@ jobs:
       # Rename unsigned APK to signed APK name
 
       - name: test
-        run: apt update ; apt install tree -y
+        run: sudo apt update ; sudo apt install tree -y
 
       - name: tree
         run: tree
