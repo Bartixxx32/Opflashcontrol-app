@@ -14,8 +14,8 @@ android {
         minSdk = 31
         targetSdk = 35
 
-        versionCode = 37
-        versionName = "1.3.10"
+        versionCode = 38
+        versionName = "1.3.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,6 +29,7 @@ android {
                 "proguard-rules.pro"
             )
             multiDexEnabled = true
+            signingConfig = signingConfigs.getByName("debug")
         }
         getByName("debug") {
             multiDexEnabled = true
@@ -93,4 +94,5 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.lifecycle.viewmodel)
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 }
