@@ -58,19 +58,7 @@ jobs:
       - name: Build APK release
         run: ./gradlew assembleRelease
 
-      # Rename unsigned APK to signed APK name
-
-      - name: test
-        run: sudo apt update ; sudo apt install tree -y
-
-      - name: tree
-        run: tree
-
-      - name: tree2
-        run: tree app/build/
         
-      - name: Rename APK
-        run: mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/app-release.apk
 
       # Get the current version from Gradle
       - name: Get current version
