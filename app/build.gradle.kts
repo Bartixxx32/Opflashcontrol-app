@@ -12,10 +12,10 @@ android {
     defaultConfig {
         applicationId = "com.bartixxx.opflashcontrol"
         minSdk = 31
-        targetSdk = 35
+        targetSdk = 36
 
-        versionCode = 41
-        versionName = "1.3.14"
+        versionCode = 42
+        versionName = "1.3.15"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -94,5 +94,5 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.lifecycle.viewmodel)
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 }

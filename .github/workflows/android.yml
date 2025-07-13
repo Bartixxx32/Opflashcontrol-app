@@ -42,7 +42,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '23'
+          java-version: '24'
           cache: 'gradle'
 
       - name: Change wrapper permissions
