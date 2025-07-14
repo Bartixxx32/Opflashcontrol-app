@@ -16,7 +16,7 @@ monitor = "1.7.2"
 recyclerview = "1.4.0"
 runtime = "1.8.3"
 uiText = "1.8.3"
-uiUnit = "1.8.1"
+uiUnit = "1.8.3"
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
