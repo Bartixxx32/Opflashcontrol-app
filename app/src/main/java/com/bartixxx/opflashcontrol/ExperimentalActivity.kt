@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.bartixxx.opflashcontrol.LedPaths.TOGGLE_PATHS
+import com.bartixxx.opflashcontrol.LedPaths.WHITE_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.YELLOW_LED_PATH
 import com.bartixxx.opflashcontrol.databinding.ActivityExperimentalBinding
 import java.lang.Thread.sleep
 
@@ -125,6 +128,7 @@ class ExperimentalActivity : BaseActivity() {
                         "on",
                         WHITE_LED_PATH,
                         YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
                         whiteBrightness = lightCycleBrightness,
                         yellowBrightness = 0,
                         showToast = false
@@ -135,6 +139,7 @@ class ExperimentalActivity : BaseActivity() {
                         "on",
                         WHITE_LED_PATH,
                         YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
                         whiteBrightness = 0,
                         yellowBrightness = lightCycleBrightness,
                         showToast = false
@@ -162,6 +167,7 @@ class ExperimentalActivity : BaseActivity() {
             "off",
             WHITE_LED_PATH,
             YELLOW_LED_PATH,
+            TOGGLE_PATHS,
             whiteBrightness = 0,
             yellowBrightness = 0,
             showToast = false
@@ -187,6 +193,7 @@ class ExperimentalActivity : BaseActivity() {
                         "on",
                         WHITE_LED_PATH,
                         YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
                         whiteBrightness = brightness,
                         yellowBrightness = brightness,
                         showToast = false
@@ -219,6 +226,7 @@ class ExperimentalActivity : BaseActivity() {
             "off",
             WHITE_LED_PATH,
             YELLOW_LED_PATH,
+            TOGGLE_PATHS,
             whiteBrightness = 0,
             yellowBrightness = 0,
             showToast = false

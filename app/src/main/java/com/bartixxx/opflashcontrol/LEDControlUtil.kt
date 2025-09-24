@@ -8,19 +8,7 @@ import android.widget.Toast
 import java.io.DataOutputStream
 import java.io.IOException
 
-class LedController {
-
-    companion object {
-        const val WHITE_LED_PATH = "/sys/class/leds/led:torch_0/brightness"
-        const val YELLOW_LED_PATH = "/sys/class/leds/led:torch_1/brightness"
-        val TOGGLE_PATHS = listOf("/sys/class/leds/led:switch_2/brightness")
-    }
-
-    private val context: Context
-
-    constructor(context: Context) {
-        this.context = context
-    }
+class LedController(private val context: Context) {
 
     private fun sanitizeBrightness(brightness: Int): Int {
         return if (brightness == 0) 1 else brightness
@@ -28,8 +16,9 @@ class LedController {
 
     fun controlLeds(
         action: String,
-        whiteLedPath: String = WHITE_LED_PATH,
-        yellowLedPath: String = YELLOW_LED_PATH,
+        whiteLedPath: String,
+        yellowLedPath: String,
+        togglePaths: List<String>,
         white2LedPath: String? = null,
         yellow2LedPath: String? = null,
         whiteBrightness: Int,
@@ -52,6 +41,7 @@ class LedController {
                     yellowLedPath,
                     white2LedPath,
                     yellow2LedPath,
+                    togglePaths,
                     sanitizedWhiteBrightness,
                     sanitizedYellowBrightness,
                     sanitizedWhite2Brightness,
@@ -64,7 +54,8 @@ class LedController {
                     whiteLedPath,
                     yellowLedPath,
                     white2LedPath,
-                    yellow2LedPath
+                    yellow2LedPath,
+                    togglePaths
                 )
             )
         }
@@ -74,12 +65,13 @@ class LedController {
 
     private fun commonOnCommands(
         white: String, yellow: String, white2: String?, yellow2: String?,
+        togglePaths: List<String>,
         whiteBrightness: Int, yellowBrightness: Int, white2Brightness: Int, yellow2Brightness: Int
     ): List<String> {
         val commands = mutableListOf<String>()
 
         // Reset toggle paths to 0, then back to 255 to ensure proper refresh
-        TOGGLE_PATHS.forEach {
+        togglePaths.forEach {
             commands.add("echo 0 > $it")
         }
 
@@ -94,7 +86,7 @@ class LedController {
             commands.add("echo $yellow2Brightness > $it")
         }
 
-        TOGGLE_PATHS.forEach {
+        togglePaths.forEach {
             commands.add("echo 255 > $it")
         }
 
@@ -102,7 +94,8 @@ class LedController {
     }
 
     private fun commonOffCommands(
-        white: String, yellow: String, white2: String?, yellow2: String?
+        white: String, yellow: String, white2: String?, yellow2: String?,
+        togglePaths: List<String>
     ): List<String> {
         val commands = mutableListOf<String>()
 
@@ -119,7 +112,7 @@ class LedController {
         }
 
         // Reset toggle paths to 0
-        TOGGLE_PATHS.forEach {
+        togglePaths.forEach {
             commands.add("echo 0 > $it")
         }
 

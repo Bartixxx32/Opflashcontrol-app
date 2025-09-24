@@ -6,6 +6,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.bartixxx.opflashcontrol.LedPaths.FLASH_WHITE_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.FLASH_YELLOW_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.TOGGLE_PATHS
+import com.bartixxx.opflashcontrol.LedPaths.WHITE_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.YELLOW_LED_PATH
 import com.bartixxx.opflashcontrol.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity() {
@@ -57,8 +62,9 @@ class MainActivity : BaseActivity() {
                     if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
                         ledController.controlLeds(
                             "on",
-                            WHITE_LED_PATH,
-                            YELLOW_LED_PATH,
+                            LedPaths.WHITE_LED_PATH,
+                            LedPaths.YELLOW_LED_PATH,
+                            LedPaths.TOGGLE_PATHS,
                             whiteBrightness = progress,
                             yellowBrightness = progress
                         )
@@ -72,8 +78,9 @@ class MainActivity : BaseActivity() {
                     if (isLedOn) {
                         ledController.controlLeds(
                             "on",
-                            WHITE_LED_PATH,
-                            YELLOW_LED_PATH,
+                            LedPaths.WHITE_LED_PATH,
+                            LedPaths.YELLOW_LED_PATH,
+                            LedPaths.TOGGLE_PATHS,
                             whiteBrightness = progress,
                             yellowBrightness = yellowBrightness
                         )
@@ -87,8 +94,9 @@ class MainActivity : BaseActivity() {
                     if (isLedOn) {
                         ledController.controlLeds(
                             "on",
-                            WHITE_LED_PATH,
-                            YELLOW_LED_PATH,
+                            LedPaths.WHITE_LED_PATH,
+                            LedPaths.YELLOW_LED_PATH,
+                            LedPaths.TOGGLE_PATHS,
                             whiteBrightness = whiteBrightness,
                             yellowBrightness = progress
                         )
@@ -180,15 +188,19 @@ class MainActivity : BaseActivity() {
         isLedOn = on
         if (on) {
             ledController.controlLeds(
-                "on", WHITE_LED_PATH, YELLOW_LED_PATH,
+                "on",
+                LedPaths.WHITE_LED_PATH,
+                LedPaths.YELLOW_LED_PATH,
+                LedPaths.TOGGLE_PATHS,
                 whiteBrightness = if (whiteBrightness == 0) masterBrightness else whiteBrightness,
                 yellowBrightness = if (yellowBrightness == 0) masterBrightness else yellowBrightness
             )
         } else {
             ledController.controlLeds(
                 "off",
-                WHITE_LED_PATH,
-                YELLOW_LED_PATH,
+                LedPaths.WHITE_LED_PATH,
+                LedPaths.YELLOW_LED_PATH,
+                LedPaths.TOGGLE_PATHS,
                 whiteBrightness = 1,
                 yellowBrightness = 1
             )
@@ -199,8 +211,9 @@ class MainActivity : BaseActivity() {
         // Turn flash LED on with the current master brightness (or any desired value)
         ledController.controlLeds(
             "on",
-            WHITE_LED_PATH,
-            YELLOW_LED_PATH,
+            LedPaths.WHITE_LED_PATH,
+            LedPaths.YELLOW_LED_PATH,
+            LedPaths.TOGGLE_PATHS,
             whiteBrightness = 80,
             yellowBrightness = 80
         )
@@ -208,8 +221,9 @@ class MainActivity : BaseActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             ledController.controlLeds(
                 "off",
-                WHITE_LED_PATH,
-                YELLOW_LED_PATH,
+                LedPaths.WHITE_LED_PATH,
+                LedPaths.YELLOW_LED_PATH,
+                LedPaths.TOGGLE_PATHS,
                 whiteBrightness = 80,
                 yellowBrightness = 80
             )
@@ -228,15 +242,17 @@ class MainActivity : BaseActivity() {
             // After cycling, execute the eye destroyer functionality
             ledController.controlLeds(
                 "off",
-                FLASH_WHITE_LED_PATH,
-                FLASH_YELLOW_LED_PATH,
+                LedPaths.FLASH_WHITE_LED_PATH,
+                LedPaths.FLASH_YELLOW_LED_PATH,
+                LedPaths.TOGGLE_PATHS,
                 whiteBrightness = 1000,
                 yellowBrightness = 1000
             )
             ledController.controlLeds(
                 "on",
-                FLASH_WHITE_LED_PATH,
-                FLASH_YELLOW_LED_PATH,
+                LedPaths.FLASH_WHITE_LED_PATH,
+                LedPaths.FLASH_YELLOW_LED_PATH,
+                LedPaths.TOGGLE_PATHS,
                 whiteBrightness = 1500,
                 yellowBrightness = 1500
             )
@@ -297,7 +313,10 @@ class MainActivity : BaseActivity() {
         // Apply the changes to the LEDs
         if (isLedOn) {
             ledController.controlLeds(
-                "on", WHITE_LED_PATH, YELLOW_LED_PATH,
+                "on",
+                LedPaths.WHITE_LED_PATH,
+                LedPaths.YELLOW_LED_PATH,
+                LedPaths.TOGGLE_PATHS,
                 whiteBrightness = if (whiteBrightness > MAX_BRIGHTNESS) SAFE_BRIGHTNESS else whiteBrightness,
                 yellowBrightness = if (yellowBrightness > MAX_BRIGHTNESS) SAFE_BRIGHTNESS else yellowBrightness
             )
