@@ -125,7 +125,7 @@ class ExperimentalActivity : BaseActivity() {
     private fun startLightCycle() {
         stopLightCycle()
         lightJob = scope.launch {
-            while (isActive) {
+            while (isActive && isLedOn) {
                 ledController.controlLeds(
                     "on",
                     WHITE_LED_PATH,
@@ -168,7 +168,7 @@ class ExperimentalActivity : BaseActivity() {
         brightnessJob = scope.launch {
             var brightness = 1
             var increment = 5
-            while (isActive) {
+            while (isActive && isLedOn) {
                 ledController.controlLeds(
                     "on",
                     WHITE_LED_PATH,
