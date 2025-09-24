@@ -6,6 +6,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.bartixxx.opflashcontrol.LedPaths.FLASH_WHITE2_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.FLASH_WHITE_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.FLASH_YELLOW2_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.FLASH_YELLOW_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.TOGGLE_PATHS
+import com.bartixxx.opflashcontrol.LedPaths.WHITE2_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.WHITE_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.YELLOW2_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.YELLOW_LED_PATH
 import com.bartixxx.opflashcontrol.databinding.ActivityMain2Binding
 
 class MainActivity2 : BaseActivity() {
@@ -25,6 +34,7 @@ class MainActivity2 : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LedPathUtil.findLedPaths()
         ledController = LedController(this)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -61,6 +71,7 @@ class MainActivity2 : BaseActivity() {
                         "on",
                         WHITE_LED_PATH,
                         YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
                         WHITE2_LED_PATH,
                         YELLOW2_LED_PATH,
                         progress,
@@ -77,6 +88,7 @@ class MainActivity2 : BaseActivity() {
                     "on",
                     WHITE_LED_PATH,
                     YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
                     WHITE2_LED_PATH,
                     YELLOW2_LED_PATH,
                     progress,
@@ -92,6 +104,7 @@ class MainActivity2 : BaseActivity() {
                     "on",
                     WHITE_LED_PATH,
                     YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
                     WHITE2_LED_PATH,
                     YELLOW2_LED_PATH,
                     whiteBrightness,
@@ -107,6 +120,7 @@ class MainActivity2 : BaseActivity() {
                     "on",
                     WHITE_LED_PATH,
                     YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
                     WHITE2_LED_PATH,
                     YELLOW2_LED_PATH,
                     whiteBrightness,
@@ -122,6 +136,7 @@ class MainActivity2 : BaseActivity() {
                     "on",
                     WHITE_LED_PATH,
                     YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
                     WHITE2_LED_PATH,
                     YELLOW2_LED_PATH,
                     whiteBrightness,
@@ -208,7 +223,12 @@ class MainActivity2 : BaseActivity() {
         isLedOn = on
         if (on) {
             ledController.controlLeds(
-                "on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH,
+                "on",
+                WHITE_LED_PATH,
+                YELLOW_LED_PATH,
+                TOGGLE_PATHS,
+                WHITE2_LED_PATH,
+                YELLOW2_LED_PATH,
                 if (whiteBrightness == 0) masterBrightness else whiteBrightness,
                 if (yellowBrightness == 0) masterBrightness else yellowBrightness,
                 if (white2Brightness == 0) masterBrightness else white2Brightness,
@@ -219,6 +239,7 @@ class MainActivity2 : BaseActivity() {
                 "off",
                 WHITE_LED_PATH,
                 YELLOW_LED_PATH,
+                TOGGLE_PATHS,
                 WHITE2_LED_PATH,
                 YELLOW2_LED_PATH,
                 1,
@@ -235,11 +256,13 @@ class MainActivity2 : BaseActivity() {
                 .show()
             return
         }
+        android.util.Log.d("MainActivity2", "Executing Eye Destroyer function")
 
         ledController.controlLeds(
             "off",
             FLASH_WHITE_LED_PATH,
             FLASH_YELLOW_LED_PATH,
+            TOGGLE_PATHS,
             FLASH_WHITE2_LED_PATH,
             FLASH_YELLOW2_LED_PATH,
             1000,
@@ -251,6 +274,7 @@ class MainActivity2 : BaseActivity() {
             "on",
             FLASH_WHITE_LED_PATH,
             FLASH_YELLOW_LED_PATH,
+            TOGGLE_PATHS,
             FLASH_WHITE2_LED_PATH,
             FLASH_YELLOW2_LED_PATH,
             1500,
@@ -330,8 +354,16 @@ class MainActivity2 : BaseActivity() {
         // Apply changes to LEDs only if any value was adjusted
         if (adjusted && isLedOn) {
             ledController.controlLeds(
-                "on", WHITE_LED_PATH, YELLOW_LED_PATH, WHITE2_LED_PATH, YELLOW2_LED_PATH,
-                whiteBrightness, yellowBrightness, white2Brightness, yellow2Brightness
+                "on",
+                WHITE_LED_PATH,
+                YELLOW_LED_PATH,
+                TOGGLE_PATHS,
+                WHITE2_LED_PATH,
+                YELLOW2_LED_PATH,
+                whiteBrightness,
+                yellowBrightness,
+                white2Brightness,
+                yellow2Brightness
             )
             Toast.makeText(
                 this,

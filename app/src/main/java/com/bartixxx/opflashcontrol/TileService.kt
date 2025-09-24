@@ -6,8 +6,9 @@ import android.os.Looper
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
-import com.bartixxx.opflashcontrol.BaseActivity.Companion.WHITE_LED_PATH
-import com.bartixxx.opflashcontrol.BaseActivity.Companion.YELLOW_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.TOGGLE_PATHS
+import com.bartixxx.opflashcontrol.LedPaths.WHITE_LED_PATH
+import com.bartixxx.opflashcontrol.LedPaths.YELLOW_LED_PATH
 import kotlinx.coroutines.*
 
 class LEDControlTileService : TileService() {
@@ -188,6 +189,7 @@ class LEDControlTileService : TileService() {
                         "off",
                         WHITE_LED_PATH,
                         YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
                         whiteBrightness = 1,
                         yellowBrightness = 1,
                         showToast = false
@@ -197,6 +199,7 @@ class LEDControlTileService : TileService() {
                         "on",
                         WHITE_LED_PATH,
                         YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
                         whiteBrightness = brightness,
                         yellowBrightness = brightness,
                         showToast = false
