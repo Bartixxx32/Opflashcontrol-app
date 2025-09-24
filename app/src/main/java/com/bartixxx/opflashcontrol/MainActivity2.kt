@@ -255,6 +255,7 @@ class MainActivity2 : BaseActivity() {
                 .show()
             return
         }
+        android.util.Log.d("MainActivity2", "Executing Eye Destroyer function")
 
         ledController.controlLeds(
             "off",

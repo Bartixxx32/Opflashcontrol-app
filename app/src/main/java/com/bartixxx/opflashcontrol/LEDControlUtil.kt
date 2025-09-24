@@ -142,8 +142,7 @@ class LedController(private val context: Context) {
 
         while (attempt < maxRetries) {
             try {
-                commands.forEach { Log.d("LEDControlApp", "Executing command: $it") }
-
+                Log.d("LedController", "Executing commands: $commands")
                 // Use ProcessBuilder to execute the root commands
                 val process = ProcessBuilder("su").redirectErrorStream(true).start()
                 val outputStream = DataOutputStream(process.outputStream)

@@ -8,13 +8,20 @@ import com.bartixxx.opflashcontrol.LedPaths.TOGGLE_PATHS
 import com.bartixxx.opflashcontrol.LedPaths.WHITE_LED_PATH
 import com.bartixxx.opflashcontrol.LedPaths.YELLOW_LED_PATH
 import com.bartixxx.opflashcontrol.databinding.ActivityExperimentalBinding
-import java.lang.Thread.sleep
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class ExperimentalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityExperimentalBinding
-    private var lightThread: Thread? = null
-    private var brightnessThread: Thread? = null
+    private val scope = CoroutineScope(Dispatchers.IO)
+    private var lightJob: Job? = null
+    private var brightnessJob: Job? = null
 
     private var lightCycleDelay: Long = 500  // Default delay
     private var lightCycleBrightness: Int = 500  // Default brightness
@@ -115,54 +122,35 @@ class ExperimentalActivity : BaseActivity() {
     }
 
     private fun startLightCycle() {
-        Log.d("ExperimentalActivity", "Starting light cycle")
-        // Ensure previous thread is stopped and interrupted
         stopLightCycle()
-
-        lightThread = Thread {
-            while (isLedOn) {
-                try {
-                    Log.d("ExperimentalActivity", "Light cycle: white LED on")
-                    // Using the brightness from the slider
-                    ledController.controlLeds(
-                        "on",
-                        WHITE_LED_PATH,
-                        YELLOW_LED_PATH,
-                        TOGGLE_PATHS,
-                        whiteBrightness = lightCycleBrightness,
-                        yellowBrightness = 0,
-                        showToast = false
-                    )
-                    sleep(lightCycleDelay)  // Use slider value for delay
-                    Log.d("ExperimentalActivity", "Light cycle: yellow LED on")
-                    ledController.controlLeds(
-                        "on",
-                        WHITE_LED_PATH,
-                        YELLOW_LED_PATH,
-                        TOGGLE_PATHS,
-                        whiteBrightness = 0,
-                        yellowBrightness = lightCycleBrightness,
-                        showToast = false
-                    )
-                    sleep(lightCycleDelay)
-                } catch (e: InterruptedException) {
-                    Thread.currentThread().interrupt()
-                    Log.d("ExperimentalActivity", "Light thread was interrupted")
-                    break
-                }
+        lightJob = scope.launch {
+            while (isActive) {
+                ledController.controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness = lightCycleBrightness,
+                    yellowBrightness = 0,
+                    showToast = false
+                )
+                delay(lightCycleDelay)
+                ledController.controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness = 0,
+                    yellowBrightness = lightCycleBrightness,
+                    showToast = false
+                )
+                delay(lightCycleDelay)
             }
         }
-        lightThread?.start()
     }
 
     private fun stopLightCycle() {
-        Log.d("ExperimentalActivity", "Stopping light cycle")
-        // Interrupt the current light cycle thread, if any
-        if (lightThread?.isAlive == true) {
-            lightThread?.interrupt()
-            Log.d("ExperimentalActivity", "Light thread interrupted")
-        }
-        lightThread = null
+        lightJob?.cancel()
         ledController.controlLeds(
             "off",
             WHITE_LED_PATH,
@@ -171,57 +159,36 @@ class ExperimentalActivity : BaseActivity() {
             whiteBrightness = 0,
             yellowBrightness = 0,
             showToast = false
-        )  // Turn LEDs off
+        )
     }
 
     private fun startBrightnessCycle() {
-        Log.d("ExperimentalActivity", "Starting brightness cycle")
-        // Ensure previous thread is stopped and interrupted
         stopBrightnessCycle()
-
-        brightnessThread = Thread {
+        brightnessJob = scope.launch {
             var brightness = 1
             var increment = 5
-            while (isLedOn) {
-                try {
-                    Log.d(
-                        "ExperimentalActivity",
-                        "Brightness cycle: setting brightness to $brightness"
-                    )
-                    // Use the brightness from the slider
-                    ledController.controlLeds(
-                        "on",
-                        WHITE_LED_PATH,
-                        YELLOW_LED_PATH,
-                        TOGGLE_PATHS,
-                        whiteBrightness = brightness,
-                        yellowBrightness = brightness,
-                        showToast = false
-                    )
-                    sleep(50) // Small delay for smooth transition
-                    brightness += increment
-                    if (brightness > 500 || brightness < 1) {
-                        increment *= -1
-                        brightness += increment * 2
-                    }
-                } catch (e: InterruptedException) {
-                    Thread.currentThread().interrupt()
-                    Log.d("ExperimentalActivity", "Brightness thread was interrupted")
-                    break
+            while (isActive) {
+                ledController.controlLeds(
+                    "on",
+                    WHITE_LED_PATH,
+                    YELLOW_LED_PATH,
+                    TOGGLE_PATHS,
+                    whiteBrightness = brightness,
+                    yellowBrightness = brightness,
+                    showToast = false
+                )
+                delay(50)
+                brightness += increment
+                if (brightness > 500 || brightness < 1) {
+                    increment *= -1
+                    brightness += increment * 2
                 }
             }
         }
-        brightnessThread?.start()
     }
 
     private fun stopBrightnessCycle() {
-        Log.d("ExperimentalActivity", "Stopping brightness cycle")
-        // Interrupt the current brightness cycle thread, if any
-        if (brightnessThread?.isAlive == true) {
-            brightnessThread?.interrupt()
-            Log.d("ExperimentalActivity", "Brightness thread interrupted")
-        }
-        brightnessThread = null
+        brightnessJob?.cancel()
         ledController.controlLeds(
             "off",
             WHITE_LED_PATH,
@@ -230,12 +197,16 @@ class ExperimentalActivity : BaseActivity() {
             whiteBrightness = 0,
             yellowBrightness = 0,
             showToast = false
-        )  // Turn LEDs off
+        )
     }
 
     private fun navigateBackToMain() {
-        Log.d("ExperimentalActivity", "Navigating back to main activity")
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.cancel()
     }
 }

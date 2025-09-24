@@ -32,6 +32,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LedPathUtil.findLedPaths()
         ledController = LedController(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -207,58 +208,32 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun cycleFlashLED(onCycleCompleted: () -> Unit) {
-        // Turn flash LED on with the current master brightness (or any desired value)
-        ledController.controlLeds(
-            "on",
-            LedPaths.WHITE_LED_PATH,
-            LedPaths.YELLOW_LED_PATH,
-            LedPaths.TOGGLE_PATHS,
-            whiteBrightness = 80,
-            yellowBrightness = 80
-        )
-        // After a short delay, turn it off and then invoke the callback.
-        Handler(Looper.getMainLooper()).postDelayed({
-            ledController.controlLeds(
-                "off",
-                LedPaths.WHITE_LED_PATH,
-                LedPaths.YELLOW_LED_PATH,
-                LedPaths.TOGGLE_PATHS,
-                whiteBrightness = 80,
-                yellowBrightness = 80
-            )
-            onCycleCompleted()
-        }, 100) // 100ms delay; adjust if needed
-    }
-
     private fun executeExtraFunction() {
         if (eyeDestroyerCooldown) {
             Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT).show()
             return
         }
+        android.util.Log.d("MainActivity", "Executing Eye Destroyer function")
 
-        // Cycle the flash LED to initialize it
-        cycleFlashLED {
-            // After cycling, execute the eye destroyer functionality
-            ledController.controlLeds(
-                "off",
-                LedPaths.FLASH_WHITE_LED_PATH,
-                LedPaths.FLASH_YELLOW_LED_PATH,
-                LedPaths.TOGGLE_PATHS,
-                whiteBrightness = 1000,
-                yellowBrightness = 1000
-            )
-            ledController.controlLeds(
-                "on",
-                LedPaths.FLASH_WHITE_LED_PATH,
-                LedPaths.FLASH_YELLOW_LED_PATH,
-                LedPaths.TOGGLE_PATHS,
-                whiteBrightness = 1500,
-                yellowBrightness = 1500
-            )
-            isLedOn = true
-            startEyeDestroyerCooldown()
-        }
+        // After cycling, execute the eye destroyer functionality
+        ledController.controlLeds(
+            "off",
+            LedPaths.FLASH_WHITE_LED_PATH,
+            LedPaths.FLASH_YELLOW_LED_PATH,
+            LedPaths.TOGGLE_PATHS,
+            whiteBrightness = 1000,
+            yellowBrightness = 1000
+        )
+        ledController.controlLeds(
+            "on",
+            LedPaths.FLASH_WHITE_LED_PATH,
+            LedPaths.FLASH_YELLOW_LED_PATH,
+            LedPaths.TOGGLE_PATHS,
+            whiteBrightness = 1500,
+            yellowBrightness = 1500
+        )
+        isLedOn = true
+        startEyeDestroyerCooldown()
     }
 
 
