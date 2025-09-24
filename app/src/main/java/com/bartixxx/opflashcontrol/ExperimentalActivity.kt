@@ -29,6 +29,7 @@ class ExperimentalActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LedPathUtil.findLedPaths()
         ledController = LedController(this)
         binding = ActivityExperimentalBinding.inflate(layoutInflater)
         setContentView(binding.root)

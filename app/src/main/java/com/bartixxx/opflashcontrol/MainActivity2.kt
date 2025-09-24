@@ -34,6 +34,7 @@ class MainActivity2 : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LedPathUtil.findLedPaths()
         ledController = LedController(this)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
