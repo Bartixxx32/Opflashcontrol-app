@@ -15,7 +15,7 @@ constraintlayout = "2.2.1"
 monitor = "1.7.2"
 recyclerview = "1.4.0"
 runtime = "1.8.3"
-uiText = "1.8.3"
+uiText = "1.9.2"
 uiUnit = "1.9.2"
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
