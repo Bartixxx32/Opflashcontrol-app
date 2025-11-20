@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.bartixxx.opflashcontrol"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.bartixxx.opflashcontrol"
