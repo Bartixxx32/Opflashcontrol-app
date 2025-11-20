@@ -6,14 +6,13 @@ import java.io.File
 object LedPathUtil {
     private const val TAG = "LedPathUtil"
 
-    fun findLedPaths(): LedPaths {
-        val basePath = "/sys/class/leds/"
+    fun findLedPaths(baseDir: File = File("/sys/class/leds/")): LedPaths {
         val torchPaths = mutableListOf<String>()
         val flashPaths = mutableListOf<String>()
         val switchPaths = mutableListOf<String>()
 
         try {
-            val ledDirs = File(basePath).listFiles()
+            val ledDirs = baseDir.listFiles()
             ledDirs?.forEach { dir ->
                 val dirName = dir.name
                 when {

@@ -120,7 +120,7 @@ class LedController(private val context: Context) {
     }
 
 
-    protected fun executeRootCommands(commands: List<String>, showToast: Boolean = true) {
+    internal fun executeRootCommands(commands: List<String>, showToast: Boolean = true) {
         val maxRetries = 3 // Maximum number of retries
         val initialDelay = 1000L // Initial delay in milliseconds
         val maxDelay = 8000L // Maximum delay (8 seconds) for exponential backoff
