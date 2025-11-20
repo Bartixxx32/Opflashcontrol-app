@@ -3,9 +3,18 @@ package com.bartixxx.opflashcontrol
 import android.util.Log
 import java.io.File
 
+/**
+ * A utility object for finding the paths to the LED brightness files.
+ */
 object LedPathUtil {
     private const val TAG = "LedPathUtil"
 
+    /**
+     * Finds the paths to the LED brightness files.
+     *
+     * @param baseDir The base directory to search for LED brightness files.
+     * @return The paths to the LED brightness files.
+     */
     fun findLedPaths(baseDir: File = File("/sys/class/leds/")): LedPaths {
         val torchPaths = mutableListOf<String>()
         val flashPaths = mutableListOf<String>()

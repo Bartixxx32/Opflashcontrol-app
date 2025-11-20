@@ -11,6 +11,11 @@ import com.bartixxx.opflashcontrol.LedPaths.WHITE_LED_PATH
 import com.bartixxx.opflashcontrol.LedPaths.YELLOW_LED_PATH
 import kotlinx.coroutines.*
 
+/**
+ * A Quick Settings tile service for controlling the flashlight LEDs.
+ *
+ * This service provides a Quick Settings tile that allows the user to control the flashlight LEDs.
+ */
 class LEDControlTileService : TileService() {
 
     // currentBrightnessState: 0 means off; otherwise, 1-indexed into brightnessSteps.
@@ -34,6 +39,9 @@ class LEDControlTileService : TileService() {
     private val serviceJob = Job()
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
 
+    /**
+     * Called when the tile is added to the Quick Settings panel.
+     */
     override fun onStartListening() {
         super.onStartListening()
         try {
@@ -45,6 +53,9 @@ class LEDControlTileService : TileService() {
         }
     }
 
+    /**
+     * Called when the tile is removed from the Quick Settings panel.
+     */
     override fun onStopListening() {
         super.onStopListening()
         stopSafetyCheck()
@@ -52,6 +63,9 @@ class LEDControlTileService : TileService() {
         serviceJob.cancel()
     }
 
+    /**
+     * Called when the user clicks the tile.
+     */
     override fun onClick() {
         super.onClick()
         val currentTime = System.currentTimeMillis()
@@ -92,6 +106,9 @@ class LEDControlTileService : TileService() {
         lastTapTime = currentTime // Update the last tap time.
     }
 
+    /**
+     * Turns off the flashlight LEDs.
+     */
     private fun turnOffLeds() {
         try {
             currentBrightnessState = 0
@@ -103,6 +120,9 @@ class LEDControlTileService : TileService() {
         }
     }
 
+    /**
+     * Starts the brightness safety check.
+     */
     private fun startSafetyCheck() {
         handler.post(object : Runnable {
             override fun run() {
@@ -116,10 +136,16 @@ class LEDControlTileService : TileService() {
         })
     }
 
+    /**
+     * Stops the brightness safety check.
+     */
     private fun stopSafetyCheck() {
         handler.removeCallbacksAndMessages(null)
     }
 
+    /**
+     * Checks if the brightness of the flashlight LEDs is within a safe range.
+     */
     private fun checkBrightnessSafety() {
         try {
             val currentTime = System.currentTimeMillis()
@@ -150,6 +176,9 @@ class LEDControlTileService : TileService() {
         }
     }
 
+    /**
+     * Updates the tile's description.
+     */
     private fun updateTileDescription() {
         try {
             val stateText = when (currentBrightnessState) {
@@ -180,6 +209,11 @@ class LEDControlTileService : TileService() {
         }
     }
 
+    /**
+     * Controls the flashlight LEDs.
+     *
+     * @param brightness The brightness to set the LEDs to.
+     */
     private fun controlAllLeds(brightness: Int) {
         // Offload LED control operations to the IO dispatcher so that blocking operations do not freeze the UI.
         serviceScope.launch(Dispatchers.IO) {

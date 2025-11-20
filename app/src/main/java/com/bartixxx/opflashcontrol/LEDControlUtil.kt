@@ -8,12 +8,40 @@ import android.widget.Toast
 import java.io.DataOutputStream
 import java.io.IOException
 
+/**
+ * A controller for the flashlight LEDs.
+ *
+ * This class provides methods for controlling the flashlight LEDs.
+ *
+ * @param context The context.
+ */
 class LedController(private val context: Context) {
 
+    /**
+     * Sanitizes a brightness value to ensure it is not 0.
+     *
+     * @param brightness The brightness value to sanitize.
+     * @return The sanitized brightness value.
+     */
     private fun sanitizeBrightness(brightness: Int): Int {
         return if (brightness == 0) 1 else brightness
     }
 
+    /**
+     * Controls the flashlight LEDs.
+     *
+     * @param action The action to perform. Can be "on" or "off".
+     * @param whiteLedPath The path to the white LED brightness file.
+     * @param yellowLedPath The path to the yellow LED brightness file.
+     * @param togglePaths A list of paths to the LED toggle files.
+     * @param white2LedPath The path to the second white LED brightness file.
+     * @param yellow2LedPath The path to the second yellow LED brightness file.
+     * @param whiteBrightness The brightness of the white LED.
+     * @param yellowBrightness The brightness of the yellow LED.
+     * @param white2Brightness The brightness of the second white LED.
+     * @param yellow2Brightness The brightness of the second yellow LED.
+     * @param showToast Whether to show a toast message when the command is executed.
+     */
     fun controlLeds(
         action: String,
         whiteLedPath: String,
@@ -63,6 +91,20 @@ class LedController(private val context: Context) {
         executeRootCommands(commands, showToast)
     }
 
+    /**
+     * Returns a list of commands to turn on the flashlight LEDs.
+     *
+     * @param white The path to the white LED brightness file.
+     * @param yellow The path to the yellow LED brightness file.
+     * @param white2 The path to the second white LED brightness file.
+     * @param yellow2 The path to the second yellow LED brightness file.
+     * @param togglePaths A list of paths to the LED toggle files.
+     * @param whiteBrightness The brightness of the white LED.
+     * @param yellowBrightness The brightness of the yellow LED.
+     * @param white2Brightness The brightness of the second white LED.
+     * @param yellow2Brightness The brightness of the second yellow LED.
+     * @return A list of commands to turn on the flashlight LEDs.
+     */
     private fun commonOnCommands(
         white: String, yellow: String, white2: String?, yellow2: String?,
         togglePaths: List<String>,
@@ -93,6 +135,16 @@ class LedController(private val context: Context) {
         return commands
     }
 
+    /**
+     * Returns a list of commands to turn off the flashlight LEDs.
+     *
+     * @param white The path to the white LED brightness file.
+     * @param yellow The path to the yellow LED brightness file.
+     * @param white2 The path to the second white LED brightness file.
+     * @param yellow2 The path to the second yellow LED brightness file.
+     * @param togglePaths A list of paths to the LED toggle files.
+     * @return A list of commands to turn off the flashlight LEDs.
+     */
     private fun commonOffCommands(
         white: String, yellow: String, white2: String?, yellow2: String?,
         togglePaths: List<String>
@@ -120,6 +172,12 @@ class LedController(private val context: Context) {
     }
 
 
+    /**
+     * Executes a list of commands as root.
+     *
+     * @param commands The commands to execute.
+     * @param showToast Whether to show a toast message when the command is executed.
+     */
     internal fun executeRootCommands(commands: List<String>, showToast: Boolean = true) {
         val maxRetries = 3 // Maximum number of retries
         val initialDelay = 1000L // Initial delay in milliseconds
