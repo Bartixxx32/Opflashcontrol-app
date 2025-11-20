@@ -17,6 +17,11 @@ import com.bartixxx.opflashcontrol.LedPaths.YELLOW2_LED_PATH
 import com.bartixxx.opflashcontrol.LedPaths.YELLOW_LED_PATH
 import com.bartixxx.opflashcontrol.databinding.ActivityMain2Binding
 
+/**
+ * The second main activity of the application.
+ *
+ * This activity allows the user to control the flashlight LEDs on devices with four LEDs.
+ */
 class MainActivity2 : BaseActivity() {
 
     private lateinit var binding: ActivityMain2Binding
@@ -32,6 +37,11 @@ class MainActivity2 : BaseActivity() {
     private var eyeDestroyerCooldown = false // Flag to track cooldown
     private lateinit var ledController: LedController
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LedPathUtil.findLedPaths()
@@ -216,9 +226,19 @@ class MainActivity2 : BaseActivity() {
         }
     }
 
+    /**
+     * Checks if all brightness values are at 1.
+     *
+     * @return True if all brightness values are at 1, false otherwise.
+     */
     private fun allBrightnessAtOne() =
         whiteBrightness <= 1 && yellowBrightness <= 1 && white2Brightness <= 1 && yellow2Brightness <= 1
 
+    /**
+     * Toggles the flashlight LEDs on or off.
+     *
+     * @param on Whether to turn the LEDs on or off.
+     */
     private fun toggleLEDs(on: Boolean) {
         isLedOn = on
         if (on) {
@@ -250,6 +270,9 @@ class MainActivity2 : BaseActivity() {
         }
     }
 
+    /**
+     * Executes the "Eye Destroyer" function, which turns on the flashlight LEDs at maximum brightness.
+     */
     private fun executeExtraFunction() {
         if (eyeDestroyerCooldown) {
             Toast.makeText(this, "Please wait before using this feature again.", Toast.LENGTH_SHORT)
@@ -287,6 +310,9 @@ class MainActivity2 : BaseActivity() {
         startEyeDestroyerCooldown()
     }
 
+    /**
+     * Starts the cooldown for the "Eye Destroyer" function.
+     */
     private fun startEyeDestroyerCooldown() {
         eyeDestroyerCooldown = true
         binding.destroyer.isEnabled = false
@@ -297,10 +323,16 @@ class MainActivity2 : BaseActivity() {
         }, 5000)
     }
 
+    /**
+     * Navigates back to the main activity.
+     */
     private fun navigateBackToMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
     }
 
+    /**
+     * Checks if the brightness of the flashlight LEDs is within a safe range.
+     */
     private fun checkBrightnessSafety() {
         val currentTime = System.currentTimeMillis()
 
@@ -317,6 +349,9 @@ class MainActivity2 : BaseActivity() {
         }
     }
 
+    /**
+     * Reverts the brightness of the flashlight LEDs to a safe level.
+     */
     private fun revertExceedingBrightnessToSafeLevel() {
         var adjusted = false
 
@@ -373,6 +408,9 @@ class MainActivity2 : BaseActivity() {
         }
     }
 
+    /**
+     * Performs a secret action, which opens the experimental activity.
+     */
     private fun performSecretAction() {
         VibrationUtil.vibrate(this, 200L)
         Toast.makeText(this, getString(R.string.experimental), Toast.LENGTH_SHORT).show()

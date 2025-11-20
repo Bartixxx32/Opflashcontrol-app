@@ -16,6 +16,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
+/**
+ * An experimental activity that provides additional flashlight controls.
+ *
+ * This activity allows the user to experiment with different light cycles and brightness cycles.
+ */
 class ExperimentalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityExperimentalBinding
@@ -27,6 +32,11 @@ class ExperimentalActivity : BaseActivity() {
     private var lightCycleBrightness: Int = 500  // Default brightness
     private lateinit var ledController: LedController
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LedPathUtil.findLedPaths()
@@ -71,6 +81,9 @@ class ExperimentalActivity : BaseActivity() {
         binding.brightnessTextView.text = "Brightness: $lightCycleBrightness"
     }
 
+    /**
+     * Sets up the buttons in the activity.
+     */
     private fun setupButtons() {
         binding.button1.setOnClickListener {
             Toast.makeText(this, getString(R.string.command_executed), Toast.LENGTH_SHORT).show()
@@ -122,6 +135,9 @@ class ExperimentalActivity : BaseActivity() {
         }
     }
 
+    /**
+     * Starts a light cycle that alternates between the white and yellow LEDs.
+     */
     private fun startLightCycle() {
         stopLightCycle()
         lightJob = scope.launch {
@@ -150,6 +166,9 @@ class ExperimentalActivity : BaseActivity() {
         }
     }
 
+    /**
+     * Stops the light cycle.
+     */
     private fun stopLightCycle() {
         lightJob?.cancel()
         ledController.controlLeds(
@@ -163,6 +182,9 @@ class ExperimentalActivity : BaseActivity() {
         )
     }
 
+    /**
+     * Starts a brightness cycle that gradually increases and decreases the brightness of the LEDs.
+     */
     private fun startBrightnessCycle() {
         stopBrightnessCycle()
         brightnessJob = scope.launch {
@@ -188,6 +210,9 @@ class ExperimentalActivity : BaseActivity() {
         }
     }
 
+    /**
+     * Stops the brightness cycle.
+     */
     private fun stopBrightnessCycle() {
         brightnessJob?.cancel()
         ledController.controlLeds(
@@ -201,11 +226,17 @@ class ExperimentalActivity : BaseActivity() {
         )
     }
 
+    /**
+     * Navigates back to the main activity.
+     */
     private fun navigateBackToMain() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
+    /**
+     * Called when the activity is destroyed.
+     */
     override fun onDestroy() {
         super.onDestroy()
         scope.cancel()

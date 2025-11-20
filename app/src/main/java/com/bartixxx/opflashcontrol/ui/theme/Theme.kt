@@ -32,6 +32,13 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+/**
+ * The theme for the application.
+ *
+ * @param darkTheme Whether to use a dark theme.
+ * @param dynamicColor Whether to use dynamic colors.
+ * @param content The content of the application.
+ */
 @Composable
 fun OpflashcontrolTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

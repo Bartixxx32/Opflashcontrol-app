@@ -24,6 +24,41 @@ By leveraging root access, the app allows direct modification of system-level fi
   - Double tap when LEDs are on to turn them off.
 - **Secret Action:** Unlock hidden features by tapping the app's title 5 times within 5 seconds, enabling a fun experimental mode.
 
+## Setup
+
+To build and run the OnePlus Flash Control application from the source code, you'll need the following:
+
+- A rooted OnePlus device
+- Android Studio IDE
+- USB debugging enabled on your device
+
+### Steps
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/Bartixxx32/Opflashcontrol-app.git
+   ```
+
+2. **Open the project in Android Studio:**
+   - Launch Android Studio.
+   - Select "Open an existing Android Studio project".
+   - Navigate to the cloned repository and select the `Opflashcontrol-app` folder.
+
+3. **Build the project:**
+   - Once the project is open, Android Studio will automatically sync the project with Gradle.
+   - To build the project, go to `Build > Make Project` or click the "Make Project" icon in the toolbar.
+
+4. **Run the application:**
+   - Connect your rooted OnePlus device to your computer via USB.
+   - In Android Studio, select your device from the dropdown menu and click the "Run" button.
+
+## Usage
+
+Once the application is installed on your rooted OnePlus device, you can use it to control the flashlight LEDs. The main screen provides sliders for adjusting the master brightness, as well as the brightness of the white and yellow LEDs individually. You can also turn the flashlight on and off, and access the "Eye Destroyer" mode for maximum brightness.
+
+The Quick Settings tile provides a convenient way to control the flashlight without opening the app. You can cycle through brightness levels with a single tap, and turn the flashlight on or off with a double tap.
+
 ## Preview Screenshot
 
 [![Preview Screenshot](https://ik.imagekit.io/bartixxx32/ghmirror/tr:w-0.2,r-26/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)](https://ik.imagekit.io/bartixxx32/ghmirror/Bartixxx32/Opflashcontrol-app/master/metadata/en-US/images/phoneScreenshots/screenshot1.png)

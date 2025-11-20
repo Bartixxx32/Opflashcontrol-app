@@ -6,10 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bartixxx.opflashcontrol.databinding.ActivitySupportersBinding
 
+/**
+ * An activity that displays a list of supporters.
+ *
+ * This activity uses a RecyclerView to display a list of supporters.
+ */
 class SupportersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySupportersBinding
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySupportersBinding.inflate(layoutInflater)
@@ -29,6 +39,9 @@ class SupportersActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Navigates back to the main activity.
+     */
     private fun backToMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish() // Optional: close SupportersActivity
