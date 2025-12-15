@@ -81,7 +81,7 @@ jobs:
           BUILD_TOOLS_VERSION: "34.0.0"
 
       # Upload signed APK as artifact
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: OnePlus Flash Control APK
           path: ${{ steps.sign_app.outputs.signedReleaseFile }}
