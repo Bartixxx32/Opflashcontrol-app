@@ -57,6 +57,20 @@ class MainActivity : BaseActivity() {
 
         // Set the range of the sliders
         with(binding) {
+            val prefs = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE)
+            safetyCheckbox.isChecked = prefs.getBoolean(Constants.KEY_SAFETY_AWARE, false)
+
+            safetyCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                prefs.edit().putBoolean(Constants.KEY_SAFETY_AWARE, isChecked).apply()
+            }
+
+            setDefaultBrightness.setOnClickListener {
+                VibrationUtil.vibrate(this@MainActivity, 50L)
+                val currentMaster = masterBrightness
+                prefs.edit().putInt(Constants.KEY_DEFAULT_BRIGHTNESS, currentMaster).apply()
+                Toast.makeText(this@MainActivity, "Default brightness set to $currentMaster", Toast.LENGTH_SHORT).show()
+            }
+
             masterSeekBar.valueFrom = 0f
             masterSeekBar.value = 80f
             masterSeekBar.valueTo = 500f
@@ -280,6 +294,11 @@ class MainActivity : BaseActivity() {
      * Checks if the brightness of the flashlight LEDs is within a safe range.
      */
     private fun checkBrightnessSafety() {
+        val prefs = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE)
+        if (prefs.getBoolean(Constants.KEY_SAFETY_AWARE, false)) {
+            brightnessExceededTime = 0L
+            return
+        }
         val currentTime = System.currentTimeMillis()
 
         // Check if any brightness exceeds the limit

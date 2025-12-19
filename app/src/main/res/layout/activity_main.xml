@@ -212,7 +212,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/destroyer" />
 
+    <CheckBox
+        android:id="@+id/safetyCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I am aware I can burn my LED"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/masterTextView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/setDefaultBrightness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Default Brightness"
+        app:layout_constraintTop_toBottomOf="@id/safetyCheckbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Space after Additional Controls -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        app:layout_constraintBottom_toTopOf="@id/buymecoffe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setDefaultBrightness"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/buymecoffe"
