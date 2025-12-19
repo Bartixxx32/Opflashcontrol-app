@@ -297,7 +297,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/destroyer" />
 
-    <CheckBox
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/safetyCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -309,9 +309,10 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/setDefaultBrightness"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Set Default Brightness"
+        app:backgroundTint="@color/material_dynamic_neutral70"
         app:layout_constraintTop_toBottomOf="@id/safetyCheckbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
