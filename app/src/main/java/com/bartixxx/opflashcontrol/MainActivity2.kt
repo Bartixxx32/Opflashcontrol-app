@@ -73,8 +73,10 @@ class MainActivity2 : BaseActivity() {
             }
 
             masterSeekBar.valueFrom = 0f
-            masterSeekBar.value = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80).toFloat()
-            masterBrightness = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80)
+            val defaultBrightness = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80)
+            masterSeekBar.value = defaultBrightness.toFloat()
+            masterBrightness = defaultBrightness
+            masterTextView.text = "Master Brightness: $defaultBrightness"
             masterSeekBar.valueTo = 500f
 
             whiteSeekBar.valueFrom = 0f

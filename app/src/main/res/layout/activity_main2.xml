@@ -303,6 +303,7 @@
         android:layout_height="wrap_content"
         android:text="@string/safety_warning"
         android:layout_marginTop="8dp"
+        app:buttonTint="@color/material_dynamic_neutral70"
         app:layout_constraintTop_toBottomOf="@id/masterTextView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
