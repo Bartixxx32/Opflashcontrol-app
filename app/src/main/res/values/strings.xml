@@ -34,4 +34,7 @@
     <string name="error_interrupted">Command failed: Process interrupted</string>
     <string name="error_retry_failed">Getting ROOT failed</string>
     <string name="safety">Returned to safe limits</string>
+    <string name="safety_warning">I am aware I can burn my LED</string>
+    <string name="set_default_brightness">Set Default Brightness</string>
+    <string name="default_brightness_set">Default brightness set to %d</string>
 </resources>

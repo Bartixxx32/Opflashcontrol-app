@@ -68,11 +68,12 @@ class MainActivity : BaseActivity() {
                 VibrationUtil.vibrate(this@MainActivity, 50L)
                 val currentMaster = masterBrightness
                 prefs.edit().putInt(Constants.KEY_DEFAULT_BRIGHTNESS, currentMaster).apply()
-                Toast.makeText(this@MainActivity, "Default brightness set to $currentMaster", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, getString(R.string.default_brightness_set, currentMaster), Toast.LENGTH_SHORT).show()
             }
 
             masterSeekBar.valueFrom = 0f
-            masterSeekBar.value = 80f
+            masterSeekBar.value = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80).toFloat()
+            masterBrightness = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80)
             masterSeekBar.valueTo = 500f
 
             whiteSeekBar.valueFrom = 0f

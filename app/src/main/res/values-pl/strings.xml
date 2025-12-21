@@ -26,4 +26,7 @@
     <string name="brightness">Jasność</string>
     <string name="flashlight_off">Latarka OFF</string>
     <string name="flashlight_on">Latarka ON</string>
+    <string name="safety_warning">Jestem świadomy, że mogę spalić LED</string>
+    <string name="set_default_brightness">Ustaw domyślną jasność</string>
+    <string name="default_brightness_set">Domyślna jasność ustawiona na %d</string>
 </resources>
