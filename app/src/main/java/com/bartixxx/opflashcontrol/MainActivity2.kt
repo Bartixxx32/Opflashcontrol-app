@@ -76,7 +76,7 @@ class MainActivity2 : BaseActivity() {
             val defaultBrightness = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80)
             masterSeekBar.value = defaultBrightness.toFloat()
             masterBrightness = defaultBrightness
-            masterTextView.text = "Master Brightness: $defaultBrightness"
+            masterTextView.text = "${getString(R.string.master)}: $defaultBrightness"
             masterSeekBar.valueTo = 500f
 
             whiteSeekBar.valueFrom = 0f
@@ -91,7 +91,7 @@ class MainActivity2 : BaseActivity() {
             yellow2SeekBar3.valueFrom = 0f
             yellow2SeekBar3.valueTo = 500f
 
-            setupSlider(masterSeekBar, masterTextView, "Master Brightness") { progress ->
+            setupSlider(masterSeekBar, masterTextView, getString(R.string.master)) { progress ->
                 masterBrightness = progress
                 if (isLedOn && allBrightnessAtOne()) {
                     ledController.controlLeds(
@@ -109,7 +109,7 @@ class MainActivity2 : BaseActivity() {
                 }
             }
 
-            setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
+            setupSlider(whiteSeekBar, whiteTextView, getString(R.string.white)) { progress ->
                 whiteBrightness = progress
                 if (isLedOn) ledController.controlLeds(
                     "on",
@@ -125,7 +125,7 @@ class MainActivity2 : BaseActivity() {
                 )
             }
 
-            setupSlider(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
+            setupSlider(yellowSeekBar, yellowTextView, getString(R.string.yellow)) { progress ->
                 yellowBrightness = progress
                 if (isLedOn) ledController.controlLeds(
                     "on",
@@ -141,7 +141,7 @@ class MainActivity2 : BaseActivity() {
                 )
             }
 
-            setupSlider(white2SeekBar2, white2TextView3, "White2 Brightness") { progress ->
+            setupSlider(white2SeekBar2, white2TextView3, getString(R.string.white2)) { progress ->
                 white2Brightness = progress
                 if (isLedOn) ledController.controlLeds(
                     "on",
@@ -157,7 +157,7 @@ class MainActivity2 : BaseActivity() {
                 )
             }
 
-            setupSlider(yellow2SeekBar3, yellow2TextView2, "Yellow2 Brightness") { progress ->
+            setupSlider(yellow2SeekBar3, yellow2TextView2, getString(R.string.yellow2)) { progress ->
                 yellow2Brightness = progress
                 if (isLedOn) ledController.controlLeds(
                     "on",

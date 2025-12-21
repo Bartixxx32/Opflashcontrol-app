@@ -75,7 +75,7 @@ class MainActivity : BaseActivity() {
             val defaultBrightness = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80)
             masterSeekBar.value = defaultBrightness.toFloat()
             masterBrightness = defaultBrightness
-            masterTextView.text = "Master Brightness: $defaultBrightness"
+            masterTextView.text = "${getString(R.string.master)}: $defaultBrightness"
             masterSeekBar.valueTo = 500f
 
             whiteSeekBar.valueFrom = 0f
@@ -84,7 +84,7 @@ class MainActivity : BaseActivity() {
             yellowSeekBar.valueFrom = 0f
             yellowSeekBar.valueTo = 500f
 
-            setupSlider(masterSeekBar, masterTextView, "Master Brightness") { progress ->
+            setupSlider(masterSeekBar, masterTextView, getString(R.string.master)) { progress ->
                 if (!safetyTriggered) {
                     masterBrightness = progress
                     if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
@@ -100,7 +100,7 @@ class MainActivity : BaseActivity() {
                 }
             }
 
-            setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
+            setupSlider(whiteSeekBar, whiteTextView, getString(R.string.white)) { progress ->
                 if (!safetyTriggered) {
                     whiteBrightness = progress
                     if (isLedOn) {
@@ -116,7 +116,7 @@ class MainActivity : BaseActivity() {
                 }
             }
 
-            setupSlider(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
+            setupSlider(yellowSeekBar, yellowTextView, getString(R.string.yellow)) { progress ->
                 if (!safetyTriggered) {
                     yellowBrightness = progress
                     if (isLedOn) {

@@ -99,19 +99,7 @@ class LEDControlTileService : TileService() {
                     val closestIndex = brightnessSteps.indexOf(closestStep)
 
                     currentBrightnessState = closestIndex + 1
-                    // Even though we set state to closest step, we use the actual default brightness
-                    // But to keep consistency with the state, we might want to stick to the step?
-                    // User asked to turn on at default brightness.
-                    // If default is 100, closest is 80 or 150.
-                    // If we use actual value, subsequent taps might jump.
-                    // Let's use the actual default brightness for the action, but set state to nearest?
-                    // Or just use the nearest step value?
-                    // "turn it on on my default brightness"
-                    // I will use the actual value if possible, but the tile logic is tied to steps.
-                    // If I use custom value, I can't represent it in currentBrightnessState perfectly if it's not a step.
-                    // Let's just set the brightness to the default value.
-                    // And set currentBrightnessState to the closest match so cycling continues from there.
-
+                    // Turn on at the explicit default brightness, but track state as the closest step
                     Log.d("LEDControlTileService", "Turning on at default brightness: $defaultBrightness (closest step: $closestStep)")
 
                     controlAllLeds(defaultBrightness)
