@@ -87,15 +87,32 @@ class LEDControlTileService : TileService() {
             } else {
                 // Single tap: cycle through brightness states.
                 VibrationUtil.vibrate(this, 50L)
-                // Cycle through states (0 = off, then each brightness step).
-                currentBrightnessState = (currentBrightnessState + 1) % (brightnessSteps.size + 1)
+
+                if (currentBrightnessState == 0) {
+                    // If currently off, turn on at default brightness
+                    val prefs = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE)
+                    val defaultBrightness = prefs.getInt(Constants.KEY_DEFAULT_BRIGHTNESS, 80) // Default to 80 if not set
+
+                    // Find the index of the closest step in brightnessSteps
+                    // Find closest value
+                    val closestStep = brightnessSteps.minByOrNull { kotlin.math.abs(it - defaultBrightness) } ?: 80
+                    val closestIndex = brightnessSteps.indexOf(closestStep)
+
+                    currentBrightnessState = closestIndex + 1
+                    // Turn on at the explicit default brightness, but track state as the closest step
+                    Log.d("LEDControlTileService", "Turning on at default brightness: $defaultBrightness (closest step: $closestStep)")
+
+                    controlAllLeds(defaultBrightness)
+                } else {
+                    // Cycle through states (0 = off, then each brightness step).
+                    currentBrightnessState = (currentBrightnessState + 1) % (brightnessSteps.size + 1)
+                    val brightnessValue = if (currentBrightnessState == 0) 0
+                    else brightnessSteps[currentBrightnessState - 1]
+                    controlAllLeds(brightnessValue)
+                }
+
                 updateTileDescription()
-
                 Log.d("LEDControlTileService", "Brightness state changed to $currentBrightnessState")
-
-                val brightnessValue = if (currentBrightnessState == 0) 0
-                else brightnessSteps[currentBrightnessState - 1]
-                controlAllLeds(brightnessValue)
             }
         } catch (e: Exception) {
             Log.e("LEDControlTileService", "Error during onClick", e)
@@ -148,6 +165,12 @@ class LEDControlTileService : TileService() {
      */
     private fun checkBrightnessSafety() {
         try {
+            val prefs = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE)
+            if (prefs.getBoolean(Constants.KEY_SAFETY_AWARE, false)) {
+                brightnessExceededTime = 0L
+                return
+            }
+
             val currentTime = System.currentTimeMillis()
             val brightnessValue = if (currentBrightnessState == 0) 0
             else brightnessSteps[currentBrightnessState - 1]
