@@ -1,5 +1,6 @@
 package com.bartixxx.opflashcontrol
 
+import android.content.Context
 import android.graphics.drawable.Icon
 import android.os.Handler
 import android.os.Looper
@@ -27,24 +28,25 @@ class LEDControlTileService : TileService() {
     private val checkInterval = 500L // Check every 500 milliseconds
 
     // Define brightness steps as absolute values.
-    // We now include a low step of 20, along with 50, 80, 150, 250, and 500.
     private val brightnessSteps = listOf(10, 20, 50, 80, 150, 250, 500)
     private val maxBrightness = 500
 
     private var lastTapTime: Long = 0L // For double-tap detection.
     private val doubleTapInterval = 300L // Time window for detecting double-tap (in milliseconds)
 
-    // Create a coroutine scope for offloading blocking operations.
-    // This scope will be cancelled when the service stops.
     private val serviceJob = Job()
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
 
-    /**
-     * Called when the tile is added to the Quick Settings panel.
-     */
+    private var isBurnAware = false
+    private var defaultBrightness = 80
+
     override fun onStartListening() {
         super.onStartListening()
         try {
+            val prefs = getSharedPreferences("OpFlashControlPrefs", Context.MODE_PRIVATE)
+            isBurnAware = prefs.getBoolean("burn_aware", false)
+            defaultBrightness = prefs.getInt("default_brightness", 80)
+
             ledController = LedController(this)
             updateTileDescription()
             startSafetyCheck()
@@ -53,19 +55,12 @@ class LEDControlTileService : TileService() {
         }
     }
 
-    /**
-     * Called when the tile is removed from the Quick Settings panel.
-     */
     override fun onStopListening() {
         super.onStopListening()
         stopSafetyCheck()
-        // Cancel any ongoing coroutines when the service stops.
         serviceJob.cancel()
     }
 
-    /**
-     * Called when the user clicks the tile.
-     */
     override fun onClick() {
         super.onClick()
         val currentTime = System.currentTimeMillis()
@@ -73,11 +68,12 @@ class LEDControlTileService : TileService() {
         try {
             if (currentTime - lastTapTime < doubleTapInterval) {
                 // Double-tap detected.
-                if (currentBrightnessState == 0 || currentBrightnessState == 1) {
-                    // When off (or at the very first step), double-tap sets brightness to 80.
-                    Log.d("LEDControlTileService", "Double-tap detected while off, turning LEDs on at 80.")
-                    currentBrightnessState = brightnessSteps.indexOf(80) + 1
-                    controlAllLeds(80)
+                if (currentBrightnessState == 0) {
+                    // When off, double-tap sets brightness to default.
+                    Log.d("LEDControlTileService", "Double-tap detected while off, turning LEDs on at $defaultBrightness.")
+                    controlAllLeds(defaultBrightness)
+                    // Find closest step for state tracking or just set to a state
+                    currentBrightnessState = (brightnessSteps.indexOfFirst { it >= defaultBrightness }.takeIf { it != -1 } ?: (brightnessSteps.size - 1)) + 1
                     updateTileDescription()
                 } else {
                     // Otherwise, double-tap turns the LEDs off.
@@ -87,28 +83,28 @@ class LEDControlTileService : TileService() {
             } else {
                 // Single tap: cycle through brightness states.
                 VibrationUtil.vibrate(this, 50L)
-                // Cycle through states (0 = off, then each brightness step).
-                currentBrightnessState = (currentBrightnessState + 1) % (brightnessSteps.size + 1)
+                
+                if (currentBrightnessState == 0) {
+                    // If turning on from OFF, use default brightness
+                    currentBrightnessState = (brightnessSteps.indexOfFirst { it >= defaultBrightness }.takeIf { it != -1 } ?: (brightnessSteps.size - 1)) + 1
+                    controlAllLeds(defaultBrightness)
+                } else {
+                    // Cycle through states
+                    currentBrightnessState = (currentBrightnessState + 1) % (brightnessSteps.size + 1)
+                    val brightnessValue = if (currentBrightnessState == 0) 0
+                    else brightnessSteps[currentBrightnessState - 1]
+                    controlAllLeds(brightnessValue)
+                }
                 updateTileDescription()
-
-                Log.d("LEDControlTileService", "Brightness state changed to $currentBrightnessState")
-
-                val brightnessValue = if (currentBrightnessState == 0) 0
-                else brightnessSteps[currentBrightnessState - 1]
-                controlAllLeds(brightnessValue)
             }
         } catch (e: Exception) {
             Log.e("LEDControlTileService", "Error during onClick", e)
-            // Turn off LEDs if something goes wrong.
             turnOffLeds()
         }
 
-        lastTapTime = currentTime // Update the last tap time.
+        lastTapTime = currentTime
     }
 
-    /**
-     * Turns off the flashlight LEDs.
-     */
     private fun turnOffLeds() {
         try {
             currentBrightnessState = 0
@@ -120,9 +116,6 @@ class LEDControlTileService : TileService() {
         }
     }
 
-    /**
-     * Starts the brightness safety check.
-     */
     private fun startSafetyCheck() {
         handler.post(object : Runnable {
             override fun run() {
@@ -136,38 +129,31 @@ class LEDControlTileService : TileService() {
         })
     }
 
-    /**
-     * Stops the brightness safety check.
-     */
     private fun stopSafetyCheck() {
         handler.removeCallbacksAndMessages(null)
     }
 
-    /**
-     * Checks if the brightness of the flashlight LEDs is within a safe range.
-     */
     private fun checkBrightnessSafety() {
+        if (isBurnAware) return
+
         try {
             val currentTime = System.currentTimeMillis()
             val brightnessValue = if (currentBrightnessState == 0) 0
             else brightnessSteps[currentBrightnessState - 1]
 
-            // Trigger safety if the brightness (absolute value) is more than 120.
             if (brightnessValue > 120) {
                 if (brightnessExceededTime == 0L) {
                     brightnessExceededTime = currentTime
-                    Log.d("LEDControlTileService", "Brightness exceeded safe limit, timer started.")
                 } else if (currentTime - brightnessExceededTime > 20000) { // More than 20 seconds.
                     if (!safetyTriggered) {
-                        Log.d("LEDControlTileService", "Safety triggered! Reducing brightness to 80.")
                         safetyTriggered = true
+                        // Revert to 80
                         currentBrightnessState = brightnessSteps.indexOf(80) + 1
                         controlAllLeds(80)
                         updateTileDescription()
                     }
                 }
             } else {
-                // Reset if brightness is within safe range.
                 brightnessExceededTime = 0L
                 safetyTriggered = false
             }
@@ -176,16 +162,12 @@ class LEDControlTileService : TileService() {
         }
     }
 
-    /**
-     * Updates the tile's description.
-     */
     private fun updateTileDescription() {
         try {
             val stateText = when (currentBrightnessState) {
                 0 -> getString(R.string.double_tap_to_turn_off)
                 else -> {
                     val brightnessValue = brightnessSteps[currentBrightnessState - 1]
-                    // Calculate percentage relative to the maximum brightness.
                     val brightnessPercentage = brightnessValue * 100 / maxBrightness
                     "${getString(R.string.brightness)}: $brightnessPercentage%"
                 }
@@ -209,13 +191,7 @@ class LEDControlTileService : TileService() {
         }
     }
 
-    /**
-     * Controls the flashlight LEDs.
-     *
-     * @param brightness The brightness to set the LEDs to.
-     */
     private fun controlAllLeds(brightness: Int) {
-        // Offload LED control operations to the IO dispatcher so that blocking operations do not freeze the UI.
         serviceScope.launch(Dispatchers.IO) {
             try {
                 if (brightness == 0) {

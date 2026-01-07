@@ -1,6 +1,8 @@
 package com.bartixxx.opflashcontrol
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -25,6 +27,8 @@ import com.bartixxx.opflashcontrol.databinding.ActivityMain2Binding
 class MainActivity2 : BaseActivity() {
 
     private lateinit var binding: ActivityMain2Binding
+    private lateinit var prefs: SharedPreferences
+
     private var clickCount = 0
     private var lastClickTime: Long = 0
     private var brightnessCheckHandler: Handler? = null
@@ -37,17 +41,18 @@ class MainActivity2 : BaseActivity() {
     private var eyeDestroyerCooldown = false // Flag to track cooldown
     private lateinit var ledController: LedController
 
-    /**
-     * Called when the activity is first created.
-     *
-     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
-     */
+    private var isBurnAware = false
+    private var defaultBrightness = 80
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LedPathUtil.findLedPaths()
         ledController = LedController(this)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        prefs = getSharedPreferences("OpFlashControlPrefs", Context.MODE_PRIVATE)
+        loadPreferences()
 
         // Initialize the brightness check handler
         brightnessCheckHandler = Handler(Looper.getMainLooper())
@@ -59,25 +64,65 @@ class MainActivity2 : BaseActivity() {
 
         with(binding) {
             masterSeekBar.valueFrom = 0f
-            masterSeekBar.value = 80f
+            masterSeekBar.value = masterBrightness.toFloat()
             masterSeekBar.valueTo = 500f
 
             whiteSeekBar.valueFrom = 0f
+            whiteSeekBar.value = whiteBrightness.toFloat()
             whiteSeekBar.valueTo = 500f
 
             yellowSeekBar.valueFrom = 0f
+            yellowSeekBar.value = yellowBrightness.toFloat()
             yellowSeekBar.valueTo = 500f
 
             white2SeekBar2.valueFrom = 0f
+            white2SeekBar2.value = white2Brightness.toFloat()
             white2SeekBar2.valueTo = 500f
 
             yellow2SeekBar3.valueFrom = 0f
+            yellow2SeekBar3.value = yellow2Brightness.toFloat()
             yellow2SeekBar3.valueTo = 500f
 
+            burnAwareCheckbox.isChecked = isBurnAware
+            burnAwareCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                isBurnAware = isChecked
+                prefs.edit().putBoolean("burn_aware", isChecked).apply()
+            }
+
+            defaultBrightnessSeekBar.valueFrom = 1f
+            defaultBrightnessSeekBar.valueTo = 500f
+            defaultBrightnessSeekBar.value = defaultBrightness.toFloat()
+            defaultBrightnessTextView.text = "Default Brightness: $defaultBrightness"
+
+            setupSlider(defaultBrightnessSeekBar, defaultBrightnessTextView, "Default Brightness") { progress ->
+                defaultBrightness = progress
+                prefs.edit().putInt("default_brightness", progress).apply()
+            }
+
             setupSlider(masterSeekBar, masterTextView, "Master Brightness") { progress ->
-                masterBrightness = progress
-                if (isLedOn && allBrightnessAtOne()) {
-                    ledController.controlLeds(
+                if (!safetyTriggered || isBurnAware) {
+                    masterBrightness = progress
+                    if (isLedOn && allBrightnessAtOne()) {
+                        ledController.controlLeds(
+                            "on",
+                            WHITE_LED_PATH,
+                            YELLOW_LED_PATH,
+                            TOGGLE_PATHS,
+                            WHITE2_LED_PATH,
+                            YELLOW2_LED_PATH,
+                            progress,
+                            progress,
+                            progress,
+                            progress
+                        )
+                    }
+                }
+            }
+
+            setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
+                if (!safetyTriggered || isBurnAware) {
+                    whiteBrightness = progress
+                    if (isLedOn) ledController.controlLeds(
                         "on",
                         WHITE_LED_PATH,
                         YELLOW_LED_PATH,
@@ -85,75 +130,65 @@ class MainActivity2 : BaseActivity() {
                         WHITE2_LED_PATH,
                         YELLOW2_LED_PATH,
                         progress,
-                        progress,
-                        progress,
-                        progress
+                        yellowBrightness,
+                        white2Brightness,
+                        yellow2Brightness
                     )
                 }
             }
 
-            setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
-                whiteBrightness = progress
-                if (isLedOn) ledController.controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    WHITE2_LED_PATH,
-                    YELLOW2_LED_PATH,
-                    progress,
-                    yellowBrightness,
-                    white2Brightness,
-                    yellow2Brightness
-                )
-            }
-
             setupSlider(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
-                yellowBrightness = progress
-                if (isLedOn) ledController.controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    WHITE2_LED_PATH,
-                    YELLOW2_LED_PATH,
-                    whiteBrightness,
-                    progress,
-                    white2Brightness,
-                    yellow2Brightness
-                )
+                if (!safetyTriggered || isBurnAware) {
+                    yellowBrightness = progress
+                    if (isLedOn) ledController.controlLeds(
+                        "on",
+                        WHITE_LED_PATH,
+                        YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
+                        WHITE2_LED_PATH,
+                        YELLOW2_LED_PATH,
+                        whiteBrightness,
+                        progress,
+                        white2Brightness,
+                        yellow2Brightness
+                    )
+                }
             }
 
             setupSlider(white2SeekBar2, white2TextView3, "White2 Brightness") { progress ->
-                white2Brightness = progress
-                if (isLedOn) ledController.controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    WHITE2_LED_PATH,
-                    YELLOW2_LED_PATH,
-                    whiteBrightness,
-                    yellowBrightness,
-                    progress,
-                    yellow2Brightness
-                )
+                if (!safetyTriggered || isBurnAware) {
+                    white2Brightness = progress
+                    if (isLedOn) ledController.controlLeds(
+                        "on",
+                        WHITE_LED_PATH,
+                        YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
+                        WHITE2_LED_PATH,
+                        YELLOW2_LED_PATH,
+                        whiteBrightness,
+                        yellowBrightness,
+                        progress,
+                        yellow2Brightness
+                    )
+                }
             }
 
             setupSlider(yellow2SeekBar3, yellow2TextView2, "Yellow2 Brightness") { progress ->
-                yellow2Brightness = progress
-                if (isLedOn) ledController.controlLeds(
-                    "on",
-                    WHITE_LED_PATH,
-                    YELLOW_LED_PATH,
-                    TOGGLE_PATHS,
-                    WHITE2_LED_PATH,
-                    YELLOW2_LED_PATH,
-                    whiteBrightness,
-                    yellowBrightness,
-                    white2Brightness,
-                    progress
-                )
+                if (!safetyTriggered || isBurnAware) {
+                    yellow2Brightness = progress
+                    if (isLedOn) ledController.controlLeds(
+                        "on",
+                        WHITE_LED_PATH,
+                        YELLOW_LED_PATH,
+                        TOGGLE_PATHS,
+                        WHITE2_LED_PATH,
+                        YELLOW2_LED_PATH,
+                        whiteBrightness,
+                        yellowBrightness,
+                        white2Brightness,
+                        progress
+                    )
+                }
             }
 
             on.setOnClickListener {
@@ -226,11 +261,11 @@ class MainActivity2 : BaseActivity() {
         }
     }
 
-    /**
-     * Checks if all brightness values are at 1.
-     *
-     * @return True if all brightness values are at 1, false otherwise.
-     */
+    private fun loadPreferences() {
+        isBurnAware = prefs.getBoolean("burn_aware", false)
+        defaultBrightness = prefs.getInt("default_brightness", 80)
+    }
+
     private fun allBrightnessAtOne() =
         whiteBrightness <= 1 && yellowBrightness <= 1 && white2Brightness <= 1 && yellow2Brightness <= 1
 
@@ -334,6 +369,12 @@ class MainActivity2 : BaseActivity() {
      * Checks if the brightness of the flashlight LEDs is within a safe range.
      */
     private fun checkBrightnessSafety() {
+        if (isBurnAware) {
+            brightnessExceededTime = 0L
+            safetyTriggered = false
+            return
+        }
+
         val currentTime = System.currentTimeMillis()
 
         // Check if any brightness exceeds the limit

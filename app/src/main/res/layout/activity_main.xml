@@ -5,265 +5,271 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface">
 
-    <!-- Title -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/flashbrightness"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/on"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <!-- On/Off Buttons -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/on"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/on"
-        app:backgroundTint="@color/material_dynamic_neutral70"
-        app:layout_constraintEnd_toStartOf="@id/off"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@id/flashbrightness"
-        app:layout_constraintTop_toBottomOf="@id/flashbrightness" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="32dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/off"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/off"
-        app:backgroundTint="@color/material_dynamic_neutral70"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/on"
-        app:layout_constraintTop_toBottomOf="@id/flashbrightness" />
+            <!-- Title -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/flashbrightness"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Space after On/Off buttons -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/off" />
+            <!-- On/Off Buttons -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/on"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/on"
+                app:backgroundTint="@color/material_dynamic_neutral70"
+                app:layout_constraintEnd_toStartOf="@id/off"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flashbrightness" />
 
-    <!-- Master Brightness Control -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/master"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/off" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/off"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/off"
+                app:backgroundTint="@color/material_dynamic_neutral70"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/on"
+                app:layout_constraintTop_toBottomOf="@id/flashbrightness" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/masterSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="255"
-        android:min="0"
-        android:value="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView4"
-        app:thumbColor="@color/material_dynamic_neutral50"
-        app:tickColorActive="@color/material_dynamic_neutral90"
-        app:tickColorInactive="@color/material_dynamic_neutral70"
-        app:trackColorActive="@color/material_dynamic_neutral60"
-        app:trackColorInactive="@color/material_dynamic_neutral40" />
+            <!-- Set as Default Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/setDefaultButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="12dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingVertical="0dp"
+                android:text="@string/set_as_default"
+                android:textSize="11sp"
+                app:backgroundTint="@color/material_dynamic_neutral70"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/on" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/masterTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Master Brightness: 80"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/masterSeekBar" />
+            <!-- Safety Checkbox -->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/burnAwareCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/burn_awareness"
+                app:buttonTint="@color/material_dynamic_neutral70"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/setDefaultButton" />
 
-    <!-- Space after Master Brightness -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/masterTextView" />
+            <!-- Master Brightness Control -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/masterLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@string/master"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/burnAwareCheckbox" />
 
-    <!-- White Brightness Control -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/masterTextView" />
+            <com.google.android.material.slider.Slider
+                android:id="@+id/masterSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="500"
+                android:min="0"
+                android:value="80"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/masterLabel"
+                app:thumbColor="@color/material_dynamic_neutral50"
+                app:trackColorActive="@color/material_dynamic_neutral60"
+                app:trackColorInactive="@color/material_dynamic_neutral40" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/whiteSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="255"
-        android:min="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView3"
-        app:thumbColor="@color/material_dynamic_neutral50"
-        app:tickColorActive="@color/material_dynamic_neutral90"
-        app:tickColorInactive="@color/material_dynamic_neutral70"
-        app:trackColorActive="@color/material_dynamic_neutral60"
-        app:trackColorInactive="@color/material_dynamic_neutral40" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/masterTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Master Brightness: 80"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/masterSeekBar" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/whiteTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="White Brightness: 0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/whiteSeekBar" />
+            <!-- White Brightness Control -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/whiteLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@string/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/masterTextView" />
 
-    <!-- Space after White -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/whiteTextView" />
+            <com.google.android.material.slider.Slider
+                android:id="@+id/whiteSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="500"
+                android:min="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/whiteLabel"
+                app:thumbColor="@color/material_dynamic_neutral50"
+                app:trackColorActive="@color/material_dynamic_neutral60"
+                app:trackColorInactive="@color/material_dynamic_neutral40" />
 
-    <!-- Yellow Brightness Control -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/yellow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/whiteTextView" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/whiteTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="White Brightness: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/whiteSeekBar" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/yellowSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="255"
-        android:min="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2"
-        app:thumbColor="@color/material_dynamic_neutral50"
-        app:tickColorActive="@color/material_dynamic_neutral90"
-        app:tickColorInactive="@color/material_dynamic_neutral70"
-        app:trackColorActive="@color/material_dynamic_neutral60"
-        app:trackColorInactive="@color/material_dynamic_neutral40" />
+            <!-- Yellow Brightness Control -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/yellowLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@string/yellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/whiteTextView" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/yellowTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Yellow Brightness: 0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/yellowSeekBar" />
+            <com.google.android.material.slider.Slider
+                android:id="@+id/yellowSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="500"
+                android:min="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/yellowLabel"
+                app:thumbColor="@color/material_dynamic_neutral50"
+                app:trackColorActive="@color/material_dynamic_neutral60"
+                app:trackColorInactive="@color/material_dynamic_neutral40" />
 
-    <!-- Space after Yellow -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/yellowTextView" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/yellowTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Yellow Brightness: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/yellowSeekBar" />
 
-    <!-- Additional Controls -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/destroyer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/destroyer"
-        app:backgroundTint="@color/material_dynamic_neutral70"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/yellowTextView" />
+            <!-- Additional Controls -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/destroyer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/destroyer"
+                app:backgroundTint="@color/material_dynamic_neutral70"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/yellowTextView" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/masterTextView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/destroyer" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/infoTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/info"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/destroyer" />
 
-    <!-- Space after Additional Controls -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/buymecoffe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/cookie"
+                android:gravity="center"
+                android:text="@string/buycoffe"
+                android:textColor="@color/material_dynamic_tertiary90"
+                android:textSize="34sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/infoTextView" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/buymecoffe"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-80dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/cookie"
-        android:gravity="center"
-        android:text="@string/buycoffe"
-        android:textColor="@color/material_dynamic_tertiary90"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/donateinfo2" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/donateinfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/donate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buymecoffe" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-30dp"
-        android:gravity="center"
-        android:text="@string/donate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/donateinfo2" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/donateinfo2"
-        android:layout_width="408dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="-80dp"
-        android:gravity="center"
-        android:text="@string/donate2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/navigateToMainActivity2" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/donateinfo2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/donate2"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/donateinfo" />
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/navigateToMainActivity2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/quadled"
-        android:visibility="invisible"
-        app:backgroundTint="@color/material_dynamic_neutral70"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/navigateToMainActivity2"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/quadled"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/donateinfo2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
