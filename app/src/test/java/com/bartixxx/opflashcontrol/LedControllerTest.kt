@@ -14,12 +14,23 @@ class LedControllerTest {
 
     private lateinit var ledController: LedController
     private val mockContext: Context = mock()
+    private lateinit var mockedLog: org.mockito.MockedStatic<android.util.Log>
 
     @Before
     fun setUp() {
+        mockedLog = org.mockito.Mockito.mockStatic(android.util.Log::class.java)
+        
+        // Prevent RootDetector from behaving unexpectedly if needed, 
+        // but primarily we need to stop Log.d from crashing
+        
         ledController = spy(LedController(mockContext))
         // Stub the executeRootCommands method to do nothing
         doNothing().`when`(ledController).executeRootCommands(any(), any())
+    }
+
+    @org.junit.After
+    fun tearDown() {
+        mockedLog.close()
     }
 
     @Test

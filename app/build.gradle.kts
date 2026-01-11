@@ -105,6 +105,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
+    testImplementation("org.mockito:mockito-inline:5.2.0")
 }
 
 android {
