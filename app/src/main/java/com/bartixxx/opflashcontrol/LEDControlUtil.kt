@@ -25,7 +25,7 @@ class LedController(private val context: Context) {
 
     init {
         Log.d("LedController", "Root available: $isRootAvailable")
-        if (!isRootAvailable && fallbackController != null) {
+        if (!isRootAvailable && fallbackController != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             Log.d("LedController", "Using fallback controller with ${fallbackController.getMaxTorchLevel()} torch levels")
         }
     }
@@ -45,7 +45,10 @@ class LedController(private val context: Context) {
      * Returns 1 if root is available or fallback is not supported.
      */
     fun getMaxTorchLevel(): Int {
-        return fallbackController?.getMaxTorchLevel() ?: 1
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            return fallbackController?.getMaxTorchLevel() ?: 1
+        }
+        return 1
     }
 
     /**
@@ -77,7 +80,7 @@ class LedController(private val context: Context) {
         showToast: Boolean = true
     ) {
         // Use fallback controller if root is not available
-        if (!isRootAvailable && fallbackController != null) {
+        if (!isRootAvailable && fallbackController != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             if (action == "on") {
                 // Use the maximum of white and yellow brightness for the torch level
                 val maxBrightness = maxOf(whiteBrightness, yellowBrightness)
