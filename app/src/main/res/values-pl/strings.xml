@@ -30,4 +30,6 @@
     <string name="default_brightness">Domyślna jasność</string>
     <string name="set_as_default">Ustaw główny jako domyślną</string>
     <string name="default_brightness_set">Domyślna jasność ustawiona na %1$d</string>
+    <string name="delayvalue">Opóźnienie dla przełączania</string>
+    <string name="brightnessalternate">Jasność dla przełączania</string>
 </resources>

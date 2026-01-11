@@ -1,15 +1,18 @@
 # OnePlus Flash Control
 
-OnePlus Flash Control is an Android application designed specifically for rooted OnePlus devices, providing users with precise control over the brightness of the dual-tone LED flashes. The app offers a user-friendly interface to easily adjust the master brightness and independently control the brightness of the white, yellow.
+OnePlus Flash Control is an Android application designed **specifically for OnePlus devices** with dual-tone LED flashes, providing precise control over flashlight brightness.
 
-By leveraging root access, the app allows direct modification of system-level files to control the LED behavior, enabling a customized and enhanced flashlight experience on your OnePlus device.
+**For rooted OnePlus devices**, the app leverages root access to directly modify system-level files, enabling full control over individual white and yellow LED brightnesses with advanced features.
+
+**For non-rooted devices** (Android 13+), the app offers a fallback mode using the CameraManager API with basic flashlight control. While designed for OnePlus, **this mode may work on other Android 13+ devices** as a bonus feature.
 
 ## Support project
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/bartixxx32)
 ## Features
 
-- **Master Brightness Control:** Adjust overall LED brightness with a single slider.
+### Rooted Devices (Full Features)
+- **Master Brightness Control:** Adjust overall LED brightness (0-500) with a single slider.
 - **Individual LED Control:** Independently control the brightness of white and yellow LEDs.
 - **"Eye Destroyer" Mode:** A feature to momentarily turn on the LEDs at maximum brightness for both white and yellow LEDs.
 - ⚠️ Use with caution as it emits very intense light and generates significant heat! ⚠️
@@ -17,45 +20,29 @@ By leveraging root access, the app allows direct modification of system-level fi
   - If brightness exceeds 120 (on a scale of 0-255) for more than 20 seconds, it automatically reduces back to the default Android brightness value to prevent overheating or damage.
   - "Eye Destroyer" Mode enforces a 5-second cooldown between uses to ensure safety and prevent excessive heat buildup.
 
-- **Compatibility:** Designed for rooted OnePlus devices only.
+### Non-Rooted Devices (Android 13+)
+- **Basic Brightness Control:** Adjust flashlight using available torch strength levels (typically 1-5 levels).
+- **Simplified UI:** Only essential controls are shown for easier use.
+- **Limited Features:** Individual LED control, Eye Destroyer mode, and advanced settings are not available without root.
+
+### Common Features
+- **Compatibility:** 
+  - **OnePlus devices (rooted):** Full feature access with dual-LED control
+  - **OnePlus devices (non-rooted, Android 13+):** Basic flashlight control with torch levels
+  - **Other Android 13+ devices (non-rooted):** May also work, but not officially supported
 - **Quick Settings Tile:** Conveniently control LED brightness and state using a Quick Settings tile:
   - Single tap cycles through brightness levels.
   - Double tap when LEDs are off to turn them on at 80% brightness.
   - Double tap when LEDs are on to turn them off.
 - **Secret Action:** Unlock hidden features by tapping the app's title 5 times within 5 seconds, enabling a fun experimental mode.
 
-## Setup
-
-To build and run the OnePlus Flash Control application from the source code, you'll need the following:
-
-- A rooted OnePlus device
-- Android Studio IDE
-- USB debugging enabled on your device
-
-### Steps
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/Bartixxx32/Opflashcontrol-app.git
-   ```
-
-2. **Open the project in Android Studio:**
-   - Launch Android Studio.
-   - Select "Open an existing Android Studio project".
-   - Navigate to the cloned repository and select the `Opflashcontrol-app` folder.
-
-3. **Build the project:**
-   - Once the project is open, Android Studio will automatically sync the project with Gradle.
-   - To build the project, go to `Build > Make Project` or click the "Make Project" icon in the toolbar.
-
-4. **Run the application:**
-   - Connect your rooted OnePlus device to your computer via USB.
-   - In Android Studio, select your device from the dropdown menu and click the "Run" button.
-
 ## Usage
 
-Once the application is installed on your rooted OnePlus device, you can use it to control the flashlight LEDs. The main screen provides sliders for adjusting the master brightness, as well as the brightness of the white and yellow LEDs individually. You can also turn the flashlight on and off, and access the "Eye Destroyer" mode for maximum brightness.
+### Rooted Devices
+Once installed on your rooted OnePlus device, you have full access to all features. The main screen provides sliders for adjusting the master brightness (0-500), as well as the brightness of the white and yellow LEDs individually. You can turn the flashlight on and off, and access the "Eye Destroyer" mode for maximum brightness.
+
+### Non-Rooted Devices (Android 13+)
+On non-rooted devices, the app provides a simplified interface with a single brightness control slider mapped to your device's available torch strength levels (typically 1-5). Individual LED controls and advanced features are automatically hidden.
 
 The Quick Settings tile provides a convenient way to control the flashlight without opening the app. You can cycle through brightness levels with a single tap, and turn the flashlight on or off with a double tap.
 

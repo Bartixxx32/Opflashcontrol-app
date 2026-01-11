@@ -16,6 +16,19 @@ import java.io.IOException
  * @param context The context.
  */
 class LedController(private val context: Context) {
+    
+    val isRootAvailable: Boolean = RootDetector.isRootAvailable()
+    private val fallbackController: FlashlightFallbackController? = 
+        if (!isRootAvailable && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            FlashlightFallbackController(context)
+        } else null
+
+    init {
+        Log.d("LedController", "Root available: $isRootAvailable")
+        if (!isRootAvailable && fallbackController != null) {
+            Log.d("LedController", "Using fallback controller with ${fallbackController.getMaxTorchLevel()} torch levels")
+        }
+    }
 
     /**
      * Sanitizes a brightness value to ensure it is not 0.
@@ -25,6 +38,14 @@ class LedController(private val context: Context) {
      */
     private fun sanitizeBrightness(brightness: Int): Int {
         return if (brightness == 0) 1 else brightness
+    }
+    
+    /**
+     * Gets the maximum torch level available for non-root devices.
+     * Returns 1 if root is available or fallback is not supported.
+     */
+    fun getMaxTorchLevel(): Int {
+        return fallbackController?.getMaxTorchLevel() ?: 1
     }
 
     /**
@@ -55,6 +76,20 @@ class LedController(private val context: Context) {
         yellow2Brightness: Int = 0,
         showToast: Boolean = true
     ) {
+        // Use fallback controller if root is not available
+        if (!isRootAvailable && fallbackController != null) {
+            if (action == "on") {
+                // Use the maximum of white and yellow brightness for the torch level
+                val maxBrightness = maxOf(whiteBrightness, yellowBrightness)
+                val torchLevel = fallbackController.mapBrightnessToTorchLevel(maxBrightness)
+                fallbackController.turnOnTorch(torchLevel)
+            } else {
+                fallbackController.turnOffTorch()
+            }
+            return
+        }
+        
+        // Root path: use original implementation
         val sanitizedWhiteBrightness = sanitizeBrightness(whiteBrightness)
         val sanitizedYellowBrightness = sanitizeBrightness(yellowBrightness)
         val sanitizedWhite2Brightness = sanitizeBrightness(white2Brightness)

@@ -45,26 +45,67 @@ class MainActivity : BaseActivity() {
         prefs = getSharedPreferences("OpFlashControlPrefs", Context.MODE_PRIVATE)
         loadPreferences()
 
-        brightnessCheckHandler = Handler(Looper.getMainLooper())
-        brightnessCheckRunnable = Runnable {
-            checkBrightnessSafety()
+        // Only run brightness safety check for rooted devices
+        // Non-root devices use CameraManager API which has built-in safety limits
+        if (ledController.isRootAvailable) {
+            brightnessCheckHandler = Handler(Looper.getMainLooper())
+            brightnessCheckRunnable = Runnable {
+                checkBrightnessSafety()
+                brightnessCheckHandler?.postDelayed(brightnessCheckRunnable!!, CHECK_INTERVAL)
+            }
             brightnessCheckHandler?.postDelayed(brightnessCheckRunnable!!, CHECK_INTERVAL)
         }
-        brightnessCheckHandler?.postDelayed(brightnessCheckRunnable!!, CHECK_INTERVAL)
 
+        // Adapt UI based on root availability
+        val isRootAvailable = ledController.isRootAvailable
+        val maxTorchLevel = ledController.getMaxTorchLevel()
+        
         with(binding) {
-            masterSeekBar.valueFrom = 0f
-            masterSeekBar.valueTo = 500f
-            masterSeekBar.value = masterBrightness.coerceIn(0, 500).toFloat()
-            masterTextView.text = "Master Brightness: $masterBrightness"
+            if (!isRootAvailable && maxTorchLevel > 1) {
+                // Non-root mode: hide white/yellow controls, adjust master brightness
+                whiteLabel.visibility = android.view.View.GONE
+                whiteSeekBar.visibility = android.view.View.GONE
+                whiteTextView.visibility = android.view.View.GONE
+                
+                yellowLabel.visibility = android.view.View.GONE
+                yellowSeekBar.visibility = android.view.View.GONE
+                yellowTextView.visibility = android.view.View.GONE
+                
+                destroyer.visibility = android.view.View.GONE
+                
+                // Hide info text about Eye Destroyer - not relevant in non-root mode
+                infoTextView.visibility = android.view.View.GONE
+                
+                // Hide burn awareness checkbox - not needed in non-root mode
+                // CameraManager API limits brightness to safe levels
+                burnAwareCheckbox.visibility = android.view.View.GONE
+                
+                // Update master label to indicate non-root mode
+                masterLabel.text = getString(R.string.master) + " (Non-Root: $maxTorchLevel levels)"
+                
+                // Adjust master slider to match torch levels - SET RANGE FIRST!
+                masterSeekBar.valueFrom = 1f
+                masterSeekBar.valueTo = maxTorchLevel.toFloat()
+                masterSeekBar.stepSize = 1f
+                // Start with middle level for non-root (don't use defaultBrightness as it could be 80+)
+                val initialLevel = (maxTorchLevel / 2).coerceAtLeast(1)
+                masterSeekBar.value = initialLevel.toFloat()
+                masterTextView.text = getString(R.string.brightness) + ": $initialLevel"
+            } else if (isRootAvailable) {
+                // Root mode: standard configuration
+                masterSeekBar.valueFrom = 0f
+                masterSeekBar.valueTo = 500f
+                masterSeekBar.value = masterBrightness.coerceIn(0, 500).toFloat()
+                masterTextView.text = "Master Brightness: $masterBrightness"
 
-            whiteSeekBar.valueFrom = 0f
-            whiteSeekBar.valueTo = 500f
-            whiteSeekBar.value = whiteBrightness.coerceIn(0, 500).toFloat()
+                whiteSeekBar.valueFrom = 0f
+                whiteSeekBar.valueTo = 500f
+                whiteSeekBar.value = whiteBrightness.coerceIn(0, 500).toFloat()
 
-            yellowSeekBar.valueFrom = 0f
-            yellowSeekBar.valueTo = 500f
-            yellowSeekBar.value = yellowBrightness.coerceIn(0, 500).toFloat()
+                yellowSeekBar.valueFrom = 0f
+                yellowSeekBar.valueTo = 500f
+                yellowSeekBar.value = yellowBrightness.coerceIn(0, 500).toFloat()
+            }
 
             burnAwareCheckbox.isChecked = isBurnAware
             burnAwareCheckbox.setOnCheckedChangeListener { _, isChecked ->
@@ -75,55 +116,61 @@ class MainActivity : BaseActivity() {
             setDefaultButton.setOnClickListener {
                 VibrationUtil.vibrate(this@MainActivity, 100L)
                 // Jeśli suwak jest na 0 lub 1, ustawiamy domyślnie 80
-                defaultBrightness = if (masterBrightness <= 1) 80 else masterBrightness
+                defaultBrightness = if (isRootAvailable) {
+                    if (masterBrightness <= 1) 80 else masterBrightness
+                } else {
+                    masterSeekBar.value.toInt()
+                }
                 prefs.edit().putInt("default_brightness", defaultBrightness).apply()
                 Toast.makeText(this@MainActivity, getString(R.string.default_brightness_set, defaultBrightness), Toast.LENGTH_SHORT).show()
             }
 
-            setupSlider(masterSeekBar, masterTextView, "Master Brightness") { progress ->
+            setupSlider(masterSeekBar, masterTextView, if (isRootAvailable) getString(R.string.master) else getString(R.string.brightness)) { progress ->
                 if (!safetyTriggered || isBurnAware) {
-                    masterBrightness = progress
-                    if (isLedOn && whiteBrightness <= 1 && yellowBrightness <= 1) {
+                    masterBrightness = if (isRootAvailable) progress else (progress * 500 / maxTorchLevel)
+                    if (isLedOn && (!isRootAvailable || (whiteBrightness <= 1 && yellowBrightness <= 1))) {
                         ledController.controlLeds(
                             "on",
                             LedPaths.WHITE_LED_PATH,
                             LedPaths.YELLOW_LED_PATH,
                             LedPaths.TOGGLE_PATHS,
-                            whiteBrightness = progress,
-                            yellowBrightness = progress
+                            whiteBrightness = if (isRootAvailable) progress else masterBrightness,
+                            yellowBrightness = if (isRootAvailable) progress else masterBrightness
                         )
                     }
                 }
             }
 
-            setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
-                if (!safetyTriggered || isBurnAware) {
-                    whiteBrightness = progress
-                    if (isLedOn) {
-                        ledController.controlLeds(
-                            "on",
-                            LedPaths.WHITE_LED_PATH,
-                            LedPaths.YELLOW_LED_PATH,
-                            LedPaths.TOGGLE_PATHS,
-                            whiteBrightness = progress,
-                            yellowBrightness = yellowBrightness
-                        )
+            if (isRootAvailable) {
+                setupSlider(whiteSeekBar, whiteTextView, "White Brightness") { progress ->
+                    if (!safetyTriggered || isBurnAware) {
+                        whiteBrightness = progress
+                        if (isLedOn) {
+                            ledController.controlLeds(
+                                "on",
+                                LedPaths.WHITE_LED_PATH,
+                                LedPaths.YELLOW_LED_PATH,
+                                LedPaths.TOGGLE_PATHS,
+                                whiteBrightness = progress,
+                                yellowBrightness = yellowBrightness
+                            )
+                        }
                     }
                 }
-            }
 
-            setupSlider(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
-                if (!safetyTriggered || isBurnAware) {
-                    yellowBrightness = progress
-                    if (isLedOn) {
-                        ledController.controlLeds(
-                            "on",
-                            LedPaths.WHITE_LED_PATH,
-                            LedPaths.YELLOW_LED_PATH,
-                            LedPaths.TOGGLE_PATHS,
-                            whiteBrightness = whiteBrightness,
-                            yellowBrightness = progress
-                        )
+                setupSlider(yellowSeekBar, yellowTextView, "Yellow Brightness") { progress ->
+                    if (!safetyTriggered || isBurnAware) {
+                        yellowBrightness = progress
+                        if (isLedOn) {
+                            ledController.controlLeds(
+                                "on",
+                                LedPaths.WHITE_LED_PATH,
+                                LedPaths.YELLOW_LED_PATH,
+                                LedPaths.TOGGLE_PATHS,
+                                whiteBrightness = whiteBrightness,
+                                yellowBrightness = progress
+                            )
+                        }
                     }
                 }
             }
@@ -136,10 +183,14 @@ class MainActivity : BaseActivity() {
                 VibrationUtil.vibrate(this@MainActivity, 100L)
                 toggleLEDs(false)
             }
-            destroyer.setOnClickListener {
-                VibrationUtil.vibrate(this@MainActivity, 100L)
-                executeExtraFunction()
+            
+            if (isRootAvailable) {
+                destroyer.setOnClickListener {
+                    VibrationUtil.vibrate(this@MainActivity, 100L)
+                    executeExtraFunction()
+                }
             }
+            
             navigateToMainActivity2.setOnClickListener {
                 VibrationUtil.vibrate(this@MainActivity, 100L)
                 navigateToMainActivity2()

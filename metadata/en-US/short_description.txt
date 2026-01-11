@@ -1,1 +1,1 @@
-Control LED brightness on rooted OnePlus devices
+Advanced LED control for OnePlus (root required)

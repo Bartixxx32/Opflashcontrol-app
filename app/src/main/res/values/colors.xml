@@ -1,1 +1,11 @@
-<resources></resources>
+<resources>
+    <!-- Original Color Palette (OnePlus Red) -->
+    <!-- Restoring exact values from before A12+ Tuning -->
+    
+    <color name="material_dynamic_neutral40">#454545</color> <!-- Inactive Track (Dark Gray) -->
+    <color name="material_dynamic_neutral50">#EB0029</color> <!-- Thumb (Red) -->
+    <color name="material_dynamic_neutral60">#EB0029</color> <!-- Active Track (Red) -->
+    <color name="material_dynamic_neutral70">#333333</color> <!-- Button Background (Dark Gray) -->
+    <color name="material_dynamic_neutral90">#FFFFFF</color> <!-- Ticks/Text (White) -->
+    <color name="material_dynamic_tertiary90">#FF8A80</color> <!-- Accent Text (Light Red) -->
+</resources>

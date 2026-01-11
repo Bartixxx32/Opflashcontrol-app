@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep Material Components
+-keep class com.google.android.material.** { *; }
+-dontwarn com.google.android.material.**
+-keepclassmembers class com.google.android.material.** { *; }
+
+# Keep R classes and resources
+-keep class **.R$* { *; }
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+# Keep resource IDs
+-keepclassmembers class * {
+    public static final int *;
+}
