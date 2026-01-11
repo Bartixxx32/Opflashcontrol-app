@@ -8,4 +8,7 @@
     <color name="material_dynamic_neutral70">#333333</color> <!-- Button Background (Dark Gray) -->
     <color name="material_dynamic_neutral90">#FFFFFF</color> <!-- Ticks/Text (White) -->
     <color name="material_dynamic_tertiary90">#FF8A80</color> <!-- Accent Text (Light Red) -->
+    
+    <!-- Static Colors for A11 Fallback -->
+    <color name="oneplus_red">#EB0029</color>
 </resources>

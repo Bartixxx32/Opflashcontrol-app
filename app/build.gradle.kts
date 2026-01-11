@@ -12,11 +12,11 @@ android {
 
     defaultConfig {
         applicationId = "com.bartixxx.opflashcontrol"
-        minSdk = 31
+        minSdk = 30
         targetSdk = 36
 
-        versionCode = 48
-        versionName = "1.6.0"
+        versionCode = 49
+        versionName = "1.6.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

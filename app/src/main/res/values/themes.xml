@@ -1,10 +1,15 @@
 <resources>
 
-    <style name="Theme.Opflashcontrol" parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
-        <!-- Dark theme colors -->
-        <item name="colorPrimary">#BB86FC</item>
-        <item name="colorPrimaryDark">#3700B3</item>
-        <item name="colorAccent">#03DAC5</item>
+    <style name="Theme.Opflashcontrol" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Static Fallback for Android 11 (OnePlus Red) -->
+        <item name="colorPrimary">@color/oneplus_red</item>
+        <item name="colorPrimaryDark">#B00020</item> <!-- Darker red or standard dark -->
+        <item name="colorAccent">@color/oneplus_red</item>
+        
+        <item name="colorSecondary">@color/oneplus_red</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
         <item name="android:windowBackground">#282828</item> <!-- Dark background -->
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/darker_gray</item>

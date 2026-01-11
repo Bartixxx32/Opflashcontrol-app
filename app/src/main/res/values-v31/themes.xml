@@ -1,0 +1,13 @@
+<resources>
+
+    <style name="Theme.Opflashcontrol" parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
+        <!-- Dark theme colors -->
+        <item name="colorPrimary">#BB86FC</item>
+        <item name="colorPrimaryDark">#3700B3</item>
+        <item name="colorAccent">#03DAC5</item>
+        <item name="android:windowBackground">#282828</item> <!-- Dark background -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
+    </style>
+    <!-- Base application theme. -->
+</resources>
