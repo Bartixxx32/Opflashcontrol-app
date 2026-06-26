@@ -48,6 +48,7 @@ class LEDControlTileService : TileService() {
             defaultBrightness = prefs.getInt("default_brightness", 80)
 
             ledController = LedController(this)
+            LedPaths.logDiagnostics()
             updateTileDescription()
             startSafetyCheck()
         } catch (e: Exception) {
@@ -58,6 +59,7 @@ class LEDControlTileService : TileService() {
     override fun onStopListening() {
         super.onStopListening()
         stopSafetyCheck()
+        ledController.cleanup()
         serviceJob.cancel()
     }
 
@@ -109,6 +111,7 @@ class LEDControlTileService : TileService() {
         try {
             currentBrightnessState = 0
             controlAllLeds(0) // Turn off LEDs.
+            ledController.cleanup()
             updateTileDescription()
             VibrationUtil.vibrate(this, 100L) // Provide haptic feedback.
         } catch (e: Exception) {

@@ -47,6 +47,7 @@ class MainActivity2 : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LedPathUtil.findLedPaths()
+        LedPaths.logDiagnostics()
         ledController = LedController(this)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -264,6 +265,10 @@ class MainActivity2 : BaseActivity() {
     private fun loadPreferences() {
         isBurnAware = prefs.getBoolean("burn_aware", false)
         defaultBrightness = prefs.getInt("default_brightness", 80)
+    }
+
+    override fun cleanupLedState() {
+        ledController.cleanup()
     }
 
     private fun allBrightnessAtOne() =

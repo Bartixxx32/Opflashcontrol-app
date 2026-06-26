@@ -1,9 +1,13 @@
 package com.bartixxx.opflashcontrol
 
+import android.util.Log
+
 /**
  * An object that contains the paths to the LED brightness files.
  */
 object LedPaths {
+    private const val TAG = "LedPaths"
+
     /**
      * The path to the white LED brightness file.
      */
@@ -40,4 +44,21 @@ object LedPaths {
      * A list of paths to the LED toggle files.
      */
     var TOGGLE_PATHS = listOf("/sys/class/leds/led:switch_2/brightness")
+
+    /**
+     * Logs the currently configured LED paths for diagnostic purposes.
+     */
+    fun logDiagnostics() {
+        Log.d(TAG, "=== LED Paths Diagnostic ===")
+        Log.d(TAG, "WHITE_LED_PATH: $WHITE_LED_PATH")
+        Log.d(TAG, "YELLOW_LED_PATH: $YELLOW_LED_PATH")
+        Log.d(TAG, "WHITE2_LED_PATH: $WHITE2_LED_PATH")
+        Log.d(TAG, "YELLOW2_LED_PATH: $YELLOW2_LED_PATH")
+        Log.d(TAG, "FLASH_WHITE_LED_PATH: $FLASH_WHITE_LED_PATH")
+        Log.d(TAG, "FLASH_YELLOW_LED_PATH: $FLASH_YELLOW_LED_PATH")
+        Log.d(TAG, "FLASH_WHITE2_LED_PATH: $FLASH_WHITE2_LED_PATH")
+        Log.d(TAG, "FLASH_YELLOW2_LED_PATH: $FLASH_YELLOW2_LED_PATH")
+        Log.d(TAG, "TOGGLE_PATHS: $TOGGLE_PATHS")
+        Log.d(TAG, "=============================")
+    }
 }

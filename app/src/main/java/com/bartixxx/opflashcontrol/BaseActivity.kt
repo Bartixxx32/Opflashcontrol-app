@@ -82,6 +82,19 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    /**
+     * Cleans up LED state when activity goes to background
+     * to allow Camera HAL / system to regain flash control.
+     */
+    protected open fun cleanupLedState() {
+        // Override in subclasses that have a LedController
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cleanupLedState()
+    }
+
 
     /**
      * Sets up a slider for controlling brightness.

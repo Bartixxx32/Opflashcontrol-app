@@ -296,5 +296,23 @@ class LedController(private val context: Context) {
         }
     }
 
+    /**
+     * Resets flash paths to 0 to allow the system (Camera HAL, QS flashlight)
+     * to regain control of the flash hardware.
+     */
+    fun cleanup() {
+        if (!isRootAvailable) return
+        val commands = mutableListOf<String>()
+        commands.add("echo 0 > ${LedPaths.FLASH_WHITE_LED_PATH}")
+        commands.add("echo 0 > ${LedPaths.FLASH_YELLOW_LED_PATH}")
+        if (LedPaths.FLASH_WHITE2_LED_PATH != LedPaths.FLASH_WHITE_LED_PATH) {
+            commands.add("echo 0 > ${LedPaths.FLASH_WHITE2_LED_PATH}")
+        }
+        if (LedPaths.FLASH_YELLOW2_LED_PATH != LedPaths.FLASH_YELLOW_LED_PATH) {
+            commands.add("echo 0 > ${LedPaths.FLASH_YELLOW2_LED_PATH}")
+        }
+        executeRootCommands(commands, showToast = false)
+    }
+
 
 }
