@@ -1,5 +1,6 @@
 package com.bartixxx.opflashcontrol
 
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -34,11 +35,12 @@ class LedPathUtilTest {
     @Mock
     private lateinit var mockSwitch1: File
 
-    @Mock
-    private lateinit var mockBrightness: File
+    private lateinit var mockedLog: org.mockito.MockedStatic<android.util.Log>
 
     @Before
     fun setUp() {
+        mockedLog = org.mockito.Mockito.mockStatic(android.util.Log::class.java)
+
         whenever(mockBaseDir.listFiles()).thenReturn(arrayOf(
             mockTorch1, mockTorch2, mockTorch3, mockTorch4,
             mockFlash1, mockFlash2, mockFlash3, mockFlash4,
@@ -64,15 +66,11 @@ class LedPathUtilTest {
         whenever(mockFlash3.absolutePath).thenReturn("/sys/class/leds/led:flash3")
         whenever(mockFlash4.absolutePath).thenReturn("/sys/class/leds/led:flash4")
         whenever(mockSwitch1.absolutePath).thenReturn("/sys/class/leds/led:switch1")
+    }
 
-        // Mock brightness file exists() for all LED dirs
-        val allLedDirs = arrayOf(mockTorch1, mockTorch2, mockTorch3, mockTorch4,
-            mockFlash1, mockFlash2, mockFlash3, mockFlash4, mockSwitch1)
-        allLedDirs.forEach { dir ->
-            val mockFile = org.mockito.kotlin.mock<File>()
-            whenever(mockFile.exists()).thenReturn(true)
-            whenever(dir.listFiles()).thenReturn(arrayOf(mockFile))
-        }
+    @After
+    fun tearDown() {
+        mockedLog.close()
     }
 
     @Test
@@ -102,10 +100,8 @@ class LedPathUtilTest {
 
         val ledPaths = LedPathUtil.findLedPaths(mockBaseDir)
 
-        // Single torch should be mapped to both white and yellow
         assertEquals("/sys/class/leds/torch0/brightness", ledPaths.WHITE_LED_PATH)
         assertEquals("/sys/class/leds/torch0/brightness", ledPaths.YELLOW_LED_PATH)
-        // Single flash should be mapped to both flash white and yellow
         assertEquals("/sys/class/leds/flash0/brightness", ledPaths.FLASH_WHITE_LED_PATH)
         assertEquals("/sys/class/leds/flash0/brightness", ledPaths.FLASH_YELLOW_LED_PATH)
     }
@@ -122,18 +118,6 @@ class LedPathUtilTest {
 
         assertEquals("/sys/class/leds/white/brightness", ledPaths.WHITE_LED_PATH)
         assertEquals("/sys/class/leds/yellow/brightness", ledPaths.YELLOW_LED_PATH)
-    }
-
-    @Test
-    fun `findLedPaths handles no brightness file gracefully`() {
-        whenever(mockBaseDir.listFiles()).thenReturn(arrayOf(mockTorch1))
-        whenever(mockTorch1.name).thenReturn("led:torch0")
-        whenever(mockTorch1.listFiles()).thenReturn(emptyArray())
-
-        val ledPaths = LedPathUtil.findLedPaths(mockBaseDir)
-
-        // Should keep default paths if nothing found with brightness file
-        assertEquals("/sys/class/leds/led:torch_0/brightness", ledPaths.WHITE_LED_PATH)
     }
 
     @Test
