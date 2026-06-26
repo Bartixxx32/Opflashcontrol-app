@@ -11,11 +11,11 @@ object LedPathUtil {
 
     private val TORCH_PATTERNS = listOf(
         "led:torch", "led:torch_", "torch", "led:led_torch",
-        "white", "led:white", "led:led_white"
+        "white", "led:white", "led:led_white",
+        "yellow", "led:yellow", "led:led_yellow"
     )
     private val FLASH_PATTERNS = listOf(
-        "led:flash", "led:flash_", "flash", "led:led_flash",
-        "yellow", "led:yellow", "led:led_yellow"
+        "led:flash", "led:flash_", "flash", "led:led_flash"
     )
     private val SWITCH_PATTERNS = listOf(
         "led:switch", "led:switch_", "switch", "led:led_switch"
